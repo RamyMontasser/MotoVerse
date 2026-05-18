@@ -5,6 +5,7 @@ import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
+import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/views/widgets/my_offer_page_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -17,6 +18,7 @@ class MyOffersPage extends StatefulWidget {
 }
 
 class _MyOffersPageState extends State<MyOffersPage> {
+  late List<OfferModel> myOffers;
   @override
   void initState() {
     super.initState();
@@ -83,6 +85,10 @@ class _MyOffersPageState extends State<MyOffersPage> {
                   }
                 },
                 child: BlocBuilder<MyOffersCubit, MyOffersState>(
+                  buildWhen: (previous, current) =>
+                      current is MyOffersLoading ||
+                      current is MyOffersSuccess ||
+                      current is MyOffersFailure,
                   builder: (context, state) {
                   if (state is MyOffersLoading) {
                     return Skeletonizer(
@@ -109,6 +115,7 @@ class _MyOffersPageState extends State<MyOffersPage> {
                     );
                   } else if (state is MyOffersSuccess) {
                     if (state.offers.isEmpty) {
+                      
                       return Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -124,17 +131,31 @@ class _MyOffersPageState extends State<MyOffersPage> {
                         ),
                       );
                     }
+                    myOffers = state.offers;
                     return ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.offers.length,
+                      itemCount: myOffers.length,
                       separatorBuilder: (context, index) => SizedBox(height: 16.h),
                       itemBuilder: (context, index) {
-                        return MyOfferPageCard(offerModel: state.offers[index]);
+                        return MyOfferPageCard(offerModel: myOffers[index]);
                       },
                     );
                   }
-                  return const SizedBox.shrink();
+                  return myOffers.isNotEmpty
+                        ? ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: myOffers.length,
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 16.h),
+                            itemBuilder: (context, index) {
+                              return MyOfferPageCard(
+                                offerModel: myOffers[index],
+                              );
+                            },
+                          )
+                        : const SizedBox.shrink();
                 },
               ),
             ),

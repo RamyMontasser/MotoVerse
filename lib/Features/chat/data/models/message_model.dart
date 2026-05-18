@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class MessageModel {
   final String senderId;
   final String text;
   final String? imageUrl;
-  final DateTime timestamp;
+  final Timestamp timestamp;
   final bool isMe;
   final bool isSeen;
 
@@ -20,7 +23,7 @@ class MessageModel {
       'senderId': senderId,
       'text': text,
       'imageUrl': imageUrl,
-      'timestamp': timestamp.toIso8601String(),
+      'timestamp': timestamp.toDate(),
       'isMe': isMe,
       'isSeen': isSeen,
     };
@@ -28,11 +31,11 @@ class MessageModel {
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
-      senderId: json['senderId'],
-      text: json['text'],
+      senderId: json['senderId'] ?? '',
+      text: json['text'] ?? '',
       imageUrl: json['imageUrl'],
-      timestamp: DateTime.parse(json['timestamp']),
-      isMe: json['isMe'],
+      timestamp: json['timestamp'] ?? Timestamp.now(),
+      isMe: json['senderId'] == FirebaseAuth.instance.currentUser?.uid,
       isSeen: json['isSeen'] ?? false,
     );
   }

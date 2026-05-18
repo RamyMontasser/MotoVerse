@@ -2,12 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/services/api_service.dart';
+import 'package:motoverse/Core/services/firestore_service.dart';
 import 'package:motoverse/Core/services/image_picker_service.dart';
 import 'package:motoverse/Core/services/location_service.dart';
 import 'package:motoverse/Core/services/network_service.dart';
 import 'package:motoverse/Core/services/secure_storage.dart';
 import 'package:motoverse/Features/auth/data/repo/auth_repo_imp.dart';
 import 'package:motoverse/Features/auth/domain/repo/auth_repo.dart';
+import 'package:motoverse/Features/chat/data/repo/chat_repo_imp.dart';
+import 'package:motoverse/Features/chat/domain/repo/chat_repo.dart';
 import 'package:motoverse/Features/home/data/repo/map_repo_imp.dart';
 import 'package:motoverse/Features/home/domain/repo/map_repo.dart';
 import 'package:motoverse/Features/map/data/repo/service_center_repo_imp.dart';
@@ -42,9 +45,15 @@ void getitsetup() {
   //   Secure Storage
   getIt.registerSingleton<SecureStorage>(SecureStorage());
 
-  //   Authintication
+  
   getIt.registerSingleton<NetworkService>(
       ApiService(dio: getIt<Dio>(), secureStorage: getIt<SecureStorage>()));
+
+
+  getIt.registerSingleton<FirestoreService>(
+      FirestoreService());
+
+  //   Authintication
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImp(
       networkService: getIt<NetworkService>(),
@@ -77,7 +86,11 @@ void getitsetup() {
   );
 
   getIt.registerSingleton<SettingsRepo>(
-    SettingsRepoImpl(getIt<NetworkService>() as ApiService),
+    SettingsRepoImpl(networkService:  getIt<NetworkService>() ),
+  );
+  
+  getIt.registerSingleton<ChatRepo>(
+    ChatRepoImpl(firestoreService: getIt<FirestoreService>()),
   );
 
 

@@ -15,7 +15,7 @@ class MapRepoImp implements MapRepo{
       Position currentLocation = await locationService.determinePosition();
     return right(currentLocation);
     } catch (e) {
-      return left(Failure(errorMsg: e.toString()));
+      return left(ServerFailure(errorMsg: e.toString()));
     }
     
     
@@ -27,7 +27,7 @@ class MapRepoImp implements MapRepo{
       String cityName = await locationService.getCityName(position.latitude, position.longitude);
     return right(cityName);
     } catch (e) {
-      return left(Failure(errorMsg: e.toString()));
+      return left(ServerFailure(errorMsg: e.toString()));
     }
   }
 }

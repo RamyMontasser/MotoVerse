@@ -26,7 +26,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -46,7 +46,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
   
@@ -60,7 +60,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -74,7 +74,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -92,7 +92,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -106,7 +106,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -125,7 +125,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -139,9 +139,9 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
-  }
+  } 
 
   @override
   Future<Either<Failure, RequestModel>> getRequestDetails({required int requestId}) async {
@@ -153,7 +153,7 @@ class HomeRepoImp implements HomeRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 }

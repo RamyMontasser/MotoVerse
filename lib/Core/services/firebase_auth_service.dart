@@ -8,9 +8,14 @@ class FirebaseAuthService {
       await FirebaseAuth.instance.signInWithCustomToken(token);
       return right(null);
     } on FirebaseAuthException catch (e) {
-      return left(Failure(errorMsg: e.message!));
+      if(e.code == 'invalid-credential'){
+        return left(ServerFailure(errorMsg: 'Invalid Credentials'));
+      }else if(e.code == 'credential-already-in-use'){
+        return left(ServerFailure(errorMsg: 'Credential Already In Use'));
+      }
+      return left(ServerFailure(errorMsg: e.message!));
     } catch (e) {
-      return left(Failure(errorMsg: e.toString()));
+      return left(ServerFailure(errorMsg: e.toString()));
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
@@ -10,14 +11,30 @@ import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Features/auth/domain/repo/auth_repo.dart';
+import 'package:motoverse/Features/home/data/models/user_model.dart';
 import 'package:motoverse/Features/home/presentation/views/widgets/profile_option.dart';
 import 'package:motoverse/Features/home/presentation/views/widgets/profile_tile.dart';
 import 'package:motoverse/generated/l10n.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
-  final String name = 'رامي منتصر';
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  // final String name = 'رامي منتصر';
+  late UserDataModel currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    final userBox = Hive.box<UserDataModel>('user_box');
+    currentUser = userBox.get('user')!;
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +44,8 @@ class Profile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProfileTile(name: name),
+            ProfileTile(name: currentUser.name, email: currentUser.email,),
+            // currentUser.
             CustomElevatedButton(
               text: 'التحقق من الهوية',
               radius: CustomRadius.card,

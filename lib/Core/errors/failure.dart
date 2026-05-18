@@ -1,9 +1,17 @@
 import 'package:dio/dio.dart';
 
-class Failure {
+abstract class Failure {
   final String errorMsg;
 
   Failure({required this.errorMsg});
+}
+
+class ServerFailure extends Failure {
+  ServerFailure({required super.errorMsg});
+}
+
+class CacheFailure extends Failure {
+  CacheFailure({required super.errorMsg});
 }
 
 class ApiFailure extends Failure {

@@ -12,6 +12,7 @@ class MyOfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<OfferModel> acceptedOffer = offers.where((request) => request.status == 'accepted').toList();
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
       decoration: BoxDecoration(
@@ -64,18 +65,33 @@ class MyOfferCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 4.w),
-                  Text(
-                    'عروضي الحالية',
-                    style: TextStyles.cairoBold14.copyWith(
-                      color: AppColors.blueNormal,
-                    ),
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    '(${offers.length})',
-                    style: TextStyles.cairoMedium12.copyWith(
-                      color: AppColors.whiteDarkActive,
-                    ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'عروضي الحالية',
+                            style: TextStyles.cairoBold14.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                          SizedBox(width: 4.w),
+                          Text(
+                            '(${offers.length})',
+                            style: TextStyles.cairoMedium12.copyWith(
+                              color: AppColors.whiteDarkActive,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if(acceptedOffer.isNotEmpty)
+                      Text(
+                        'يوجد محادثة نشطة',
+                        style: TextStyles.cairoRegular14.copyWith(
+                          color: AppColors.greenNormal,
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),

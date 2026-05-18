@@ -27,13 +27,12 @@ class MessageBubble extends StatelessWidget {
                 : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!message.isMe && receiverAvatar != null)
+              if (!message.isMe )
                 Padding(
                   padding: EdgeInsets.only(right: 3.w, left: 7.w, top: 15.h),
                   child: CircleAvatar(
                     radius: 18.r,
-                    backgroundImage:
-                        receiverAvatar != null && receiverAvatar!.isNotEmpty
+                    backgroundImage: receiverAvatar != null && receiverAvatar!.isNotEmpty
                         ? NetworkImage(
                             receiverAvatar!.startsWith('http')
                                 ? receiverAvatar!
@@ -48,7 +47,7 @@ class MessageBubble extends StatelessWidget {
               // SizedBox(width: 5.w,),
               Flexible(
                 child: Container(
-                  padding: EdgeInsets.all(12.w),
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
                   decoration: BoxDecoration(
                     color: message.isMe
                         ? AppColors.blueNormal
@@ -80,41 +79,52 @@ class MessageBubble extends StatelessWidget {
                         ),
                       Text(
                         message.text,
-                        style: TextStyles.cairoRegular14.copyWith(
-                          color: message.isMe ? Colors.white : Colors.black87,
+                        style: TextStyles.cairoRegular16.copyWith(
+                          color: message.isMe ? AppColors.whiteLight : AppColors.black,
                         ),
                       ),
+                      SizedBox(height: 5.h,),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: message.isMe
+                            ? isEN() 
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start
+                            :isEN() 
+                            ? MainAxisAlignment.start
+                            : MainAxisAlignment.end,
+                        children: [
+                          // if (message.isMe)
+                          //   SizedBox(width: 20.w,),
+                          Text(
+                            DateFormat(
+                              'hh:mm a',
+                            ).format(message.timestamp.toDate()),
+                            style: TextStyles.cairoBold13.copyWith(
+                              color: message.isMe ? AppColors.whiteDark : AppColors.whiteDarker,
+                              // fontSize: 10.sp,
+                            ),
+                          ),
+                          if (message.isMe) ...[
+                            SizedBox(width: 4.w),
+                            Icon(
+                              Icons.done_all,
+                              size: 14.sp,
+                              color: message.isSeen ? Colors.blue : Colors.grey,
+                            ),
+                          ],
+                        ],
+                      ),
+
+
                     ],
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 4.h),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: message.isMe
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-            children: [
-              if (!message.isMe) SizedBox(width: 40.w), // Space for avatar
-              Text(
-                DateFormat('hh:mm a').format(message.timestamp),
-                style: TextStyles.cairoMedium12.copyWith(
-                  color: Colors.grey,
-                  fontSize: 10.sp,
-                ),
-              ),
-              if (message.isMe) ...[
-                SizedBox(width: 4.w),
-                Icon(
-                  Icons.done_all,
-                  size: 14.sp,
-                  color: message.isSeen ? Colors.blue : Colors.grey,
-                ),
-              ],
-            ],
-          ),
+          // SizedBox(height: 4.h),/
+          
         ],
       ),
     );

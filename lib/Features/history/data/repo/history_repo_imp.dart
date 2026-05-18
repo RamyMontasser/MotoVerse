@@ -28,7 +28,7 @@ class HistoryRepoImp implements HistoryRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -43,7 +43,7 @@ class HistoryRepoImp implements HistoryRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 
@@ -58,7 +58,7 @@ class HistoryRepoImp implements HistoryRepo {
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      return Left(Failure(errorMsg: e.toString()));
+      return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
 }

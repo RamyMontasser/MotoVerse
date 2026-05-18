@@ -56,6 +56,10 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+
   await AppPref.init();
   await Hive.initFlutter();
   Hive.registerAdapter(UserDataModelAdapter());
@@ -66,9 +70,7 @@ void main() async {
   final String? token = await secureStorage.getAccessToken();
   final bool isLoggedIn = token != null && token.isNotEmpty;
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  
   runApp(
     MultiProvider(
       providers: [

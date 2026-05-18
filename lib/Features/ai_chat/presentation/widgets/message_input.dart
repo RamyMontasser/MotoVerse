@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motoverse/Core/errors/app_validator.dart';
+// import 'package:motoverse/Core/errors/app_validator.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
@@ -13,6 +13,7 @@ class MessageInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final _formKey = GlobalKey<FormState>();
     return Container(
       color: AppColors.whiteLight,
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
@@ -71,28 +72,31 @@ class MessageInput extends StatelessWidget {
                     border: Border.all(color: Colors.black12),
                   ),
                   child: 
-                   TextFormField(
-                    controller: message,
-                    cursorColor: AppColors.yellowNormal,
-                    validator: (value) => AppValidator.validateEmpty(value),
-                    // textAlign: TextAlign.right,
-                    decoration: InputDecoration(
-                      // prefixIcon: Icon(
-                      //   Icons.mic_none_outlined,
-                      //   color: AppColors.whiteDark,
-                      //   size: 24.sp,
-                      // ),
-                      hintText:isAI? "اكتب مشكلتك هنا": null,
-                      hintStyle: TextStyles.cairoRegular14.copyWith(
-                        color: AppColors.whiteDark,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 12.h,
-                        horizontal: 10.w,
-                      ),
-                    ),
-                  ),
+                    TextFormField(
+                     controller: message,
+                     cursorColor: AppColors.yellowNormal,
+                     style: TextStyles.cairoRegular16.copyWith(
+                       color: AppColors.black,
+                     ),
+                     // validator: (value) => AppValidator.validateEmpty(value),
+                     // textAlign: TextAlign.right,
+                     decoration: InputDecoration(
+                       // prefixIcon: Icon(
+                       //   Icons.mic_none_outlined,
+                       //   color: AppColors.whiteDark,
+                       //   size: 24.sp,
+                       // ),
+                       hintText:isAI? "اكتب مشكلتك هنا": null,
+                       hintStyle: TextStyles.cairoRegular14.copyWith(
+                         color: AppColors.whiteDark,
+                       ),
+                       border: InputBorder.none,
+                       contentPadding: EdgeInsets.symmetric(
+                         vertical: 12.h,
+                         horizontal: 10.w,
+                       ),
+                     ),
+                                      ),
                 ),
               ),
               SizedBox(width: 10.w),
@@ -100,14 +104,18 @@ class MessageInput extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 13.h),
                 style: IconButton.styleFrom(
                   elevation: 6, 
-                  shadowColor: Colors.black45,
+                  shadowColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: CustomRadius.circle,
                   ),
 
                   backgroundColor: AppColors.yellowNormal,
                 ),
-                onPressed: onSend,
+                onPressed:(){
+                  if(message.text.isNotEmpty){
+                    onSend();
+                  }
+                },
                 icon: Icon(Icons.send_rounded, color: AppColors.whiteLight),
               ),
             ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
+import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_app_dialog.dart';
 // import 'package:motoverse/Core/widgets/custom_dialog.dart';
@@ -86,10 +87,15 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         PopupMenuButton(
           icon: Icon(Icons.more_vert, color: AppColors.whiteLight),
+          shape: RoundedRectangleBorder(borderRadius: CustomRadius.auth),
+          padding: EdgeInsets.zero,
+          color: AppColors.whiteLight,
           itemBuilder: (BuildContext context) {
           return [
             PopupMenuItem(
-              onTap: () => showDialog(context: context, builder: (context) => CustomAppDialog(
+              onTap: () => showDialog(
+                context: context, 
+                builder: (context) => CustomAppDialog(
                 title: 'انهاء المحادثة',
                 desc: isHelper? 'سيتم حذف عرض المساعدة الخاص بك':'سيتم حذف المحادثة بمجرد انهائها',
                 btnText: isHelper? 'حذف عرض المساعدة': 'حذف المحادثة',
@@ -117,7 +123,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                   );
                 },
               )),
-              child: Text('Delete Chat', style: TextStyles.cairoBold16.copyWith(color: AppColors.blueNormal),)),
+              child: Text('Delete Chat', style: TextStyles.cairoBold16.copyWith(color: AppColors.redNormal),)),
           ];
         } ), 
         // IconButton(

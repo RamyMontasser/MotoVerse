@@ -10,7 +10,7 @@ class MyOffersCubit extends Cubit<MyOffersState> {
   final HomeRepo homeRepo;
 
   MyOffersCubit(this.homeRepo) : super(MyOffersInitial());
-
+  
   Future<void> getMyOffers() async {
     emit(MyOffersLoading());
     var result = await homeRepo.getMyOffers();

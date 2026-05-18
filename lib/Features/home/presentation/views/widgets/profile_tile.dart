@@ -5,9 +5,10 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 
 class ProfileTile extends StatelessWidget {
-  const ProfileTile({super.key, required this.name});
+  const ProfileTile({super.key, required this.name, required this.email});
 
   final String name;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class ProfileTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'kmkmkm@gmv.com',
+                  email,
                   // textDirection: TextDirection.ltr,
                   style: TextStyles.cairoRegular14.copyWith(
                     color: AppColors.blueNormalActive,

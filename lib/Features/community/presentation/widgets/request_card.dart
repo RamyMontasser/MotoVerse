@@ -58,6 +58,7 @@ class RequestCard extends StatelessWidget {
               SizedBox(width: 10.w),
 
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     request.userName,
@@ -66,7 +67,7 @@ class RequestCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${request.city}, ${request.distance} km away ",
+                    request.distance != null? "${request.city}, ${request.distance} km away ": request.city,
                     style: TextStyles.cairoRegular11.copyWith(
                       color: AppColors.whiteDarkActive,
                     ),

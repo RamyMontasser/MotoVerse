@@ -2,14 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motoverse/Core/constants/constants.dart';
-import 'package:motoverse/Core/services/api_service.dart';
+import 'package:motoverse/Core/services/network_service.dart';
 import 'package:motoverse/Features/settings/data/repo/settings_repo.dart';
 import 'package:motoverse/core/errors/failure.dart';
 
 class SettingsRepoImpl implements SettingsRepo {
-  final ApiService apiService;
+  final NetworkService networkService;
 
-  SettingsRepoImpl(this.apiService);
+  SettingsRepoImpl({required this.networkService});
 
   @override
   Future<Either<Failure, dynamic>> verifyIdentity({
@@ -33,7 +33,7 @@ class SettingsRepoImpl implements SettingsRepo {
         ),
       });
 
-      var response = await apiService.addFormData(
+      var response = await networkService.addFormData(
         endPoint: AppConstants.verifyAcc,
         data: formData,
       );

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 
 class MemberInfoCard extends StatelessWidget {
-  const MemberInfoCard({super.key, required this.request, });
+  const MemberInfoCard({super.key, required this.request});
   final RequestModel request;
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,11 @@ class MemberInfoCard extends StatelessWidget {
                 radius: 25.r,
                 backgroundImage:
                     request.userImage != null && request.userImage!.isNotEmpty
-                    ? NetworkImage(request.userImage!)
+                    ? NetworkImage(
+                        request.userImage!.startsWith('http')
+                            ? request.userImage!
+                            : "${AppConstants.baseUrl}/${request.userImage!}",
+                      )
                     : null,
                 child: request.userImage == null || request.userImage!.isEmpty
                     ? const Icon(Icons.person)
