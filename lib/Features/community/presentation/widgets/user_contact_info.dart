@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
@@ -6,11 +7,14 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
 // import 'package:motoverse/Features/community/domain/entities/request_entity.dart';
 
 class UserContactInfo extends StatelessWidget {
   final RequestModel request;
-  const UserContactInfo({super.key, required this.request});
+  final OfferModel offer;
+  const UserContactInfo({super.key, required this.request, required this.offer});
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +41,14 @@ class UserContactInfo extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 25.r,
+                    backgroundColor: AppColors.blueLight,
                     backgroundImage:
                         request.userImage != null &&
                             request.userImage!.isNotEmpty
                         ? NetworkImage(
                             request.userImage!.startsWith('http')
                                 ? request.userImage!
-                                : "${AppConstants.baseUrl}/${request.userImage!}",
+                                : "${AppConstants.baseUrl}${request.userImage!}",
                           )
                         : null,
                     child:
@@ -53,7 +58,8 @@ class UserContactInfo extends StatelessWidget {
                   ),
                   CircleAvatar(
                     radius: 8.r,
-                    backgroundColor: Colors.white,
+                    backgroundColor: AppColors.blueLight,
+                    // backgroundColor: Colors.white,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 2.w,
@@ -71,11 +77,12 @@ class UserContactInfo extends StatelessWidget {
               SizedBox(width: 10.w),
 
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     request.userName,
-                    style: TextStyles.cairoBold13.copyWith(
-                      color: AppColors.blueDarkActive,
+                    style: TextStyles.cairoBold14.copyWith(
+                      color: AppColors.blueNormal,
                       height: 2.h,
                     ),
                   ),
@@ -126,6 +133,7 @@ class UserContactInfo extends StatelessWidget {
           ),
           const Divider(height: 20, color: AppColors.blueLight),
 
+          if(offer.status == 'accepted')
           Row(
             children: [
               Expanded(
@@ -149,9 +157,13 @@ class UserContactInfo extends StatelessWidget {
 
               Expanded(
                 child: CustomElevatedButton(
-                  text: 'اتصال',
+                  text: 'دردشة',
                   radius: CustomRadius.card12,
-                  fun: () {},
+                  fun: () {
+                    context.read<NotificationCubit>().enterChat(
+                          requestId: request.id,
+                        );
+                  },
                   height: 45,
                   fontStyle: TextStyles.cairoBold16,
                   prefixIcon: Icon(

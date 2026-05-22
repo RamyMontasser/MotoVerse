@@ -48,7 +48,7 @@ class ProfileTile extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                name[0],
+                name.isNotEmpty ? name[0] : '',
                 style: TextStyles.cairoMedium16.copyWith(
                   color: AppColors.blueDarker,
                 ),

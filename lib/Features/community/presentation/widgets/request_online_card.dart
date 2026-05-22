@@ -33,12 +33,13 @@ class RequestOnlineCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 25.r,
+            backgroundColor: AppColors.blueLight,
             backgroundImage:
                 request.userImage != null && request.userImage!.isNotEmpty
                 ? NetworkImage(
                     request.userImage!.startsWith('http')
                         ? request.userImage!
-                        : "${AppConstants.baseUrl}/${request.userImage!}",
+                        : "${AppConstants.baseUrl}${request.userImage!}",
                   )
                 : null,
             child: request.userImage == null || request.userImage!.isEmpty

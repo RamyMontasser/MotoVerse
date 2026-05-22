@@ -9,7 +9,7 @@
 <key>NSCameraUsageDescription</key>
 <string>نحتاج لفتح الكاميرا لتصوير مشكلة المركبة</string>
 <key>NSMicrophoneUsageDescription</key>
-<string>نحتاج للميكروفون في حالة تسجيل فيديو للمشكلة</string>
+<string>نحتاج إلى الوصول للميكروفون لتتمكن من تسجيل الرسائل الصوتية داخل الشات.</string>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

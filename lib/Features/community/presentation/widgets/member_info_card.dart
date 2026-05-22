@@ -34,12 +34,13 @@ class MemberInfoCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 25.r,
+                backgroundColor: AppColors.blueLight,
                 backgroundImage:
                     request.userImage != null && request.userImage!.isNotEmpty
                     ? NetworkImage(
                         request.userImage!.startsWith('http')
                             ? request.userImage!
-                            : "${AppConstants.baseUrl}/${request.userImage!}",
+                            : "${AppConstants.baseUrl}${request.userImage!}",
                       )
                     : null,
                 child: request.userImage == null || request.userImage!.isEmpty
@@ -48,7 +49,8 @@ class MemberInfoCard extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 8.r,
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.blueLight,
+                // backgroundColor: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
                   child: Icon(

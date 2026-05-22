@@ -58,7 +58,7 @@ class ProblemDescriptionCard extends StatelessWidget {
           SizedBox(height: 10.h),
           Text(
             description,
-            style: TextStyles.cairoRegular11.copyWith(
+            style: TextStyles.cairoMedium12.copyWith(
               color: AppColors.whiteDarkActive,
               height: 1.5.h,
             ),

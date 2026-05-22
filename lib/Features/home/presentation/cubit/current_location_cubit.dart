@@ -33,6 +33,7 @@ class CurrentLocationCubit extends Cubit<CurrentLocationState> {
         emit(CurrentLocationFailure(errMsg: fail.errorMsg));
       },
       (location) async {
+        debugPrint('Current Location: ${location.latitude}, ${location.longitude}');
         lastKnownPosition = location;
         
         var cityResponse = await mapRepo.getCurrentCity(position: location);
@@ -46,6 +47,7 @@ class CurrentLocationCubit extends Cubit<CurrentLocationState> {
 
         if (cityName != null) {
           await homeRepo.updateProfile(city: cityName!);
+          debugPrint('Current city updated to : $cityName');
         }
       }
     );

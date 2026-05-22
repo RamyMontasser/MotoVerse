@@ -1,4 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,7 +14,7 @@ import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat1.dart';
 import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat2.dart';
 import 'package:motoverse/Features/auth/presentation/views/onboarding.dart';
-import 'package:motoverse/Features/chat/presentation/views/chat_page.dart';
+// import 'package:motoverse/Features/chat/presentation/views/chat_page.dart';
 import 'package:motoverse/Features/auth/presentation/views/log_in.dart';
 import 'package:motoverse/Features/auth/presentation/views/otp_forget.dart';
 import 'package:motoverse/Features/auth/presentation/views/otp_page.dart';
@@ -49,15 +49,18 @@ import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/settings/presentation/views/settings_screen.dart';
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
-import 'package:motoverse/firebase_options.dart';
+import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat_body.dart';
+import 'package:motoverse/Features/socket_chat/presentation/cubit/socket_chat_cubit.dart';
+import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
+// import 'package:motoverse/firebase_options.dart';
 import 'package:motoverse/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
 
   await AppPref.init();
@@ -158,7 +161,13 @@ class MyApp extends StatelessWidget {
             'IdentityVarification': (context) => IdentityVarification(),
             'RequestDetails': (context) => RequestDetails(),
             'HelpOffline': (context) => HelpOffline(),
-            'chat': (context) => ChatPage(),
+            // 'chat': (context) => ChatPage(),
+            'SocketChatBody': (context) => BlocProvider(
+                  create: (context) => SocketChatCubit(
+                    chatSocketRepo: getIt<ChatSocketRepository>(),
+                  ),
+                  child: const SocketChatBody(),
+                ),
             'UserRequests': (context) => const UserRequestsScreen(),
             'MyOffersPage': (context) => const MyOffersPage(),
           },

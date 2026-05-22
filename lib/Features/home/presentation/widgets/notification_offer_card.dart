@@ -41,6 +41,7 @@ class NotificationOfferCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 35.r,
+                backgroundColor: AppColors.blueLight,
                 backgroundImage: offerModel.helperImage != null && offerModel.helperImage!.isNotEmpty
                     ? NetworkImage(offerModel.helperImage!)
                     : null,

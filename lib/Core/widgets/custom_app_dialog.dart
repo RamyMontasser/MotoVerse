@@ -55,7 +55,7 @@ class CustomAppDialog extends StatelessWidget {
                       ? CustomElevatedButton(
                           text: btnText!,
                           fun: () {
-                            onTap;
+                            onTap?.call();
                             // Navigator.pushNamedAndRemoveUntil(context, 'main screen', (route) => false);
                           },
                           height: 48,
@@ -69,32 +69,36 @@ class CustomAppDialog extends StatelessWidget {
                 : Row(
                     children: [
                       if (btnText != null && btnText!.isNotEmpty)
-                        CustomElevatedButton(
-                          text: btnText!,
-                          fun: () {
-                            onTap;
-                            // Navigator.pushNamedAndRemoveUntil(context, 'main screen', (route) => false);
-                          },
-                          height: 48,
-                          radius: BorderRadius.circular(12.r),
-                          withBorder: false,
-                          backgColor: AppColors.blueNormal,
-                          foregColor: AppColors.whiteLight,
-                          fontStyle: TextStyles.cairoBold16,
+                        Expanded(
+                          child: CustomElevatedButton(
+                            text: btnText!,
+                            fun: () {
+                              onTap?.call();
+                              // Navigator.pushNamedAndRemoveUntil(context, 'main screen', (route) => false);
+                            },
+                            height: 48,
+                            radius: BorderRadius.circular(12.r),
+                            withBorder: false,
+                            backgColor: AppColors.blueNormal,
+                            foregColor: AppColors.whiteLight,
+                            fontStyle: TextStyles.cairoBold16,
+                          ),
                         ),
-                      SizedBox(height: 8.h),
+                      SizedBox(width: 8.w),
                       if (btnText2 != null && btnText2!.isNotEmpty)
-                        CustomElevatedButton(
-                          text: btnText2!,
-                          fun: () {
-                            onTap2;
-                          },
-                          height: 48,
-                          radius: BorderRadius.circular(12.r),
-                          withBorder: false,
-                          backgColor: AppColors.blueNormal,
-                          foregColor: AppColors.whiteLight,
-                          fontStyle: TextStyles.cairoBold16,
+                        Expanded(
+                          child: CustomElevatedButton(
+                            text: btnText2!,
+                            fun: () {
+                              onTap2?.call();
+                            },
+                            height: 48,
+                            radius: BorderRadius.circular(12.r),
+                            withBorder: false,
+                            backgColor: AppColors.blueNormal,
+                            foregColor: AppColors.whiteLight,
+                            fontStyle: TextStyles.cairoBold16,
+                          ),
                         ),
                     ],
                   ),

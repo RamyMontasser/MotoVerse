@@ -4,7 +4,7 @@ import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
-import 'package:motoverse/Core/widgets/custom_app_dialog.dart';
+// import 'package:motoverse/Core/widgets/custom_app_dialog.dart';
 // import 'package:motoverse/Core/widgets/custom_dialog.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -35,6 +35,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           CircleAvatar(
                   radius: 20.r,
+                  backgroundColor: AppColors.blueLight,
                   backgroundImage: avatarUrl != null && avatarUrl!.isNotEmpty
                     ? NetworkImage(
                     avatarUrl!.startsWith('http')
@@ -93,37 +94,14 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           itemBuilder: (BuildContext context) {
           return [
             PopupMenuItem(
-              onTap: () => showDialog(
-                context: context, 
-                builder: (context) => CustomAppDialog(
-                title: 'انهاء المحادثة',
-                desc: isHelper? 'سيتم حذف عرض المساعدة الخاص بك':'سيتم حذف المحادثة بمجرد انهائها',
-                btnText: isHelper? 'حذف عرض المساعدة': 'حذف المحادثة',
-                onTap: (){
-                  onDeleteChat();
-                  Navigator.pop(context);
-                  CustomAppDialog(
-                    title: 'تم حذف المحادثة بنجاح',
-                    desc: 'هل تم حل مشكلتك؟',
-                    btnText: 'نعم ',
-                    btnText2: 'لا',
-                    onTap: (){
-                      Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            'main screen',
-                            (route) => false,
-                          );
-                    }, onTap2: (){
-                      Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            'main screen',
-                            (route) => false,
-                          );
-                    },
-                  );
-                },
-              )),
-              child: Text('Delete Chat', style: TextStyles.cairoBold16.copyWith(color: AppColors.redNormal),)),
+              onTap: () {
+                onDeleteChat();
+              },
+              child: Text(
+                isHelper ? 'إنهاء عرض المساعدة' : 'إنهاء المحادثة',
+                style: TextStyles.cairoBold16.copyWith(color: AppColors.redNormal),
+              ),
+            ),
           ];
         } ), 
         // IconButton(

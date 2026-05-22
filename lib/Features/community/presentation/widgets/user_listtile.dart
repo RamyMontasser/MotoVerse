@@ -6,9 +6,8 @@ import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 
 class UserListtile extends StatelessWidget {
-  const UserListtile({super.key, required this.request, });
+  const UserListtile({super.key, required this.request});
   final RequestModel request;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +17,13 @@ class UserListtile extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 25.r,
+          backgroundColor: AppColors.blueLight,
           backgroundImage:
               request.userImage != null && request.userImage!.isNotEmpty
               ? NetworkImage(
                   request.userImage!.startsWith('http')
                       ? request.userImage!
-                      : "${AppConstants.baseUrl}/${request.userImage!}",
+                      : "${AppConstants.baseUrl}${request.userImage!}",
                 )
               : null,
           child: request.userImage == null || request.userImage!.isEmpty

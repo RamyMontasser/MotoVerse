@@ -37,3 +37,17 @@ class DeleteRequestFailure extends NotificationState {
 
   DeleteRequestFailure(this.errMessage);
 }
+
+class CreateChatLoading extends NotificationState {}
+
+class CreateChatSuccess extends NotificationState {
+  final ConversationModel chat;
+
+  CreateChatSuccess(this.chat);
+}
+
+class CreateChatFailure extends NotificationState {
+  final String errMessage;
+
+  CreateChatFailure(this.errMessage);
+}

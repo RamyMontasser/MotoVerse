@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
@@ -12,10 +13,8 @@ import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.d
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
-import 'package:motoverse/Features/home/presentation/views/widgets/notification_offer_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/notification_offer_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:motoverse/Core/functions/custom_snackbar.dart';
-
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -23,14 +22,13 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)?.settings.arguments;
-    final List<RequestModel>? requests =
-        arguments is List<RequestModel> ? arguments : null;
+    final List<RequestModel>? requests = arguments is List<RequestModel>
+        ? arguments
+        : null;
 
     if (requests == null || requests.isEmpty) {
       return const Scaffold(
-        body: Center(
-          child: Text('حدث خطأ في تحميل البيانات'),
-        ),
+        body: Center(child: Text('حدث خطأ في تحميل البيانات')),
       );
     }
 
@@ -49,7 +47,9 @@ class NotificationPage extends StatelessWidget {
               msg: 'تم تحديث حالة العرض بنجاح',
               isDone: true,
             );
-            context.read<NotificationCubit>().getOffers(requestId: requests.first.id);
+            context.read<NotificationCubit>().getOffers(
+              requestId: requests.first.id,
+            );
           } else if (state is UpdateOfferStatusFailure) {
             customSnackBar(
               context: context,
@@ -72,6 +72,45 @@ class NotificationPage extends StatelessWidget {
               msg: state.errMessage,
               isDone: false,
             );
+          } else if (state is CreateChatSuccess) {
+            customSnackBar(
+              context: context,
+              msg: 'تم إنشاء المحادثة بنجاح',
+              isDone: true,
+            );
+            
+
+            final offers = context.read<NotificationCubit>().offers;
+            final acceptedOffer = offers.any((o) => o.status == 'accepted')
+                ? offers.firstWhere((o) => o.status == 'accepted')
+                : null;
+
+            if (acceptedOffer != null) {
+              Navigator.pushNamed(
+                context,
+                'SocketChatBody',
+                arguments: {
+                  'otherUserId': state.chat.offerUser.id ,
+                  // acceptedOffer.helperId,
+                  'otherUserName': state.chat.offerUser.name ,
+                  // acceptedOffer.helperName,
+                  'otherUserAvatar': state.chat.offerUser.image
+                  // acceptedOffer.helperImage,
+                  ,
+                  'isHelper': false,
+                  'requestId': state.chat.helpRequest,
+                  //  acceptedOffer.request,
+                  'offerId': acceptedOffer.id,
+                  'chatId': state.chat.id,
+                },
+              );
+            }
+          } else if (state is CreateChatFailure) {
+            customSnackBar(
+              context: context,
+              msg: state.errMessage,
+              isDone: false,
+            );
           }
         },
         builder: (newContext, state) {
@@ -85,7 +124,11 @@ class NotificationPage extends StatelessWidget {
                     text: 'عرض تفاصيل الطلب',
                     radius: CustomRadius.card12,
                     fun: () {
-                       Navigator.pushNamed(context, 'RequestDetails', arguments: requests.first);
+                      Navigator.pushNamed(
+                        newContext,
+                        'RequestDetails',
+                        arguments: requests.first,
+                      );
                     },
                     backgColor: AppColors.blueNormal,
                     foregColor: AppColors.whiteLight,
@@ -97,7 +140,9 @@ class NotificationPage extends StatelessWidget {
                     text: 'الغاء الطلب',
                     radius: CustomRadius.card12,
                     fun: () {
-                      newContext.read<NotificationCubit>().deleteRequest(requestId: requests.first.id);
+                      newContext.read<NotificationCubit>().deleteRequest(
+                        requestId: requests.first.id,
+                      );
                     },
                     backgColor: AppColors.redLightActive,
                     foregColor: AppColors.redDark,
@@ -117,10 +162,17 @@ class NotificationPage extends StatelessWidget {
                     _buildLoadingHeader(newContext, requests),
                     SizedBox(height: 20.h),
                     BlocBuilder<NotificationCubit, NotificationState>(
+                      buildWhen: (previous, current) =>
+                          current is NotificationLoading ||
+                          current is NotificationSuccess ||
+                          current is NotificationFailure,
                       builder: (context, state) {
                         if (state is NotificationSuccess) {
-                          final acceptedOffer = state.offers.any((o) => o.status == 'accepted')
-                              ? state.offers.firstWhere((o) => o.status == 'accepted')
+                          final acceptedOffer =
+                              state.offers.any((o) => o.status == 'accepted')
+                              ? state.offers.firstWhere(
+                                  (o) => o.status == 'accepted',
+                                )
                               : null;
 
                           if (acceptedOffer != null) {
@@ -140,16 +192,56 @@ class NotificationPage extends StatelessWidget {
                                   text: 'الذهاب للدردشة',
                                   radius: CustomRadius.card12,
                                   fun: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      'chat',
-                                      arguments: {
-                                        'otherUserId': acceptedOffer.helperId,
-                                        'otherUserName': acceptedOffer.helperName,
-                                        'otherUserAvatar': acceptedOffer.helperImage,
-                                        'isHelper': false,
-                                      },
-                                    );
+                                    final cubitState = context
+                                        .read<NotificationCubit>()
+                                        .state;
+
+                                    if (cubitState is CreateChatSuccess) {
+                                      Navigator.pushNamed(
+                                        context,
+                                        'SocketChatBody',
+                                        arguments: {
+                                          'otherUserId': acceptedOffer.helperId,
+                                          'otherUserName':
+                                              acceptedOffer.helperName,
+                                          'otherUserAvatar':
+                                              acceptedOffer.helperImage,
+                                          'isHelper': false,
+                                          'requestId': acceptedOffer.request,
+                                          'offerId': acceptedOffer.id,
+                                          'chatId': cubitState.chat.id,
+                                        },
+                                      );
+                                    } else {
+                                      context
+                                          .read<NotificationCubit>()
+                                          .enterChat(
+                                            requestId: requests.first.id,
+                                          );
+                                    }
+
+                                    // context
+                                    //     .read<NotificationCubit>()
+                                    //     .createChat(
+                                    //       requestUserId: requests.first.userId,
+                                    //       offerUserId: acceptedOffer.helperId,
+                                    //       requestId: requests.first.id,
+                                    //     );
+                                    // Navigator.pushNamed(
+                                    //   context,
+                                    //   'SocketChatBody',
+                                    //   arguments: {
+                                    //     'otherUserId': acceptedOffer.helperId,
+                                    //     'otherUserName':
+                                    //         acceptedOffer.helperName,
+                                    //     'otherUserAvatar':
+                                    //         acceptedOffer.helperImage,
+                                    //     'isHelper': false,
+                                    //     'requestId': acceptedOffer.request,
+                                    //     'offerId': acceptedOffer.id,
+                                    //     'chatId': state.chat.id,
+                                    //   },
+                                    // );
                                   },
                                   backgColor: AppColors.greenNormal,
                                   foregColor: AppColors.whiteLight,
@@ -170,14 +262,13 @@ class NotificationPage extends StatelessWidget {
                           );
                         } else if (state is NotificationFailure) {
                           return Center(child: Text(state.errMessage));
-                        } else {
-                          return _buildContent(
-                            context,
-                            _getDummyOffers(),
-                            true,
-                            requests,
-                          );
                         }
+                        return _buildContent(
+                          context,
+                          _getDummyOffers(),
+                          true,
+                          requests,
+                        );
                       },
                     ),
                     SizedBox(height: 100.h),
@@ -239,7 +330,7 @@ class NotificationPage extends StatelessWidget {
         distance: '1.5',
         estimatedMinutes: '10',
         status: 'pending',
-        createdAt: DateTime.now().toIso8601String(), 
+        createdAt: DateTime.now().toIso8601String(),
         helperId: 0,
         helperVerified: true,
       ),

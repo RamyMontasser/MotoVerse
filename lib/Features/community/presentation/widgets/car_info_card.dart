@@ -1,11 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/Features/community/data/models/problem_type_model.dart';
 
 class CarInfoCard extends StatelessWidget {
-  const CarInfoCard({super.key});
+  final String problemType;
+   CarInfoCard({super.key, required this.problemType});
+
+  final List<ProblemTypeModel> _problemTypes = [
+    ProblemTypeModel(
+      title: "بطارية",
+      titleEnglish: "battery",
+      iconPath: 'assets/icons/community/battery.svg',
+    ),
+    ProblemTypeModel(
+      title: "محرك",
+      titleEnglish: "engine",
+      iconPath: 'assets/icons/community/motor.svg',
+    ),
+    ProblemTypeModel(
+      title: "الإطارات",
+      titleEnglish: "tires",
+      iconPath: 'assets/icons/community/wheels.svg',
+    ),
+    ProblemTypeModel(
+      title: "غير ذلك",
+      titleEnglish: "other",
+      iconPath: 'assets/icons/community/other.svg',
+    ),
+  ];
+
+  String getProblemTitleInArabic(String englishTypeFromBackend) {
+  try {
+    final matchedProblem = _problemTypes.firstWhere(
+      (problem) => problem.titleEnglish == englishTypeFromBackend,
+    );
+    
+    return matchedProblem.title;
+  } catch (_) {
+    return "غير ذلك"; 
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +125,8 @@ class CarInfoCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'عطل في المحرك',
+                                
+                                'عطل في ${isEN()? problemType: getProblemTitleInArabic(problemType)}',
                                 style: TextStyles.cairoBold16.copyWith(
                                   color: AppColors.blueDarkActive,
                                 ),
@@ -101,4 +140,7 @@ class CarInfoCard extends StatelessWidget {
                 ),
               );
   }
+bool isEN() {
+  return Intl.getCurrentLocale() == 'en';
+}
 }

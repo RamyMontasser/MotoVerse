@@ -11,11 +11,11 @@ import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
-import 'package:motoverse/Features/home/presentation/views/widgets/greating_card.dart';
-import 'package:motoverse/Features/home/presentation/views/widgets/history_listtile.dart';
-import 'package:motoverse/Features/home/presentation/views/widgets/my_offer_card.dart';
-import 'package:motoverse/Features/home/presentation/views/widgets/request_status_card.dart';
-import 'package:motoverse/Features/home/presentation/views/widgets/tool_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/greating_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/history_listtile.dart';
+import 'package:motoverse/Features/home/presentation/widgets/my_offer_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/request_status_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/tool_card.dart';
 import 'package:motoverse/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> {
                             .where((request) => request.status == 'accepted')
                             .toList()
                             .isNotEmpty)) {
-                  Padding(
+                  return Padding(
                     padding: EdgeInsets.only(top: 15.h),
                     child: RequestStatusCard(
                       requests: state.requests,

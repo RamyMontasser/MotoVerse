@@ -6,7 +6,7 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Features/history/presentation/widgets/maintenance_card.dart';
-import 'package:motoverse/Features/home/presentation/views/widgets/tool_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/tool_card.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';

@@ -18,6 +18,10 @@ class UserDataModel extends HiveObject {
   final bool isProfileComplete;
   @HiveField(6)
   final String? city;
+  @HiveField(7)
+  final bool isVerified;
+  @HiveField(8)
+  final String image;
 
   UserDataModel({
     required this.id,
@@ -26,6 +30,8 @@ class UserDataModel extends HiveObject {
     required this.email,
     required this.isPhoneVerified,
     required this.isProfileComplete,
+    required this.isVerified,
+    required this.image,
     this.city,
   });
 
@@ -37,7 +43,9 @@ class UserDataModel extends HiveObject {
       email: json['email'],
       isPhoneVerified: json['is_phone_verified'],
       isProfileComplete: json['is_profile_complete'],
-      city: json['city'],
+      city: json['city']??"",
+      isVerified: json['is_verified'],
+      image: json['image']??"",
     );
   }
 
@@ -50,6 +58,8 @@ class UserDataModel extends HiveObject {
       'is_phone_verified': isPhoneVerified,
       'is_profile_complete': isProfileComplete,
       'city': city,
+      'is_verified': isVerified,
+      'image': image,
     };
   }
 }

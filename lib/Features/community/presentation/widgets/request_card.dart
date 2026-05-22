@@ -41,17 +41,16 @@ class RequestCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 25.r,
+                backgroundColor: AppColors.blueLight,
                 backgroundImage:
-                    request.userImage != null &&
-                        request.userImage!.isNotEmpty
+                    request.userImage != null && request.userImage!.isNotEmpty
                     ? NetworkImage(
                         request.userImage!.startsWith('http')
                             ? request.userImage!
-                            : "${AppConstants.baseUrl}/${request.userImage!}",
+                            : "${AppConstants.baseUrl}${request.userImage!}",
                       )
                     : null,
-                child: request.userImage == null ||
-                        request.userImage!.isEmpty
+                child: request.userImage == null || request.userImage!.isEmpty
                     ? const Icon(Icons.person)
                     : null,
               ),
@@ -67,7 +66,9 @@ class RequestCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    request.distance != null? "${request.city}, ${request.distance} km away ": request.city,
+                    request.distance != null
+                        ? "${request.city}, ${request.distance} km away "
+                        : request.city,
                     style: TextStyles.cairoRegular11.copyWith(
                       color: AppColors.whiteDarkActive,
                     ),
@@ -106,10 +107,9 @@ class RequestCard extends StatelessWidget {
             text: "تفاصيل المشكلة",
             radius: CustomRadius.r1,
             fun: () {
-              Navigator.of(context).pushNamed(
-                'RequestDetails',
-                arguments: request,
-              );
+              Navigator.of(
+                context,
+              ).pushNamed('RequestDetails', arguments: request);
             },
             height: 41,
             fontStyle: TextStyles.cairoBold12,

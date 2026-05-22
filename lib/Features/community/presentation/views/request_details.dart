@@ -240,34 +240,45 @@ class RequestDetails extends StatelessWidget {
                     },
                   ),
                 )
-              : BlocProvider(
-                  create: (context) => OffersCubit(communityRepo: getIt<CommunityRepo>()),
-                  child: Builder(
-                    builder: (newContext) {
-                      return BottomSheetButton(
-                        text: 'تقديم المساعدة',
-                        bgColor: AppColors.blueNormal,
-                        fun: () {
-                          var offerCubit = BlocProvider.of<OffersCubit>(
-                            newContext,
-                          );
-                          if (request.requestType == 'online') {
-                            debugPrint(request.id.toString());
-                          offerCubit.makeOffer(requestId: request.id);
-                           context.read<NavigationProvider>().changeIndex(0);
-                           Navigator.of(
-                            newContext,
-                          ).pushNamed('main screen');
-                          }
-
-                    //       else{ Navigator.of(
-                    //         newContext,
-                    //       ).pushNamed('IdentityVarification');}
-                        },
-                      );
-                    },
-                  ),
-                ),
+              :  BlocProvider(
+    create: (context) => OffersCubit(communityRepo: getIt<CommunityRepo>()),
+    child: BlocConsumer<OffersCubit, OffersState>(
+      listener: (context, state) {
+        if (state is MakeOfferSuccess) {
+          customSnackBar(
+            context: context,
+            msg: 'تم تقديم عرض المساعدة بنجاح',
+            isDone: true,
+          );
+          context.read<NavigationProvider>().changeIndex(0);
+          Navigator.of(context).pushNamed('main screen');
+        } 
+        else if (state is MakeOfferFailure) {
+          customSnackBar(
+            context: context,
+            msg: state.errorMsg, 
+            isDone: false,
+          );
+        }
+      },
+      builder: (context, state) {
+        return BottomSheetButton(
+          text: state is MakeOfferLoading ? 'جاري إرسال العرض...' : 'تقديم المساعدة',
+          bgColor: state is MakeOfferLoading ? AppColors.whiteDarker : AppColors.blueNormal,
+          fun: state is MakeOfferLoading 
+              ? () {} 
+              : () {
+                  if (request.requestType == 'online') {
+                    debugPrint(request.id.toString());
+                    context.read<OffersCubit>().makeOffer(requestId: request.id);
+                  } else {
+                    // Navigator.of(context).pushNamed('IdentityVarification');
+                  }
+                },
+        );
+      },
+    ),
+  ),
         ],
       ),
     );
