@@ -160,8 +160,26 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-  Future<void> logOut() async {
-    await secureStorage.deleteTokens();
+  Future<Either<Failure, void>> logOut() async {
+    try {
+      final refreshToken = await secureStorage.getRefreshToken();
+      if (refreshToken != null) {
+        await networkService.addData(
+          endPoint: '/accounts/auth/logout/',
+          data: {'refresh': refreshToken},
+          // requiresAuth: false,
+        );
+      }
+      return right(null);
+    } on DioException catch (e) {
+      debugPrint("Logout API Error: ${e.message}");
+      return left(ApiFailure.fromDioException(e));
+    } catch (e) {
+      debugPrint("Logout Error: ${e.toString()}");
+      return left(ApiFailure(errorMsg: e.toString()));
+    } finally {
+      await secureStorage.deleteTokens();
+    }
   }
 
   @override

@@ -34,7 +34,6 @@ class TextMessageModel {
     };
   }
 
-  /// Creates a text message model from an incoming JSON map (socket or REST).
   factory TextMessageModel.fromJson(
     Map<String, dynamic> json,
     String currentUserId,
@@ -42,16 +41,13 @@ class TextMessageModel {
     final senderIdRaw = json['sender_id'] ?? json['sender'];
     final senderIdStr = senderIdRaw != null ? senderIdRaw.toString() : '';
 
-    // قراءة نوع الرسالة (نص، صورة، صوت) والمستلم افتراضياً 'text'
     final messageTypeStr = (json['message_type'] ?? json['type'] ?? 'text')
         .toString();
 
-    // 💡 التحويل الآمن والدقيق للوقت والتاريخ القادم من الـ Django backend
     final timestampStr = json['timestamp']?.toString() ?? '';
     DateTime parsedTime;
 
     if (timestampStr.isNotEmpty) {
-      // إذا كان التنسيق يحتوي على مسافة تفصل التاريخ عن الوقت، نستبدلها بـ T ليفهمها الفلاتر فوراً
       final formattedTimestamp = timestampStr.contains(' ')
           ? timestampStr.replaceFirst(' ', 'T')
           : timestampStr;
@@ -67,13 +63,12 @@ class TextMessageModel {
       messageId: (json['message_id'] ?? json['id'] ?? '').toString(),
       type: messageTypeStr,
       message: (json['message'] ?? json['content'] ?? '')
-          .toString(), // قراءة نص الرسالة من السيرفر بنجاح
+          .toString(), 
       imageUrl: _parseStringOrMapUrl(json['image']),
       audioUrl: _parseStringOrMapUrl(json['audio']),
       senderId: senderIdStr,
       senderName: (json['sender_name'] ?? '').toString(),
       timestamp: parsedTime,
-      // المقارنة تتم الآن بنجاح لمعرفة هل الرسالة مرسلة من المستخدم الحالي أم الطرف الآخر
       isMe: senderIdStr.isNotEmpty && senderIdStr == currentUserId,
       isSeen:
           isSeenRaw == true || isSeenRaw?.toString().toLowerCase() == 'true',

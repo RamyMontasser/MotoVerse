@@ -106,6 +106,7 @@ class SocketChatCubit extends Cubit<SocketChatState> {
     required String fileType, // 'image' or 'audio'
   }) async {
     emit(SocketSendMessageLoading());
+    debugPrint("---------------- Sending media message: $filePath, type: $fileType ----------------");
 
     final fileMessage = FileMessageModel(
       file: XFile(filePath),
@@ -127,7 +128,6 @@ class SocketChatCubit extends Cubit<SocketChatState> {
       (fileUrl) async {
         debugPrint("---------------- fileUrl: $fileUrl ----------------");
         final sendResult = await chatSocketRepo.sendMessage(
-          // text: fileType == 'image' ? '[صورة]' : '[صوت]',
           text: '',
           type: fileType,
           imageUrl: fileType == 'image' ? fileUrl : null,

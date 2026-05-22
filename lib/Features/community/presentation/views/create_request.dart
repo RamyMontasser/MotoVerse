@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:motoverse/Core/providers/navigation_provider.dart';
+import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/Core/widgets/custom_app_dialog.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Core/widgets/custom_textfeild_with_border.dart';
-import 'package:motoverse/Features/community/data/models/problem_type_model.dart';
 import 'package:motoverse/Features/community/data/models/create_request_model.dart';
+import 'package:motoverse/Features/community/data/models/problem_type_model.dart';
+import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
+import 'package:motoverse/Features/community/presentation/cubit/create_request_cubit.dart';
 import 'package:motoverse/Features/community/presentation/widgets/images_list.dart';
 import 'package:motoverse/Features/community/presentation/widgets/map_card.dart';
 import 'package:motoverse/Features/community/presentation/widgets/problem_types_grid.dart';
-import 'package:motoverse/Core/services/getit.dart';
-import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
-import 'package:motoverse/Features/community/presentation/cubit/create_request_cubit.dart';
-import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 import 'package:motoverse/Features/history/presentation/widgets/bottom_sheet_button.dart';
+import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 
 class CreateRequest extends StatefulWidget {
   const CreateRequest({super.key});
@@ -190,11 +192,27 @@ class _CreateRequestState extends State<CreateRequest> {
                 BlocConsumer<CreateRequestCubit, CreateRequestState>(
                   listener: (context, state) {
                     if (state is CreateRequestSuccess) {
-                      Navigator.of(context).pushNamed('RequestDone');
-                    } else if (state is CreateRequestFail) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.errorMessage)),
-                      );
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                      CustomAppDialog(
+                        title: 'تم ارسال الطلب بنجاح',
+                        desc: 'تم استلام طلبك بنجاح\nوسيتم عرض في سجل الطلبات',
+                        icon: Icon(
+                          Icons.check_circle_outline,
+                          color: AppColors.greenNormal,
+                        ),
+                        iconBgColor: AppColors.greenLight,
+                      )
+                        );
+                        Duration(seconds: 2);
+                      context.read<NavigationProvider>().changeIndex(0);
+                                        Navigator.of(context).pushNamedAndRemoveUntil('main screen', (route) => false);
+                      //   Navigator.of(context).pushNamed('RequestDone');
+                      // } else if (state is CreateRequestFail) {
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(content: Text(state.errorMessage)),
+                      //   );
                     }
                   },
                   builder: (context, state) {

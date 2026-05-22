@@ -12,6 +12,10 @@ class UserCubitCubit extends Cubit<UserCubitState> {
   UserCubitCubit({required this.homeRepo}) : super(UserCubitInitial());
   final HomeRepo homeRepo;
 
+  void reset() {
+    emit(UserCubitInitial());
+  }
+
   // Future<void> getUserToken() async {
   //   emit(GetUserTokenLoading());
   //   final result = await homeRepo.getUserToken();
@@ -37,8 +41,11 @@ class UserCubitCubit extends Cubit<UserCubitState> {
       },
       (user) async {
         debugPrint("user name from cubit is ${user.name}");
+
         var box = Hive.box<UserDataModel>('user_box');
         await box.put('user', user);
+        var checkUser = box.get('user');
+        debugPrint("🔍 Check Hive immediately: ${checkUser?.name}");
         emit(GetUserInfoSuccess(user: user));
       },
     );

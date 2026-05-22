@@ -13,7 +13,7 @@ class CustomAppDialog extends StatelessWidget {
     required this.title,
     required this.desc,
     this.btnText,
-    this.btnText2,
+    this.btnText2, this.icon, this.iconBgColor,
   });
 
   final VoidCallback? onTap;
@@ -22,6 +22,8 @@ class CustomAppDialog extends StatelessWidget {
   final String desc;
   final String? btnText;
   final String? btnText2;
+  final Icon? icon;
+  final Color? iconBgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,14 @@ class CustomAppDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if(icon != null)...[
+              CircleAvatar(
+                backgroundColor: AppColors.greenLight,
+                radius: 30.r,
+                child: icon,
+              ),
+              // icon!,
+              SizedBox(height: 12.h,),],
             Text(
               title,
               style: TextStyles.cairoBold18.copyWith(

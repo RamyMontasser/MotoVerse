@@ -34,7 +34,7 @@ abstract class AuthRepo {
     required String password,
   });
 
-  Future<void> logOut();
+  Future<Either<Failure, void>> logOut();
 
   Future<Either<Failure, dynamic>> deleteAccount();
 }
