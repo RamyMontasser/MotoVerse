@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -175,6 +176,21 @@ class SocketChatCubit extends Cubit<SocketChatState> {
     result.fold(
       (failure) => emit(SocketCloseChatError(errorMsg: failure.errorMsg)),
       (_) => emit(SocketCloseChatSuccess()),
+    );
+  }
+
+  Future<void> completeRequest({required String requestId}) async {
+    emit(SocketRequestCompleteLoading());
+    final result = await chatSocketRepo.completeRequest(requestId: requestId);
+    return result.fold(
+      (failure) {
+        debugPrint('Failed to complete request: ${failure.errorMsg}');
+        emit(SocketRequestCompleteError(errorMsg: failure.errorMsg));
+      },
+      (_) {
+        debugPrint('Request completed successfully.');
+        emit(SocketRequestCompleteSuccess());
+      },
     );
   }
 

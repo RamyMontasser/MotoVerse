@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/errors/failure.dart';
 import 'package:motoverse/Core/services/network_service.dart';
 import 'package:motoverse/Features/home/data/models/user_model.dart';
-import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
 import 'package:motoverse/Features/socket_chat/data/models/file_message_model.dart';
+import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
 import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
 import 'package:motoverse/Features/socket_chat/services/socket_service.dart';
 
@@ -217,6 +219,23 @@ class ChatSocketRepositoryImpl implements ChatSocketRepository {
         'solved': solved,
       });
       return right(null);
+    } catch (e) {
+      return left(ServerFailure(errorMsg: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> completeRequest({
+    required String requestId,
+  }) async {
+    try {
+      await networkService.addData(
+        endPoint: '${AppConstants.communityRequests}$requestId/complete/',
+        data: {},
+      );
+      return right(null);
+    } on DioException catch (e) {
+      return left(ApiFailure.fromDioException(e));
     } catch (e) {
       return left(ServerFailure(errorMsg: e.toString()));
     }

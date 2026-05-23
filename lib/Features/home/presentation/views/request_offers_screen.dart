@@ -16,8 +16,8 @@ import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.da
 import 'package:motoverse/Features/home/presentation/widgets/notification_offer_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class NotificationPage extends StatelessWidget {
-  const NotificationPage({super.key});
+class RequestOffersScreen extends StatelessWidget {
+  const RequestOffersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,6 @@ class NotificationPage extends StatelessWidget {
               msg: 'تم إنشاء المحادثة بنجاح',
               isDone: true,
             );
-            
 
             final offers = context.read<NotificationCubit>().offers;
             final acceptedOffer = offers.any((o) => o.status == 'accepted')
@@ -90,17 +89,17 @@ class NotificationPage extends StatelessWidget {
                 context,
                 'SocketChatBody',
                 arguments: {
-                  'otherUserId': state.chat.offerUser.id ,
+                  'otherUserId': state.chat.offerUser.id,
                   // acceptedOffer.helperId,
-                  'otherUserName': state.chat.offerUser.name ,
+                  'otherUserName': state.chat.offerUser.name,
                   // acceptedOffer.helperName,
-                  'otherUserAvatar': state.chat.offerUser.image
+                  'otherUserAvatar': state.chat.offerUser.image,
                   // acceptedOffer.helperImage,
-                  ,
                   'isHelper': false,
                   'requestId': state.chat.helpRequest,
                   //  acceptedOffer.request,
                   'offerId': acceptedOffer.id,
+                  'averageRating': acceptedOffer.averageRating,
                   'chatId': state.chat.id,
                 },
               );
@@ -209,6 +208,8 @@ class NotificationPage extends StatelessWidget {
                                           'isHelper': false,
                                           'requestId': acceptedOffer.request,
                                           'offerId': acceptedOffer.id,
+                                          'averageRating':
+                                              acceptedOffer.averageRating,
                                           'chatId': cubitState.chat.id,
                                         },
                                       );
@@ -328,6 +329,7 @@ class NotificationPage extends StatelessWidget {
         helperName: 'محمد أحمد',
         helperImage: '',
         distance: '1.5',
+        averageRating: '4.5',
         estimatedMinutes: '10',
         status: 'pending',
         createdAt: DateTime.now().toIso8601String(),

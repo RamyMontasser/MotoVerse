@@ -8,13 +8,12 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
+import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/widgets/car_info_card.dart';
 import 'package:motoverse/Features/community/presentation/widgets/request_location_card.dart';
 import 'package:motoverse/Features/community/presentation/widgets/user_contact_info.dart';
-
-import 'package:motoverse/Features/community/data/models/request_model.dart';
-import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
 
@@ -25,7 +24,7 @@ class HelpOffline extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments as List;
     final RequestModel request = args[0];
-    final OfferModel offer=args[1];
+    final OfferModel offer = args[1];
     // final String status = args[1];
     // final int offerId = args[2];
 
@@ -85,9 +84,7 @@ class HelpOffline extends StatelessWidget {
               context: context,
               barrierDismissible: false,
               builder: (context) => const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.blueNormal,
-                ),
+                child: CircularProgressIndicator(color: AppColors.blueNormal),
               ),
             );
           } else if (state is CreateChatSuccess) {
@@ -97,11 +94,12 @@ class HelpOffline extends StatelessWidget {
               'SocketChatBody',
               arguments: {
                 'otherUserId': state.chat.requestUser.id,
-                'otherUserName':state.chat.requestUser.name,
+                'otherUserName': state.chat.requestUser.name,
                 'otherUserAvatar': state.chat.requestUser.image,
                 'isHelper': true,
                 'requestId': state.chat.id,
                 'offerId': offer.id,
+                'averageRating': offer.averageRating,
                 'chatId': state.chat.id,
               },
             );
@@ -122,7 +120,10 @@ class HelpOffline extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 4.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30.w,
+                        vertical: 4.h,
+                      ),
                       decoration: BoxDecoration(
                         color: request.requestType == 'offline'
                             ? AppColors.blueLight
@@ -158,14 +159,21 @@ class HelpOffline extends StatelessWidget {
                     SizedBox(height: 20.h),
 
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 16.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.blueGrey,
                         borderRadius: CustomRadius.r1,
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.lock, size: 16.sp, color: AppColors.blueNormal),
+                          Icon(
+                            Icons.lock,
+                            size: 16.sp,
+                            color: AppColors.blueNormal,
+                          ),
                           SizedBox(width: 8.w),
                           Text(
                             'جميع تفاصيل العميل والبيانات الشخصية محمية ومؤمنة .',
@@ -185,7 +193,9 @@ class HelpOffline extends StatelessWidget {
                       fun: () {
                         if (offer.status == 'pending') {
                           debugPrint(offer.id.toString());
-                          context.read<MyOffersCubit>().deleteOffer(offerId: offer.id);
+                          context.read<MyOffersCubit>().deleteOffer(
+                            offerId: offer.id,
+                          );
                           Navigator.pop(context);
                         }
                       },

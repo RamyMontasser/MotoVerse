@@ -4,6 +4,7 @@ class OfferModel {
   final int helperId;
   final String helperName;
   final bool helperVerified;
+  final String averageRating;
   final String? helperImage;
   final String? distance;
   final String? estimatedMinutes;
@@ -14,11 +15,12 @@ class OfferModel {
     required this.id,
     required this.request,
     required this.helperName,
-     this.helperImage,
-     this.distance,
-     this.estimatedMinutes,
+    required this.averageRating,
+    this.helperImage,
+    this.distance,
+    this.estimatedMinutes,
     required this.status,
-    required this.createdAt, 
+    required this.createdAt,
     required this.helperId,
     required this.helperVerified,
   });
@@ -31,6 +33,7 @@ class OfferModel {
       helperImage: json['helper_image'] as String?,
       distance: json['distance']?.toString(),
       estimatedMinutes: json['estimated_minutes']?.toString(),
+      averageRating: (json['average_rating'] ?? '').toString(),
       status: json['status'] as String? ?? '',
       createdAt: json['created_at'] as String? ?? '',
       helperId: json['helper_id'] as int? ?? 0,
@@ -45,6 +48,7 @@ class OfferModel {
       'helper_id': helperId,
       'helper_name': helperName,
       'helper_verified': helperVerified,
+      'average_rating': averageRating,
       'helper_image': helperImage,
       'distance': distance,
       'estimated_minutes': estimatedMinutes,

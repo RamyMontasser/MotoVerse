@@ -34,74 +34,79 @@ class RequestStatusCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child:Container(
-              width: 48.w,
-              height: 48.h,
-              decoration: BoxDecoration(
-                color: AppColors.orangeLight,
-                shape: BoxShape.circle,
+              child: Container(
+                width: 48.w,
+                height: 48.h,
+                decoration: BoxDecoration(
+                  color: AppColors.orangeLight,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.engineering_outlined,
+                  color: AppColors.orangeNormal,
+                  size: 26.sp,
+                ),
               ),
-              child: Icon(
-                Icons.engineering_outlined,
-                color: AppColors.orangeNormal,
-                size: 26.sp,
-              ),
-            )),
-        
+            ),
+
             SizedBox(width: 12.w),
-        
+
             // Middle: Text Info
             Expanded(
               flex: 4,
               // child: Column(
               //   crossAxisAlignment: CrossAxisAlignment.start,
               //   children: [
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 8.w,
-                        height: 8.h,
-                        decoration: const BoxDecoration(
-                          color: AppColors.orangeNormal,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        'طلبات جارية',
-                        style: TextStyles.cairoBold14.copyWith(
-                          color: AppColors.blueNormal,
-                        ),
-                      ),
-                    ],
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 8.w,
+                    height: 8.h,
+                    decoration: const BoxDecoration(
+                      color: AppColors.orangeNormal,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                  // Text(
-                  //   'طلب رقم #AC-8892',
-                  //   style: TextStyles.cairoMedium12.copyWith(
-                  //     color: AppColors.whiteDarkActive,
-                  //   ),
-                  // ),
-                // ],
+                  SizedBox(width: 4.w),
+                  Text(
+                    'طلبات جارية',
+                    style: TextStyles.cairoBold14.copyWith(
+                      color: AppColors.blueNormal,
+                    ),
+                  ),
+                ],
+              ),
+              // Text(
+              //   'طلب رقم #AC-8892',
+              //   style: TextStyles.cairoMedium12.copyWith(
+              //     color: AppColors.whiteDarkActive,
+              //   ),
+              // ),
+              // ],
               // ),
             ),
-        
+
             // const Spacer(),
-        
             Expanded(
               flex: 2,
-              child:CustomElevatedButton(
-              text: 'تتبع الطلب',
-              radius: CustomRadius.card12,
-              fun: () {
-                Navigator.pushNamed(context, 'NotificationPage',arguments: requests);
-              },
-              height: 32,
-              fontStyle: TextStyles.cairoBold12,
-              backgColor: AppColors.yellowNormal,
-              padding: EdgeInsets.symmetric(horizontal: 14.w),
-            )),
-        
+              child: CustomElevatedButton(
+                text: 'تتبع الطلب',
+                radius: CustomRadius.card12,
+                fun: () {
+                  Navigator.pushNamed(
+                    context,
+                    'RequestOffersScreen',
+                    arguments: requests,
+                  );
+                },
+                height: 32,
+                fontStyle: TextStyles.cairoBold12,
+                backgColor: AppColors.yellowNormal,
+                padding: EdgeInsets.symmetric(horizontal: 14.w),
+              ),
+            ),
+
             // SizedBox(
             //   height: 40.h,
             //   child: ElevatedButton(

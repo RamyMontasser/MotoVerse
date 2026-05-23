@@ -99,7 +99,7 @@ class SocketMessageBubble extends StatelessWidget {
                                 child: Image.network(
                                   message.imageUrl!.startsWith('http')
                                       ? message.imageUrl!
-                                      : "${AppConstants.baseUrl}${message.imageUrl!}",
+                                      : "${AppConstants.baseUrl}/media/${message.imageUrl!}",
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                       Container(

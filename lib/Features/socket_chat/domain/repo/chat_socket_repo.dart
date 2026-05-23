@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:motoverse/Core/errors/failure.dart';
-import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
 import 'package:motoverse/Features/socket_chat/data/models/file_message_model.dart';
+import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
 
 abstract class ChatSocketRepository {
   Future<Either<Failure, void>> connectToChat({
@@ -38,5 +38,9 @@ abstract class ChatSocketRepository {
   Future<Either<Failure, void>> closeChat({
     required String chatId,
     required bool solved,
+  });
+
+  Future<Either<Failure, void>> completeRequest({
+    required String requestId,
   });
 }

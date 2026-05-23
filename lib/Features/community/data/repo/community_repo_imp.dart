@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/errors/failure.dart';
 import 'package:motoverse/Core/services/network_service.dart';
+import 'package:motoverse/Features/community/data/models/create_request_model.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
-import 'package:motoverse/Features/community/data/models/create_request_model.dart';
 
 class CommunityRepoImp implements CommunityRepo {
   final NetworkService networkService;
@@ -85,7 +83,7 @@ class CommunityRepoImp implements CommunityRepo {
   }
   
   @override
-  Future<Either<Failure, dynamic>> makeOffer({required int requestId, double? lat, double? long}) async {
+  Future<Either<Failure, void>> makeOffer({required int requestId, double? lat, double? long}) async {
     try {
       var response = await networkService.addData(
         endPoint: '${AppConstants.communityRequests}$requestId/offers/',
@@ -100,6 +98,31 @@ class CommunityRepoImp implements CommunityRepo {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(errorMsg: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> createReview({
+    required int offerId,
+    required int rating,
+    required String comment,
+    required List<String> tags,
+  }) async {
+    try {
+      await networkService.addData(
+        endPoint: '/community/reviews/create/',
+        data: {
+          'offer': offerId,
+          'rating': rating,
+          'comment': comment,
+          'tags': tags,
+        },
+      );
+      return right(null);
+    } on DioException catch (e) {
+      return left(ApiFailure.fromDioException(e));
+    } catch (e) {
+      return left(ServerFailure(errorMsg: e.toString()));
     }
   }
 }

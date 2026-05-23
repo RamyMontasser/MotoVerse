@@ -8,7 +8,9 @@ final class SocketChatInitial extends SocketChatState {}
 
 // Connection States
 final class SocketChatConnectLoading extends SocketChatState {}
+
 final class SocketChatConnectSuccess extends SocketChatState {}
+
 final class SocketChatConnectError extends SocketChatState {
   final String errorMsg;
   SocketChatConnectError({required this.errorMsg});
@@ -16,10 +18,12 @@ final class SocketChatConnectError extends SocketChatState {
 
 // Messages Streaming States
 final class SocketMessagesLoading extends SocketChatState {}
+
 final class SocketMessagesSuccess extends SocketChatState {
   final List<TextMessageModel> messages;
   SocketMessagesSuccess({required this.messages});
 }
+
 final class SocketMessagesError extends SocketChatState {
   final String errorMsg;
   SocketMessagesError({required this.errorMsg});
@@ -27,7 +31,9 @@ final class SocketMessagesError extends SocketChatState {
 
 // Outgoing Message States
 final class SocketSendMessageLoading extends SocketChatState {}
+
 final class SocketSendMessageSuccess extends SocketChatState {}
+
 final class SocketSendMessageError extends SocketChatState {
   final String errorMsg;
   SocketSendMessageError({required this.errorMsg});
@@ -35,7 +41,9 @@ final class SocketSendMessageError extends SocketChatState {
 
 // Seen status state
 final class SocketMarkAsSeenLoading extends SocketChatState {}
+
 final class SocketMarkAsSeenSuccess extends SocketChatState {}
+
 final class SocketMarkAsSeenError extends SocketChatState {
   final String errorMsg;
   SocketMarkAsSeenError({required this.errorMsg});
@@ -43,15 +51,28 @@ final class SocketMarkAsSeenError extends SocketChatState {
 
 // Offer Completion States
 final class SocketCompleteOfferLoading extends SocketChatState {}
+
 final class SocketCompleteOfferSuccess extends SocketChatState {}
+
 final class SocketCompleteOfferError extends SocketChatState {
   final String errorMsg;
   SocketCompleteOfferError({required this.errorMsg});
 }
 
+final class SocketRequestCompleteLoading extends SocketChatState {}
+
+final class SocketRequestCompleteSuccess extends SocketChatState {}
+
+final class SocketRequestCompleteError extends SocketChatState {
+  final String errorMsg;
+  SocketRequestCompleteError({required this.errorMsg});
+}
+
 // Close Chat States
 final class SocketCloseChatLoading extends SocketChatState {}
+
 final class SocketCloseChatSuccess extends SocketChatState {}
+
 final class SocketCloseChatError extends SocketChatState {
   final String errorMsg;
   SocketCloseChatError({required this.errorMsg});
