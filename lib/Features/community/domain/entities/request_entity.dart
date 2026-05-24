@@ -18,6 +18,7 @@ class RequestEntity {
   final String? city;
   final RequestLocationModel? location;
   final double? distance;
+  final String averageRating;
 
   RequestEntity({
     required this.id,
@@ -35,5 +36,6 @@ class RequestEntity {
     this.city,
     this.location,
     this.distance,
+    required this.averageRating,
   });
 }

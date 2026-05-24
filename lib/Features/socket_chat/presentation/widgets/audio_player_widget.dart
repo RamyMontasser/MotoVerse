@@ -66,6 +66,17 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
     _audioPlayer.onPositionChanged.listen((Duration p) {
       if (mounted) setState(() => _position = p);
     });
+
+    // عشان تصفر العداد لما الفويس يخلص
+    _audioPlayer.onPlayerComplete.listen((event) {
+      if (mounted) {
+        setState(() {
+          _position = Duration.zero;
+          _isPlaying = false;
+        });
+        widget.onStateChanged?.call();
+      }
+    });
   }
 
   @override
@@ -87,17 +98,19 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
         _errorMessage = null;
       });
 
+      final url = widget.audioUrl!.startsWith('http')
+          ? widget.audioUrl!
+          : "${AppConstants.baseUrl}${widget.audioUrl!}";
+
       if (_isPlaying) {
         await _audioPlayer.pause();
       } else {
-        // If the audio hasn't been loaded yet, load it
-        if (_duration == Duration.zero) {
-          final url = widget.audioUrl!.startsWith('http')
-              ? widget.audioUrl!
-              : "${AppConstants.baseUrl}${widget.audioUrl!}";
-          
+        // 1. لو الفويس خلص ووصل للآخر أو العداد تم تصفيره، بنشغله من جديد تماماً عبر play
+        if (_position == Duration.zero || _position >= _duration) {
           await _audioPlayer.play(UrlSource(url));
-        } else {
+        }
+        // 2. لو الفويس واخد Pause في النص، خليه يكمل عادي من مكانه بـ resume
+        else {
           await _audioPlayer.resume();
         }
       }
@@ -145,10 +158,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
             padding: EdgeInsets.only(bottom: 8.h),
             child: Text(
               _errorMessage!,
-              style: TextStyle(
-                fontSize: 10.sp,
-                color: AppColors.redNormal,
-              ),
+              style: TextStyle(fontSize: 10.sp, color: AppColors.redNormal),
             ),
           ),
         Container(
@@ -226,14 +236,37 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
                         children: List.generate(24, (index) {
                           // Generate simulated bar heights for waveform effect
                           final heights = [
-                            4, 8, 15, 12, 6, 18, 22, 10, 5, 9, 14, 20,
-                            16, 7, 11, 24, 13, 8, 4, 10, 15, 7, 12, 6,
+                            4,
+                            8,
+                            15,
+                            12,
+                            6,
+                            18,
+                            22,
+                            10,
+                            5,
+                            9,
+                            14,
+                            20,
+                            16,
+                            7,
+                            11,
+                            24,
+                            13,
+                            8,
+                            4,
+                            10,
+                            15,
+                            7,
+                            12,
+                            6,
                           ];
                           final isPassed = index / 24.0 <= playbackProgress;
                           return AnimatedContainer(
                             duration: const Duration(milliseconds: 250),
                             width: 2.5.w,
-                            height: heights[index % heights.length].h *
+                            height:
+                                heights[index % heights.length].h *
                                 (_isPlaying && index % 3 == 0
                                     ? _pulseController.value * 0.4 + 0.8
                                     : 0.85),

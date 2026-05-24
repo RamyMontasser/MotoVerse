@@ -5,6 +5,7 @@ class OfferModel {
   final String helperName;
   final bool helperVerified;
   final String averageRating;
+  final String memberSince;
   final String? helperImage;
   final String? distance;
   final String? estimatedMinutes;
@@ -22,7 +23,7 @@ class OfferModel {
     required this.status,
     required this.createdAt,
     required this.helperId,
-    required this.helperVerified,
+    required this.helperVerified, required this.memberSince,
   });
 
   factory OfferModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +39,7 @@ class OfferModel {
       createdAt: json['created_at'] as String? ?? '',
       helperId: json['helper_id'] as int? ?? 0,
       helperVerified: json['helper_verified'] as bool? ?? false,
+      memberSince: json['member_since']?.toString() ?? '',
     );
   }
 
@@ -54,6 +56,7 @@ class OfferModel {
       'estimated_minutes': estimatedMinutes,
       'status': status,
       'created_at': createdAt,
+      'member_since': memberSince,
     };
   }
 }

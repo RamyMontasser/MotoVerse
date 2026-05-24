@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
+import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
 
-class NotificationOfferCard extends StatelessWidget {
-  const NotificationOfferCard({
+class RequestOfferCard extends StatelessWidget {
+  const RequestOfferCard({
     super.key,
     required this.isOffline,
     required this.offerModel,
+    this.request,
+    this.isAccepted = false,
   });
 
   final bool isOffline;
   final OfferModel offerModel;
+  final bool isAccepted;
+  final RequestModel? request;
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +48,13 @@ class NotificationOfferCard extends StatelessWidget {
               CircleAvatar(
                 radius: 35.r,
                 backgroundColor: AppColors.blueLight,
-                backgroundImage: offerModel.helperImage != null && offerModel.helperImage!.isNotEmpty
-                    ? NetworkImage(offerModel.helperImage!)
+                backgroundImage:
+                    offerModel.helperImage != null && offerModel.helperImage!.isNotEmpty
+                    ? NetworkImage(
+                        offerModel.helperImage!.startsWith('http')
+                            ? offerModel.helperImage!
+                            : "${AppConstants.baseUrl}${offerModel.helperImage!}",
+                      )
                     : null,
                 child: offerModel.helperImage == null || offerModel.helperImage!.isEmpty
                     ? const Icon(Icons.person)
@@ -62,7 +73,7 @@ class NotificationOfferCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '4.8',
+                        offerModel.averageRating,
                         style: TextStyles.cairoBold13.copyWith(
                           color: AppColors.blueDarkActive,
                         ),
@@ -99,34 +110,53 @@ class NotificationOfferCard extends StatelessWidget {
             ),
           ],
           SizedBox(height: 12.h),
-          Row(
-            children: [
-              _buildActionCardButton(
-                'قبول',
-                isOffline ? AppColors.yellowNormal : AppColors.blueNormal,
-                AppColors.whiteLight,
-                () {
-                  context.read<NotificationCubit>().updateOfferStatus(
-                        offerId: offerModel.id,
-                        status: 'accepted',
-                      );
-                },
-              ),
-              SizedBox(width: 10.w),
-              _buildActionCardButton(
-                'رفض',
-                AppColors.blueGrey,
-                AppColors.blueNormal,
-                () {
-                  debugPrint(offerModel.id.toString());
-                  context.read<NotificationCubit>().updateOfferStatus(
-                        offerId: offerModel.id,
-                        status: 'rejected',
-                      );
-                },
-              ),
-            ],
-          ),
+
+          if (isAccepted)
+            CustomElevatedButton(
+              text: 'تم قبول العرض',
+              radius: CustomRadius.card12,
+              fun: () {
+                Navigator.pushNamed(
+                  context,
+                  'HelpOffline',
+                  arguments: [request, offerModel, false],
+                );
+              },
+              backgColor: AppColors.greenNormal,
+              foregColor: AppColors.whiteLight,
+              height: 48,
+              fontStyle: TextStyles.cairoBold16,
+            ),
+
+          if (!isAccepted)
+            Row(
+              children: [
+                _buildActionCardButton(
+                  'قبول',
+                  isOffline ? AppColors.yellowNormal : AppColors.blueNormal,
+                  AppColors.whiteLight,
+                  () {
+                    context.read<NotificationCubit>().updateOfferStatus(
+                      offerId: offerModel.id,
+                      status: 'accepted',
+                    );
+                  },
+                ),
+                SizedBox(width: 10.w),
+                _buildActionCardButton(
+                  'رفض',
+                  AppColors.blueGrey,
+                  AppColors.blueNormal,
+                  () {
+                    debugPrint(offerModel.id.toString());
+                    context.read<NotificationCubit>().updateOfferStatus(
+                      offerId: offerModel.id,
+                      status: 'rejected',
+                    );
+                  },
+                ),
+              ],
+            ),
         ],
       ),
     );

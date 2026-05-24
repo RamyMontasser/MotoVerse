@@ -13,7 +13,7 @@ import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.d
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
-import 'package:motoverse/Features/home/presentation/widgets/notification_offer_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/request_offer_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class RequestOffersScreen extends StatelessWidget {
@@ -175,82 +175,50 @@ class RequestOffersScreen extends StatelessWidget {
                               : null;
 
                           if (acceptedOffer != null) {
-                            return Column(
-                              children: [
-                                SizedBox(height: 50.h),
-                                Center(
-                                  child: Text(
-                                    'تم قبول عرض ${acceptedOffer.helperName}',
-                                    style: TextStyles.cairoBold16.copyWith(
-                                      color: AppColors.blueNormal,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 20.h),
-                                CustomElevatedButton(
-                                  text: 'الذهاب للدردشة',
-                                  radius: CustomRadius.card12,
-                                  fun: () {
-                                    final cubitState = context
-                                        .read<NotificationCubit>()
-                                        .state;
-
-                                    if (cubitState is CreateChatSuccess) {
-                                      Navigator.pushNamed(
-                                        context,
-                                        'SocketChatBody',
-                                        arguments: {
-                                          'otherUserId': acceptedOffer.helperId,
-                                          'otherUserName':
-                                              acceptedOffer.helperName,
-                                          'otherUserAvatar':
-                                              acceptedOffer.helperImage,
-                                          'isHelper': false,
-                                          'requestId': acceptedOffer.request,
-                                          'offerId': acceptedOffer.id,
-                                          'averageRating':
-                                              acceptedOffer.averageRating,
-                                          'chatId': cubitState.chat.id,
-                                        },
-                                      );
-                                    } else {
-                                      context
-                                          .read<NotificationCubit>()
-                                          .enterChat(
-                                            requestId: requests.first.id,
-                                          );
-                                    }
-
-                                    // context
-                                    //     .read<NotificationCubit>()
-                                    //     .createChat(
-                                    //       requestUserId: requests.first.userId,
-                                    //       offerUserId: acceptedOffer.helperId,
-                                    //       requestId: requests.first.id,
-                                    //     );
-                                    // Navigator.pushNamed(
-                                    //   context,
-                                    //   'SocketChatBody',
-                                    //   arguments: {
-                                    //     'otherUserId': acceptedOffer.helperId,
-                                    //     'otherUserName':
-                                    //         acceptedOffer.helperName,
-                                    //     'otherUserAvatar':
-                                    //         acceptedOffer.helperImage,
-                                    //     'isHelper': false,
-                                    //     'requestId': acceptedOffer.request,
-                                    //     'offerId': acceptedOffer.id,
-                                    //     'chatId': state.chat.id,
-                                    //   },
-                                    // );
-                                  },
-                                  backgColor: AppColors.greenNormal,
-                                  foregColor: AppColors.whiteLight,
-                                  height: 48,
-                                  fontStyle: TextStyles.cairoBold16,
-                                ),
-                              ],
+                            return Padding(
+                              padding: EdgeInsets.only(top: 20.h),
+                              child: RequestOfferCard(
+                                isOffline:
+                                    requests.first.requestType == 'offline',
+                                offerModel: acceptedOffer,
+                                request: requests.first,
+                                isAccepted: true,
+                              ),
                             );
+
+                            // Column(
+                            //   children: [
+                            //     SizedBox(height: 50.h),
+                            //     Center(
+                            //       child: Text(
+                            //         'تم قبول عرض ${acceptedOffer.helperName}',
+                            //         style: TextStyles.cairoBold16.copyWith(
+                            //           color: AppColors.blueNormal,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     SizedBox(height: 20.h),
+                            //     CustomElevatedButton(
+                            //       text: 'الذهاب للدردشة',
+                            //       radius: CustomRadius.card12,
+                            //       fun: () {
+                            //         Navigator.pushNamed(
+                            //           context,
+                            //           'HelpOffline',
+                            //           arguments: [
+                            //             requests.first,
+                            //             acceptedOffer,
+                            //             false,
+                            //           ],
+                            //         );
+                            //       },
+                            //       backgColor: AppColors.greenNormal,
+                            //       foregColor: AppColors.whiteLight,
+                            //       height: 48,
+                            //       fontStyle: TextStyles.cairoBold16,
+                            //     ),
+                            //   ],
+                            // );
                           }
 
                           return _buildContent(
@@ -312,7 +280,7 @@ class RequestOffersScreen extends StatelessWidget {
               shrinkWrap: true,
               itemCount: offers.length,
               separatorBuilder: (context, index) => SizedBox(height: 15.h),
-              itemBuilder: (context, index) => NotificationOfferCard(
+              itemBuilder: (context, index) => RequestOfferCard(
                 isOffline: requests.first.requestType == 'offline',
                 offerModel: offers[index],
               ),
@@ -335,6 +303,7 @@ class RequestOffersScreen extends StatelessWidget {
         createdAt: DateTime.now().toIso8601String(),
         helperId: 0,
         helperVerified: true,
+        memberSince: '2020',
       ),
     );
   }

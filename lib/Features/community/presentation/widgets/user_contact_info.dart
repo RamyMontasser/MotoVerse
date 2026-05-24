@@ -14,7 +14,8 @@ import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.da
 class UserContactInfo extends StatelessWidget {
   final RequestModel request;
   final OfferModel offer;
-  const UserContactInfo({super.key, required this.request, required this.offer});
+  final bool isHelper;
+  const UserContactInfo({super.key, required this.request, required this.offer, required this.isHelper});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class UserContactInfo extends StatelessWidget {
                   CircleAvatar(
                     radius: 25.r,
                     backgroundColor: AppColors.blueLight,
-                    backgroundImage:
+                    backgroundImage: isHelper?
                         request.userImage != null &&
                             request.userImage!.isNotEmpty
                         ? NetworkImage(
@@ -50,14 +51,25 @@ class UserContactInfo extends StatelessWidget {
                                 ? request.userImage!
                                 : "${AppConstants.baseUrl}${request.userImage!}",
                           )
+                        : null
+                        : offer.helperImage != null &&
+                              offer.helperImage!.isNotEmpty
+                        ? NetworkImage(
+                            offer.helperImage!.startsWith('http')
+                                ? offer.helperImage!
+                                : "${AppConstants.baseUrl}${offer.helperImage!}",
+                          )
                         : null,
-                    child:
+                    child: isHelper?
                         request.userImage == null || request.userImage!.isEmpty
+                        ? const Icon(Icons.person)
+                        : null
+                        : offer.helperImage == null || offer.helperImage!.isEmpty
                         ? const Icon(Icons.person)
                         : null,
                   ),
                   CircleAvatar(
-                    radius: 8.r,
+                    radius: 9.r,
                     backgroundColor: AppColors.blueLight,
                     // backgroundColor: Colors.white,
                     child: Padding(
@@ -80,14 +92,16 @@ class UserContactInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    request.userName,
+                    isHelper
+                    ? request.userName
+                    : offer.helperName,
                     style: TextStyles.cairoBold14.copyWith(
                       color: AppColors.blueNormal,
                       height: 2.h,
                     ),
                   ),
                   Text(
-                    "عضو منذ ${request.memberSince}",
+                    "عضو منذ ${isHelper ? request.memberSince : offer.memberSince}",
                     style: TextStyles.cairoRegular11.copyWith(
                       color: AppColors.whiteDarkActive,
                     ),
@@ -121,7 +135,10 @@ class UserContactInfo extends StatelessWidget {
                     ),
                     SizedBox(width: 2.w),
                     Text(
-                      "4.8",
+                      isHelper
+                      // ?'3.5'
+                      ? request.averageRating
+                      : offer.averageRating,
                       style: TextStyles.cairoBold12.copyWith(
                         color: AppColors.blueDarkActive,
                       ),

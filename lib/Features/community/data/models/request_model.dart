@@ -9,6 +9,7 @@ class RequestModel {
   final String? userImage;
   final int memberSince;
   final String city;
+  final String averageRating;
   final RequestLocationModel? location;
   final double? distance;
   final String description;
@@ -35,21 +36,27 @@ class RequestModel {
     required this.imagesCount,
     required this.status,
     required this.createdAt,
+    required this.averageRating,
   });
 
   factory RequestModel.fromJson(Map<String, dynamic> json) {
     return RequestModel(
       id: json['request_id'] as int? ?? 0,
       userId: json['user_id'] as int? ?? 0,
-      userName: json['user'] as String? ?? '',
-      userImage: json['user_image'] as String? ,
+      userName: json['user']?.toString() ?? '',
+      userImage: json['user_image']?.toString(),
       memberSince: json['member_since'] as int? ?? 0,
-      city: json['city'] as String? ?? '',
+      city: json['city']?.toString() ?? '',
+      averageRating: json['average_rating'] == null
+          ? ''
+          : (json['average_rating'] is num
+                ? (json['average_rating'] as num).toString()
+                : json['average_rating'].toString()),
       location: RequestLocationModel.fromJson(json['location'] ?? {}),
       distance: (json['distance'] as num?)?.toDouble(),
-      description: json['description'] as String? ?? '',
-      problemType: json['problem_type'] as String? ?? '',
-      requestType: json['request_type'] as String? ?? '',
+      description: json['description']?.toString() ?? '',
+      problemType: json['problem_type']?.toString() ?? '',
+      requestType: json['request_type']?.toString() ?? '',
       images:
           (json['images'] as List<dynamic>?)
               ?.map(
@@ -58,8 +65,8 @@ class RequestModel {
               .toList() ??
           [],
       imagesCount: json['images_count'] as int? ?? 0,
-      status: json['status'] as String? ?? '',
-      createdAt: json['created_at'] as String? ?? '',
+      status: json['status']?.toString() ?? '',
+      createdAt: json['created_at']?.toString() ?? '',
     );
   }
 
@@ -71,6 +78,7 @@ class RequestModel {
       'user_image': userImage,
       'member_since': memberSince,
       'city': city,
+      'average_rating': averageRating,
       'location': location?.toJson(),
       'distance': distance,
       'description': description,
@@ -97,6 +105,7 @@ class RequestModel {
       imagesCount: imagesCount,
       status: status,
       createdAt: createdAt,
+      averageRating: averageRating,
       city: requestType == 'offline' ? city : null,
       location: requestType == 'offline' ? location : null,
       distance: requestType == 'offline' ? distance : null,
@@ -120,6 +129,7 @@ class RequestModel {
       imagesCount: entity.imagesCount,
       status: entity.status,
       createdAt: entity.createdAt,
+      averageRating: entity.averageRating,
     );
   }
 }

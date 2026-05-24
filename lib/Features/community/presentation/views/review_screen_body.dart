@@ -10,7 +10,6 @@ import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Core/widgets/custom_textfeild_with_border.dart';
 import 'package:motoverse/Features/community/data/models/tag_model.dart';
 import 'package:motoverse/Features/community/presentation/cubit/review_cubit.dart';
-import 'package:motoverse/Features/community/presentation/widgets/helper_contact.dart';
 
 class ReviewScreenBody extends StatefulWidget {
   final int offerId;
@@ -51,6 +50,27 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
     super.dispose();
   }
 
+  void _showSnackBar(String message, {bool isError = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: TextStyles.cairoMedium12.copyWith(color: AppColors.whiteLight),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: isError ? AppColors.redNormal : AppColors.blueNormal,
+        duration: Duration(seconds: isError ? 3 : 2),
+      ),
+    );
+  }
+
+  void _navigateToMain() {
+    context.read<NavigationProvider>().changeIndex(0);
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil('main screen', (route) => false);
+  }
+
   void _toggleTag(TagModel tag) {
     setState(() {
       if (_selectedTags.contains(tag)) {
@@ -59,31 +79,19 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
         if (_selectedTags.length < 3) {
           _selectedTags.add(tag);
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'يمكنك اختيار ثلاثة صفات فقط كحد أقصى',
-                style: TextStyles.cairoMedium12.copyWith(
-                  color: AppColors.whiteLight,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              backgroundColor: AppColors.blueNormal,
-              duration: const Duration(seconds: 2),
-            ),
-          );
+          _showSnackBar('يمكنك اختيار ثلاثة صفات فقط كحد أقصى');
         }
       }
     });
   }
 
   void _submitReview() {
-    List<String> tagsToSend = _selectedTags.map((e) => e.nameEn).toList();
+    final List<String> tagsToSend = _selectedTags.map((e) => e.nameEn).toList();
 
     context.read<ReviewCubit>().submitReview(
       offerId: widget.offerId,
       rating: _selectedRating,
-      comment: _commentController.text,
+      comment: _commentController.text.trim(),
       tags: tagsToSend,
     );
   }
@@ -93,41 +101,12 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
     return BlocListener<ReviewCubit, ReviewState>(
       listener: (context, state) {
         if (state is ReviewSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'تم إرسال تقييمك بنجاح!',
-                style: TextStyles.cairoMedium12.copyWith(
-                  color: AppColors.whiteLight,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              backgroundColor: AppColors.blueNormal,
-              duration: const Duration(seconds: 2),
-            ),
-          );
+          _showSnackBar('تم إرسال تقييمك بنجاح!');
           Future.delayed(const Duration(milliseconds: 500), () {
-            if (mounted) {
-              context.read<NavigationProvider>().changeIndex(0);
-              Navigator.of(
-                context,
-              ).pushNamedAndRemoveUntil('main screen', (route) => false);
-            }
+            if (mounted) _navigateToMain();
           });
         } else if (state is ReviewFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                state.errorMessage,
-                style: TextStyles.cairoMedium12.copyWith(
-                  color: AppColors.whiteLight,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              backgroundColor: AppColors.redNormal,
-              duration: const Duration(seconds: 3),
-            ),
-          );
+          _showSnackBar(state.errorMessage, isError: true);
         }
       },
       child: CustomScrollViewWithAppBar(
@@ -147,22 +126,13 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
                 ),
               ),
               SizedBox(height: 16.h),
-
               Text(
                 'تم إنهاء الطلب بنجاح',
                 style: TextStyles.cairoBold24.copyWith(
                   color: AppColors.blueNormal,
                 ),
               ),
-              // SizedBox(height: 24.h),
-
-              // HelperContact(
-              //   helperName: widget.helperName,
-              //   helperAvatar: widget.helperAvatar,
-              //   averageRating: widget.averageRating,
-              // ),
               SizedBox(height: 32.h),
-
               Text(
                 'كيف كانت تجربتك مع مقدم المساعدة؟',
                 style: TextStyles.cairoBold16.copyWith(
@@ -171,13 +141,15 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
               ),
               SizedBox(height: 16.h),
 
+              // الـ Rating Stars
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(5, (index) {
+                  final int starValue = index + 1;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        _selectedRating = index + 1;
+                        _selectedRating = starValue;
                       });
                     },
                     child: Padding(
@@ -195,6 +167,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
               ),
               SizedBox(height: 24.h),
 
+              // الـ Tags Wrap
               Wrap(
                 spacing: 8.w,
                 runSpacing: 10.h,
@@ -233,7 +206,6 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
                 }).toList(),
               ),
               SizedBox(height: 32.h),
-
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
@@ -244,7 +216,6 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
                 ),
               ),
               SizedBox(height: 12.h),
-
               CustomTextfeildWithBorder(
                 controller: _commentController,
                 hint: 'شارك تجربتك لمساعدة المستخدمين الآخرين',
@@ -253,8 +224,8 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
               ),
               SizedBox(height: 40.h),
 
+              // زر الإرسال مع إصلاح الـ buildWhen والمناولة الصحيحة للـ Loading
               BlocBuilder<ReviewCubit, ReviewState>(
-                buildWhen: (previous, current) => current is ReviewLoading,
                 builder: (context, state) {
                   final isLoading = state is ReviewLoading;
                   return CustomElevatedButton(
@@ -269,14 +240,8 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
                 },
               ),
               SizedBox(height: 16.h),
-
               GestureDetector(
-                onTap: () {
-                  context.read<NavigationProvider>().changeIndex(0);
-                  Navigator.of(
-                    context,
-                  ).pushNamedAndRemoveUntil('main screen', (route) => false);
-                },
+                onTap: _navigateToMain,
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.h),
                   child: Text(
@@ -288,7 +253,6 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
                 ),
               ),
               SizedBox(height: 50.h),
-
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
                 decoration: BoxDecoration(

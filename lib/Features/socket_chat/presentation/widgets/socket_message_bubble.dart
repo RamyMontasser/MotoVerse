@@ -47,7 +47,7 @@ class SocketMessageBubble extends StatelessWidget {
                         ? NetworkImage(
                             receiverAvatar!.startsWith('http')
                                 ? receiverAvatar!
-                                : "${AppConstants.baseUrl}/${receiverAvatar!}",
+                                : "${AppConstants.baseUrl}${receiverAvatar!}",
                           )
                         : null,
                     child: receiverAvatar == null || receiverAvatar!.isEmpty
@@ -120,12 +120,13 @@ class SocketMessageBubble extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(bottom: 8.h),
                               child: AudioPlayerWidget(
-                                audioUrl: message.audioUrl,
+                                audioUrl: message.audioUrl!.startsWith('http')
+                                      ? message.audioUrl!
+                                      : "${AppConstants.baseUrl}/media/${message.audioUrl!}",
                                 isMe: message.isMe,
                               ),
                             ),
 
-                          // Render Text Message
                           if (message.message.isNotEmpty)
                             Text(
                               message.message,

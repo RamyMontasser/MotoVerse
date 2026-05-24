@@ -13,12 +13,13 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? avatarUrl;
   final Function onDeleteChat;
   final bool isHelper;
+  final bool helperVerified;
 
   const ChatAppBar({
     super.key,
     required this.name,
     required this.status,
-    required this.avatarUrl, required this.onDeleteChat, required this.isHelper,
+    required this.avatarUrl, required this.onDeleteChat, required this.isHelper, required this.helperVerified,
   });
 
   @override
@@ -40,7 +41,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ? NetworkImage(
                     avatarUrl!.startsWith('http')
                         ? avatarUrl!
-                        : "${AppConstants.baseUrl}/${avatarUrl!}",
+                        : "${AppConstants.baseUrl}${avatarUrl!}",
                   )
                 : null,
                 child: avatarUrl == null || avatarUrl!.isEmpty
@@ -59,26 +60,35 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 name,
                 style: TextStyles.cairoBold16.copyWith(color: Colors.white),
               ),
+
+              
               Row(
                 children: [
                   Text(
-                    '$status • ',
+                    status,
                     style: TextStyles.cairoMedium12.copyWith(
                       color: Colors.white70,
                     ),
                   ),
-                  Icon(
-                    Icons.verified,
-                    color: AppColors.yellowNormal,
-                    size: 14.sp,
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    'منقذ معتمد',
-                    style: TextStyles.cairoBold12.copyWith(
-                      color: AppColors.yellowNormal,
+                  if (!isHelper && helperVerified)...[
+                    Text(
+                      ' • ',
+                      style: TextStyles.cairoMedium12.copyWith(
+                        color: Colors.white70,
+                      ),
                     ),
-                  ),
+                    Icon(
+                      Icons.verified,
+                      color: AppColors.yellowNormal,
+                      size: 14.sp,
+                    ),
+                    SizedBox(width: 4.w),
+                    Text(
+                      'منقذ معتمد',
+                      style: TextStyles.cairoBold12.copyWith(
+                        color: AppColors.yellowNormal,
+                      ),
+                    ),]
                 ],
               ),
             ],

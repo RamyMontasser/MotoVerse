@@ -10,13 +10,15 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/community/presentation/widgets/user_listtile.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 
 class RequestLocationCard extends StatelessWidget {
-  const RequestLocationCard({super.key, this.isAccepted, required this.request});
+  const RequestLocationCard({super.key, this.isAccepted, required this.request, this.offer});
 
   final bool? isAccepted;
   final RequestModel request;
+  final OfferModel? offer;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +116,7 @@ class RequestLocationCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${request.distance ?? 0} كم - 10 دقائق',
+                      '${request.distance ?? 0} كم - ${offer?.estimatedMinutes ?? 0} د',
                       style: TextStyles.cairoBold16.copyWith(
                         color: AppColors.blueNormal,
                       ),

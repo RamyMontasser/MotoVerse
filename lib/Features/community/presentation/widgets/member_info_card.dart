@@ -48,7 +48,7 @@ class MemberInfoCard extends StatelessWidget {
                     : null,
               ),
               CircleAvatar(
-                radius: 8.r,
+                radius: 9.r,
                 backgroundColor: AppColors.blueLight,
                 // backgroundColor: Colors.white,
                 child: Padding(
@@ -65,10 +65,11 @@ class MemberInfoCard extends StatelessWidget {
           SizedBox(width: 10.w),
 
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 request.userName,
-                style: TextStyles.cairoBold13.copyWith(
+                style: TextStyles.cairoBold14.copyWith(
                   color: AppColors.blueDarkActive,
                   height: 2.h,
                 ),
@@ -100,7 +101,8 @@ class MemberInfoCard extends StatelessWidget {
                 ),
                 SizedBox(width: 2.w),
                 Text(
-                  "4.8",
+                  // request.avarageRating ??
+                   '4.8',
                   style: TextStyles.cairoBold12.copyWith(
                     color: AppColors.blueDarkActive,
                   ),

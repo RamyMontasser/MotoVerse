@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
@@ -213,6 +214,13 @@ class _CreateRequestState extends State<CreateRequest> {
                       //   ScaffoldMessenger.of(context).showSnackBar(
                       //     SnackBar(content: Text(state.errorMessage)),
                       //   );
+                    }
+                    if (state is CreateRequestFail) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: AppColors.redNormal,
+                          content: Text(state.errorMessage, style: TextStyles.cairoRegular14.copyWith(color: AppColors.whiteLight),),
+                      ));
                     }
                   },
                   builder: (context, state) {

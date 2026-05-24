@@ -67,6 +67,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                   imagesCount: 0,
                                   status: 'open',
                                   createdAt: '2022-01-01 00:00:00',
+                                  averageRating: '4.5',
                                 ),
                               );
                             } else if (currentCategory == 2) {
@@ -90,6 +91,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                   imagesCount: 0,
                                   status: 'open',
                                   createdAt: '2022-01-01 00:00:00',
+                                  averageRating: '4.5',
                                 ),
                               );
                             } else if (index % 2 == 0) {
@@ -113,6 +115,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                   imagesCount: 0,
                                   status: 'open',
                                   createdAt: '2022-01-01 00:00:00',
+                                  averageRating: '4.5',
                                 ),
                               );
                             }
@@ -136,6 +139,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                 imagesCount: 0,
                                 status: 'open',
                                 createdAt: '2022-01-01 00:00:00',
+                                averageRating: '4.5',
                               ),
                             );
                           },

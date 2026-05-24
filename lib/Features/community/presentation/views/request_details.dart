@@ -268,12 +268,12 @@ class RequestDetails extends StatelessWidget {
           fun: state is MakeOfferLoading 
               ? () {} 
               : () {
-                  if (request.requestType == 'online') {
+                  // if (request.requestType == 'online') {
                     debugPrint(request.id.toString());
                     context.read<OffersCubit>().makeOffer(requestId: request.id);
-                  } else {
+                  // } else {
                     // Navigator.of(context).pushNamed('IdentityVarification');
-                  }
+                  // }
                 },
         );
       },

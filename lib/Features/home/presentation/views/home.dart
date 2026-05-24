@@ -60,6 +60,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _refreshData,
+      backgroundColor: AppColors.whiteLight,
+      color: AppColors.yellowNormal,
       child: CustomScrollViewWithAppBar(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),

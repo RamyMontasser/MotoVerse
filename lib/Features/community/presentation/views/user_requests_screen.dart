@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
+import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
-import 'package:motoverse/Features/community/presentation/widgets/request_card.dart';
+import 'package:motoverse/Features/community/presentation/widgets/user_request_page_card.dart';
+import 'package:motoverse/Features/community/presentation/widgets/user_requests_category_tabs.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class UserRequestsScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class UserRequestsScreen extends StatefulWidget {
 }
 
 class _UserRequestsScreenState extends State<UserRequestsScreen> {
-  bool showAll = false;
+  int currentCategory = 0;
 
   @override
   void initState() {
@@ -28,85 +30,121 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollViewWithAppBar(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'طلباتي',
-                      style: TextStyles.cairoBold24.copyWith(color: AppColors.blueNormal),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          showAll = !showAll;
-                        });
-                      },
-                      child: Text(
-                        showAll ? 'عرض المعلق فقط' : 'عرض الكل',
-                        style: TextStyles.cairoBold14.copyWith(color: AppColors.blueNormal),
-                      ),
-                    ),
-                  ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'طلباتي',
+                style: TextStyles.cairoBold24.copyWith(
+                  color: AppColors.blueNormal,
                 ),
-                SizedBox(height: 16.h),
-                BlocBuilder<RequestsCubit, RequestsState>(
-              builder: (context, state) {
-                if (state is RequestsLoading) {
-                  return Skeletonizer(
-                    enabled: true,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 5,
-                      itemBuilder: (context, index) => const Card(
-                        child: ListTile(
-                          title: Text('Loading...'),
-                          subtitle: Text('Loading...'),
+              ),
+              SizedBox(height: 16.h),
+              UserRequestsCategoryTabs(
+                selectedIndex: currentCategory,
+                onTap: (index) {
+                  setState(() {
+                    currentCategory = index;
+                  });
+                },
+              ),
+              SizedBox(height: 16.h),
+              BlocBuilder<RequestsCubit, RequestsState>(
+                builder: (context, state) {
+                  if (state is RequestsLoading) {
+                    return Skeletonizer(
+                      enabled: true,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 5,
+                        itemBuilder: (context, index) => const Card(
+                          child: ListTile(
+                            title: Text('Loading...'),
+                            subtitle: Text('Loading...'),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                } else if (state is RequestsFail) {
-                  return Center(
-                    child: Text(
-                      state.errorMessage,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  );
-                } else if (state is RequestsSuccess) {
-                  final requests = showAll 
-                    ? state.requests 
-                    : state.requests.where((request) => request.status == 'pending').toList();
-                  if (requests.isEmpty) {
-                    return const Center(
-                      child: Text('لا توجد طلبات سابقة'),
+                    );
+                  } else if (state is RequestsFail) {
+                    return Center(
+                      child: Text(
+                        state.errorMessage,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    );
+                  } else if (state is RequestsSuccess) {
+                    final requests = currentCategory == 0
+                        ? state.requests
+                        : state.requests
+                              .where(
+                                (request) =>
+                                    request.status == 'pending' ||
+                                    request.status == 'accepted',
+                              )
+                              .toList();
+                    if (requests.isEmpty) {
+                      final bool isActiveTab = currentCategory == 1;
+                      return  Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(height: 100.h),
+                              Icon(
+                                isActiveTab
+                                    ? Icons.hourglass_empty
+                                    : Icons.request_page,
+                                size: 80.sp,
+                                color: isActiveTab
+                                    ? AppColors.yellowNormal
+                                    : AppColors.blueGrey,
+                              ),
+                              SizedBox(height: 16.h),
+                              Text(
+                                isActiveTab
+                                    ? 'لا توجد طلبات نشطة حالياً'
+                                    : 'لا توجد طلبات سابقة',
+                                textAlign: TextAlign.center,
+                                style: TextStyles.cairoBold16.copyWith(
+                                  color: AppColors.blueDarkActive,
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Text(
+                                'يمكنك إنشاء طلب جديد أو مراجعة الطلبات السابقة.',
+                                textAlign: TextAlign.center,
+                                style: TextStyles.cairoRegular14.copyWith(
+                                  color: AppColors.whiteDarkActive,
+                                ),
+                              ),
+                            ],
+                          ),
+                        // ),
+                      );
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: requests.length,
+                      itemBuilder: (context, index) {
+                        final RequestModel request = requests[index];
+                        return UserRequestPageCard(request: request);
+                      },
                     );
                   }
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: requests.length,
-                    itemBuilder: (context, index) {
-                      final request = requests[index];
-                      return RequestCard(
-                        request: request,
-                        isChat: request.requestType == 'online',
-                      );
-                    },
-                  );
-                }
-                return const SizedBox.shrink();
-                  },
-                ),
-              ],
+                  return const SizedBox.shrink();
+                },
               ),
-            ),
+            ],
           ),
-      );
+        ),
+      ),
+    );
   }
 }
+
+

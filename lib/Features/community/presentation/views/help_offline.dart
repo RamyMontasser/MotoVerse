@@ -16,6 +16,7 @@ import 'package:motoverse/Features/home/data/models/notification_offer_model.dar
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
+import 'package:motoverse/Features/socket_chat/data/models/chat_arguments.dart';
 
 class HelpOffline extends StatelessWidget {
   const HelpOffline({super.key});
@@ -25,6 +26,7 @@ class HelpOffline extends StatelessWidget {
     final args = ModalRoute.of(context)?.settings.arguments as List;
     final RequestModel request = args[0];
     final OfferModel offer = args[1];
+    final bool isHelper = args[2];
     // final String status = args[1];
     // final int offerId = args[2];
 
@@ -88,23 +90,32 @@ class HelpOffline extends StatelessWidget {
               ),
             );
           } else if (state is CreateChatSuccess) {
-            Navigator.pop(context); // Pop loading dialog
+            Navigator.pop(context);
             Navigator.pushNamed(
               context,
-              'SocketChatBody',
-              arguments: {
-                'otherUserId': state.chat.requestUser.id,
-                'otherUserName': state.chat.requestUser.name,
-                'otherUserAvatar': state.chat.requestUser.image,
-                'isHelper': true,
-                'requestId': state.chat.id,
-                'offerId': offer.id,
-                'averageRating': offer.averageRating,
-                'chatId': state.chat.id,
-              },
+              'SocketChat',
+              arguments: ChatArguments(
+                chatId: state.chat.id.toString(),
+                otherUserId: isHelper
+                    ? state.chat.requestUser.id.toString()
+                    : offer.helperId.toString(),
+                helperName: isHelper
+                    ? (state.chat.requestUser.name )
+                    : (offer.helperName ),
+                helperAvatar: isHelper
+                    ? state.chat.requestUser.image
+                    : offer.helperImage,
+                isHelper: isHelper,
+                requestId: isHelper
+                    ? state.chat.id.toString()
+                    : request.id.toString(),
+                offerId: offer.id.toString(),
+                averageRating: offer.averageRating.toString() ,
+                helperVerified: offer.helperVerified ,
+              ),
             );
           } else if (state is CreateChatFailure) {
-            Navigator.pop(context); // Pop loading dialog
+            Navigator.pop(context); 
             customSnackBar(
               context: context,
               msg: state.errMessage,
@@ -146,11 +157,13 @@ class HelpOffline extends StatelessWidget {
                         ? RequestLocationCard(
                             isAccepted: true,
                             request: displayRequest,
+                            offer: offer,
+                            // isOfferSent: true,
                           )
                         : SizedBox.shrink(),
                     SizedBox(height: 15.h),
 
-                    UserContactInfo(request: displayRequest, offer: offer),
+                    UserContactInfo(request: displayRequest, offer: offer, isHelper: isHelper),
 
                     SizedBox(height: 20.h),
 
@@ -188,10 +201,16 @@ class HelpOffline extends StatelessWidget {
                     SizedBox(height: 10.h),
 
                     CustomElevatedButton(
-                      text: statusText,
+                      text: offer.status == 'accepted'
+                          ? 'الذهاب للدردشة'
+                          : statusText,
                       radius: CustomRadius.card12,
                       fun: () {
-                        if (offer.status == 'pending') {
+                        if (offer.status == 'accepted') {
+                          context.read<NotificationCubit>().enterChat(
+                            requestId: request.id,
+                          );
+                        } else if (offer.status == 'pending') {
                           debugPrint(offer.id.toString());
                           context.read<MyOffersCubit>().deleteOffer(
                             offerId: offer.id,

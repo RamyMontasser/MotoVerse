@@ -44,26 +44,16 @@ import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart'
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/home/presentation/views/main_screen.dart';
 import 'package:motoverse/Features/home/presentation/views/my_offers_page.dart';
-// import 'package:motoverse/Features/home/presentation/views/notification_page.dart';
-// import 'package:motoverse/Features/home/presentation/views/map.dart';
-// import 'package:motoverse/Features/home/presentation/views/market.dart';
 import 'package:motoverse/Features/home/presentation/views/profile.dart';
 import 'package:motoverse/Features/home/presentation/views/request_offers_screen.dart';
 import 'package:motoverse/Features/settings/presentation/views/identity_varification1.dart';
 import 'package:motoverse/Features/settings/presentation/views/settings_screen.dart';
-import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
-import 'package:motoverse/Features/socket_chat/presentation/cubit/socket_chat_cubit.dart';
-import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat_body.dart';
-// import 'package:motoverse/firebase_options.dart';
+import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat.dart';
 import 'package:motoverse/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
   await AppPref.init();
   await Hive.initFlutter();
   Hive.registerAdapter(UserDataModelAdapter());
@@ -141,10 +131,6 @@ class MyApp extends StatelessWidget {
                   'otp page': (context) => OtpPage(),
                   'otp forget': (context) => OtpForget(),
                   'reset pass': (context) => ResetPass(),
-                  // 'home': (context) => Home(),
-                  // 'tools': (context) => ToolsPage(),
-                  // 'market': (context) => Market(),
-                  // 'map': (context) => MapPage(),
                   'profile': (context) => Profile(),
                   'main screen': (context) => MainScreen(),
                   'RequestOffersScreen': (context) => RequestOffersScreen(),
@@ -156,18 +142,11 @@ class MyApp extends StatelessWidget {
                   'ai2': (context) => AiChat2(),
                   'RequestHelp1': (context) => RequestHelp1(),
                   'CreateRequest': (context) => CreateRequest(),
-                  // 'RequestDone': (context) => RequestDone(),
                   'AvailableRequests': (context) => AvailableRequests(),
                   'IdentityVarification': (context) => IdentityVarification(),
                   'RequestDetails': (context) => RequestDetails(),
                   'HelpOffline': (context) => HelpOffline(),
-                  // 'chat': (context) => ChatPage(),
-                  'SocketChatBody': (context) => BlocProvider(
-                    create: (context) => SocketChatCubit(
-                      chatSocketRepo: getIt<ChatSocketRepository>(),
-                    ),
-                    child: const SocketChatBody(),
-                  ),
+                  'SocketChat': (context) =>  SocketChat(),
                   'UserRequests': (context) => const UserRequestsScreen(),
                   'MyOffersPage': (context) => const MyOffersPage(),
                   'ReviewScreen': (context) => const ReviewScreen(),

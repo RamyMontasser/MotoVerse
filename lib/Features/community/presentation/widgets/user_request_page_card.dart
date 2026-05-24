@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:motoverse/Core/constants/constants.dart';
-// import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
-import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
-import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
+import 'package:motoverse/Features/community/data/models/request_model.dart';
 
-class MyOfferPageCard extends StatelessWidget {
-  const MyOfferPageCard({super.key, required this.offerModel});
+class UserRequestPageCard extends StatelessWidget {
+  const UserRequestPageCard({super.key, required this.request});
 
-  final OfferModel offerModel;
+  final RequestModel request;
 
   String _formatArabicDateTime(String createdAt) {
     try {
@@ -49,30 +45,11 @@ class MyOfferPageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color statusColor;
-    String statusText;
-
-    switch (offerModel.status) {
-      case 'accepted':
-        statusColor = AppColors.greenNormal;
-        statusText = 'مقبول';
-        break;
-      case 'rejected':
-        statusColor = AppColors.redDark;
-        statusText = 'مرفوض';
-        break;
-      case 'completed':
-        statusColor = AppColors.blueNormal;
-        statusText = 'مكتمل';
-        break;
-      case 'pending':
-      default:
-        statusColor = AppColors.yellowNormal;
-        statusText = 'قيد الانتظار';
-        break;
-    }
-
-    // String buttonText = offerModel.status == 'accepted' ? 'الذهاب للدردشة' : 'عرض التفاصيل';
+    final bool isOffline = request.requestType == 'offline';
+    final Color statusColor = isOffline
+        ? AppColors.blueNormal
+        : AppColors.yellowNormal;
+    final String statusText = isOffline ? 'أوفلاين' : 'أونلاين';
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7.h),
@@ -101,73 +78,59 @@ class MyOfferPageCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Status Badge
-
-              // SizedBox(width: 8.w),
-              // Delete Icon (visible for pending)
-              // if (offerModel.status == 'pending')
-              // InkWell(
-              //   onTap: () {
-              //     context.read<MyOffersCubit>().deleteOffer(offerId: offerModel.id);
-              //   },
-              //   borderRadius: CustomRadius.auth,
-              //   child: Padding(
-              //     padding: EdgeInsets.all(4.r),
-              //     child: Icon(Icons.delete_outline, color: AppColors.redDark, size: 20.sp),
-              //   ),
-              // ),
-              // const Spacer(),
-              CircleAvatar(
-                radius: 26.r,
-                backgroundColor: statusColor,
-                child: CircleAvatar(
-                  radius: 25.r,
-                  backgroundColor: AppColors.blueLight,
-                    backgroundImage:
-                        offerModel.helperImage != null &&
-                            offerModel.helperImage!.isNotEmpty
-                        ? NetworkImage(
-                            offerModel.helperImage!.startsWith('http')
-                                ? offerModel.helperImage!
-                                : "${AppConstants.baseUrl}${offerModel.helperImage!}",
-                          )
-                        : null,
-                    child:
-                        offerModel.helperImage == null || offerModel.helperImage!.isEmpty
-                        ? const Icon(Icons.person)
-                        : null,
-                  ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                decoration: BoxDecoration(
+                  borderRadius: CustomRadius.card12,
+                  color: statusColor.withValues(alpha: 0.1),
+                ),
+                child: Center(
+                  child: isOffline
+                      ? Icon(
+                          Icons.location_on_outlined,
+                          size: 26.sp,
+                          color: statusColor,
+                        )
+                      : Icon(
+                          Icons.chat_outlined,
+                          size: 26.sp,
+                          color: statusColor,
+                        ),
+                ),
               ),
               SizedBox(width: 10.w),
-              Text(
-                offerModel.helperName,
-                style: TextStyles.cairoBold16.copyWith(
-                  color: AppColors.blueDarkActive,
-                ),
-              ),
-
-              Spacer(),
-
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 6.h),
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
+              Expanded(
                 child: Text(
-                  statusText,
-                  style: TextStyles.cairoBold12.copyWith(color: statusColor),
+                  'مساعدة $statusText',
+                  style: TextStyles.cairoBold16.copyWith(
+                    color: AppColors.blueNormal,
+                  ),
                 ),
               ),
+              if (request.status == 'pending' || request.status == 'accepted')
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 26.w,
+                    vertical: 6.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.greenLight,
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  child: Text(
+                    'نشط',
+                    style: TextStyles.cairoBold12.copyWith(
+                      color: AppColors.greenNormal,
+                    ),
+                  ),
+                ),
             ],
           ),
           SizedBox(height: 16.h),
-          // Details Box
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: 0.05),
-              //  AppColors.blueGrey.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Column(
@@ -182,7 +145,7 @@ class MyOfferPageCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      offerModel.distance != null
+                      request.requestType == 'offline'
                           ? 'مساعدة ميدانية'
                           : 'مساعدة أونلاين',
                       style: TextStyles.cairoRegular14.copyWith(
@@ -202,7 +165,7 @@ class MyOfferPageCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      _formatArabicDateTime(offerModel.createdAt),
+                      _formatArabicDateTime(request.createdAt),
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.blueDarker,
                       ),
@@ -215,24 +178,11 @@ class MyOfferPageCard extends StatelessWidget {
           SizedBox(height: 16.h),
           CustomElevatedButton(
             text: 'عرض التفاصيل',
-            radius: CustomRadius.card12,
-            fun: ()  {
-
-              context.read<MyOffersCubit>().getRequestDetails(
-          requestId: offerModel.request,
-        );
-              // var result =
-              //      context.read<MyOffersCubit>().getRequestDetails(
-              //       requestId: offerModel.request,
-              //     );
-
-              // if (result is RequestDetailsFailure) {
-              //   return;
-              // }
-              // var requestDetails = result as RequestDetailsSuccess;
-              // final List<dynamic> args = [requestDetails.request, offerModel.status];
-              // debugPrint(args.toString());
-              // Navigator.of(context).pushNamed('HelpOffline', arguments: args);
+            radius: CustomRadius.r2,
+            fun: () {
+              Navigator.of(
+                context,
+              ).pushNamed('RequestDetails', arguments: request);
             },
             backgColor: statusColor,
             foregColor: AppColors.whiteLight,

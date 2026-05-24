@@ -7,7 +7,7 @@ class RequestImageModel {
   factory RequestImageModel.fromJson(Map<String, dynamic> json) {
     return RequestImageModel(
       id: json['id'] as int? ?? 0,
-      image: json['image'] as String? ?? '',
+      image: json['image']?.toString() ?? '',
     );
   }
 

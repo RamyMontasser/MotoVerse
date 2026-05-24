@@ -23,7 +23,7 @@ import 'package:motoverse/Features/history/data/repo/history_repo_imp.dart';
 import 'package:motoverse/Features/history/domain/repo/history_repo.dart';
 import 'package:motoverse/Features/settings/data/repo/settings_repo.dart';
 import 'package:motoverse/Features/settings/data/repo/settings_repo_impl.dart';
-import 'package:motoverse/Features/socket_chat/services/socket_service.dart';
+import 'package:motoverse/Core/services/socket_service.dart';
 import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
 import 'package:motoverse/Features/socket_chat/data/repo/chat_socket_repo_impl.dart';
 
