@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motoverse/Core/constants/constants.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
@@ -16,13 +17,13 @@ class ServiceCenterCard extends StatelessWidget {
     required this.lat,
     required this.lng,
     required this.name,
-    required this.image, 
+    required this.image,
     required this.services,
-     required this.openingTime, 
-     required this.closingTime, 
-     required this.averageRating, 
-     required this.distanceKm,
-     required this.mapController, 
+    required this.openingTime,
+    required this.closingTime,
+    required this.averageRating,
+    required this.distanceKm,
+    required this.mapController,
   });
 
   final double lat;
@@ -41,6 +42,12 @@ class ServiceCenterCard extends StatelessWidget {
   //       ? image.replaceFirst('http://', 'https://')
   //       : image;
   // }
+
+  String get _imageUrl {
+    if (image.startsWith('http')) return image;
+    final separator = image.startsWith('/') ? '' : '/';
+    return '${AppConstants.baseUrl}$separator$image';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,48 +76,50 @@ class ServiceCenterCard extends StatelessWidget {
                 flex: 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.r),
-                  child: 
-                  // CachedNetworkImage(
-                  //   imageUrl: image,
-                  //   fit: BoxFit.cover,
-                  //   width: 40.w,
-                  //   height: 40.h,
-                  //   placeholder: (context, url) =>
-                  //       Center(child: CircularProgressIndicator(
-                  //         color: AppColors.yellowNormal,
-                  //       )),
-                  //   errorWidget: (context, url, error) => Icon(Icons.error),
-                  // )
+                  child:
+                      // CachedNetworkImage(
+                      //   imageUrl: image,
+                      //   fit: BoxFit.cover,
+                      //   width: 40.w,
+                      //   height: 40.h,
+                      //   placeholder: (context, url) =>
+                      //       Center(child: CircularProgressIndicator(
+                      //         color: AppColors.yellowNormal,
+                      //       )),
+                      //   errorWidget: (context, url, error) => Icon(Icons.error),
+                      // )
+                      Image.network(
+                        _imageUrl,
+                        fit: BoxFit.cover,
+                        headers: {"Accept": "image/*"},
+                        width: 40.w,
+                        height: 80.h,
+                        errorBuilder: (context, error, stackTrace) {
+                          // debugPrint('$error');
+                          return Container(
+                            width: 40.w,
+                            height: 80.h,
+                            color: AppColors.whiteDark,
+                            child: const Icon(
+                              Icons.broken_image,
+                              color: AppColors.whiteDarker,
+                            ),
+                          );
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return SizedBox(
+                            width: 40.w,
+                            height: 80.h,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.yellowNormal,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
 
-                  Image.network(
-                    image,fit: BoxFit.cover,
-                    headers: {"Accept": "image/*"},
-                    width: 40.w,
-                    height: 80.h,
-                    errorBuilder: (context, error, stackTrace) {
-                      // debugPrint('$error');
-                      return Container(
-                        width: 40.w,
-                        height: 80.h,
-                        color: AppColors.whiteDark,
-                        child: const Icon(
-                          Icons.broken_image,
-                          color: AppColors.whiteDarker,
-                        ),
-                      );
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return SizedBox(
-                        width: 40.w,
-                        height: 80.h,
-                        child: Center(child: CircularProgressIndicator(
-                          color: AppColors.yellowNormal,
-                        )),
-                      );
-                    },
-                  ),
-                
                   // SvgPicture.asset(
                   //   'assets/images/onboarding/Frame1.svg',
                   //   fit: BoxFit.cover,
@@ -168,26 +177,26 @@ class ServiceCenterCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 8.h),
-                    
+
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          ...services.map((service) => _buildTag(
-                            service.name,
-                          )),
-                        // _buildTag("فرامل"),
-                        // _buildTag("إطارات"),
-                        // _buildTag("تغيير زيت"),
-                      ],
-                    ),),
+                          ...services.map((service) => _buildTag(service.name)),
+                          // _buildTag("فرامل"),
+                          // _buildTag("إطارات"),
+                          // _buildTag("تغيير زيت"),
+                        ],
+                      ),
+                    ),
 
                     SizedBox(height: 6.h),
 
                     Row(
                       children: [
                         buildIconText(
-                          text: "${openingTime.substring(0,5)} - ${closingTime.substring(0,5)}",
+                          text:
+                              "${openingTime.substring(0, 5)} - ${closingTime.substring(0, 5)}",
                           icon: Icons.access_time,
                           color: AppColors.greenNormal,
                         ),
@@ -204,7 +213,6 @@ class ServiceCenterCard extends StatelessWidget {
               ),
 
               // const Spacer(),
-              
             ],
           ),
 

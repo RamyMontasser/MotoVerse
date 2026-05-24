@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
+import 'package:motoverse/Core/widgets/error_state_widget.dart';
 import 'package:motoverse/Features/community/data/models/request_location_model.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
@@ -20,6 +21,11 @@ class AvailableRequests extends StatefulWidget {
 
 class _AvailableRequestsState extends State<AvailableRequests> {
   int currentCategory = 0;
+
+  Future<void> _refreshRequests() async {
+    await context.read<RequestsCubit>().fetchRequests();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -27,6 +33,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
           RequestsCubit(communityRepo: getIt<CommunityRepo>())..fetchRequests(),
       child: Scaffold(
         body: CustomScrollViewWithAppBar(
+          onRefresh: _refreshRequests,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Column(
@@ -123,7 +130,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                               isChat: false,
                               request: RequestModel(
                                 id: 1,
-                                userId: 1,    
+                                userId: 1,
                                 userName: 'John Doe',
                                 userImage: '',
                                 memberSince: 2022,
@@ -147,11 +154,11 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                       );
                     } else if (state is RequestsFail) {
                       debugPrint(state.errorMessage);
-                      return Center(
-                        child: Text(
-                          'حدث خطأ اثناء تحميل الطلبات',
-                          style: const TextStyle(color: Colors.red),
-                        ),
+                      return ErrorStateWidget(
+                        title: 'حدث خطأ أثناء تحميل الطلبات',
+                        message: state.errorMessage,
+                        buttonLabel: 'إعادة المحاولة',
+                        onButtonPressed: _refreshRequests,
                       );
                     } else if (state is RequestsSuccess) {
                       final requests = state.requests

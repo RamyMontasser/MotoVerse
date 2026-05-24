@@ -6,6 +6,7 @@ import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
 import 'package:motoverse/Features/socket_chat/presentation/widgets/audio_player_widget.dart';
+import 'package:photo_view/photo_view.dart';
 
 class SocketMessageBubble extends StatelessWidget {
   final TextMessageModel message;
@@ -89,28 +90,72 @@ class SocketMessageBubble extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Render Image Message if available
                           if (message.type == 'image' &&
                               message.imageUrl != null)
                             Padding(
                               padding: EdgeInsets.only(bottom: 8.h),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12.r),
-                                child: Image.network(
-                                  message.imageUrl!.startsWith('http')
+                              child: GestureDetector(
+                                onTap: () {
+                                  final imageUrl =
+                                      message.imageUrl!.startsWith('http')
                                       ? message.imageUrl!
-                                      : "${AppConstants.baseUrl}/media/${message.imageUrl!}",
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
-                                        height: 150.h,
-                                        width: 200.w,
-                                        color: Colors.grey[300],
-                                        child: const Icon(
-                                          Icons.broken_image,
-                                          color: Colors.grey,
+                                      : "${AppConstants.baseUrl}/media/${message.imageUrl!}";
+
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                        backgroundColor: Colors.black,
+                                        body: SafeArea(
+                                          child: Stack(
+                                            children: [
+                                              PhotoView(
+                                                imageProvider: NetworkImage(
+                                                  imageUrl,
+                                                ),
+                                                backgroundDecoration:
+                                                    const BoxDecoration(
+                                                      color: Colors.black,
+                                                    ),
+                                              ),
+                                              Positioned(
+                                                top: 16.h,
+                                                left: 16.w,
+                                                child: IconButton(
+                                                  icon: const Icon(
+                                                    Icons.close,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
+                                    ),
+                                  );
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  child: Image.network(
+                                    message.imageUrl!.startsWith('http')
+                                        ? message.imageUrl!
+                                        : "${AppConstants.baseUrl}/media/${message.imageUrl!}",
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                              height: 150.h,
+                                              width: 200.w,
+                                              color: Colors.grey[300],
+                                              child: const Icon(
+                                                Icons.broken_image,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -121,8 +166,8 @@ class SocketMessageBubble extends StatelessWidget {
                               padding: EdgeInsets.only(bottom: 8.h),
                               child: AudioPlayerWidget(
                                 audioUrl: message.audioUrl!.startsWith('http')
-                                      ? message.audioUrl!
-                                      : "${AppConstants.baseUrl}/media/${message.audioUrl!}",
+                                    ? message.audioUrl!
+                                    : "${AppConstants.baseUrl}/media/${message.audioUrl!}",
                                 isMe: message.isMe,
                               ),
                             ),

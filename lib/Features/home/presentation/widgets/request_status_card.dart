@@ -5,6 +5,7 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/Features/community/presentation/views/user_requests_screen.dart';
 
 class RequestStatusCard extends StatelessWidget {
   const RequestStatusCard({super.key, required this.requests});
@@ -28,7 +29,12 @@ class RequestStatusCard extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed('UserRequests');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  const UserRequestsScreen(initialCategory: 1),
+            ),
+          );
         },
         child: Row(
           children: [

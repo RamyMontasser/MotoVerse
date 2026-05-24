@@ -61,6 +61,22 @@ class MapPage extends StatelessWidget {
               .lastKnownPosition;
 
           return CustomScrollViewWithAppBar(
+            onRefresh: () async {
+              final currentLocationCubit = context.read<CurrentLocationCubit>();
+              final serviceCenterCubit = context.read<ServiceCenterCubit>();
+              final lastPos = currentLocationCubit.lastKnownPosition;
+
+              await currentLocationCubit.getCurrentLocation(forceRefresh: true);
+
+              final refreshedPos =
+                  currentLocationCubit.lastKnownPosition ?? lastPos;
+              if (refreshedPos != null) {
+                serviceCenterCubit.fetchServiceCenters(
+                  lat: refreshedPos.latitude,
+                  long: refreshedPos.longitude,
+                );
+              }
+            },
             child: MapBody(currentPosition: currentPos),
           );
 

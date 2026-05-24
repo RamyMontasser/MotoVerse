@@ -135,6 +135,7 @@ class RequestOffersScreen extends StatelessWidget {
                     fontStyle: TextStyles.cairoBold16,
                   ),
                   SizedBox(height: 8.h),
+                  if(requests.first.status == 'pending')
                   CustomElevatedButton(
                     text: 'الغاء الطلب',
                     radius: CustomRadius.card12,

@@ -95,7 +95,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: [
+      actions: isHelper? null : [
         PopupMenuButton(
           icon: Icon(Icons.more_vert, color: AppColors.whiteLight),
           shape: RoundedRectangleBorder(borderRadius: CustomRadius.auth),

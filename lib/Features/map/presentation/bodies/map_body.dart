@@ -33,7 +33,7 @@ class _MapBodyState extends State<MapBody> {
     super.initState();
     _mapController = MapController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // final cubit = context.read<CurrentLocationCubit>();
+      if (!mounted) return;
       final lat = widget.currentPosition?.latitude ?? 31.4128;
       final lng = widget.currentPosition?.longitude ?? 31.8148;
       _mapController.move(LatLng(lat, lng), 15.0);
@@ -215,12 +215,10 @@ class _MapBodyState extends State<MapBody> {
                     heroTag: null,
                     mini: true,
                     onPressed: () {
-                      final currentPos = context
-                          .read<CurrentLocationCubit>()
-                          .lastKnownPosition;
-                      if (widget.currentPosition != null) {
+                      final currentPos = cubit.lastKnownPosition;
+                      if (currentPos != null) {
                         cubit.moveToCurrentPosition(
-                          currentPos!.latitude,
+                          currentPos.latitude,
                           currentPos.longitude,
                           mapController: _mapController,
                         );
@@ -233,7 +231,6 @@ class _MapBodyState extends State<MapBody> {
                       }
                     },
                     backgroundColor: AppColors.whiteLight,
-                    // foregroundColor: AppColors.blueNormal,
                     child: SvgPicture.asset(
                       'assets/icons/map/gps.svg',
                       width: 21.w,

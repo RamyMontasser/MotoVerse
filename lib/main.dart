@@ -146,7 +146,7 @@ class MyApp extends StatelessWidget {
                   'IdentityVarification': (context) => IdentityVarification(),
                   'RequestDetails': (context) => RequestDetails(),
                   'HelpOffline': (context) => HelpOffline(),
-                  'SocketChat': (context) =>  SocketChat(),
+                  'SocketChat': (context) => SocketChat(),
                   'UserRequests': (context) => const UserRequestsScreen(),
                   'MyOffersPage': (context) => const MyOffersPage(),
                   'ReviewScreen': (context) => const ReviewScreen(),

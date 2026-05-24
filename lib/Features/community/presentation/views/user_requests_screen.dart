@@ -11,18 +11,21 @@ import 'package:motoverse/Features/community/presentation/widgets/user_requests_
 import 'package:skeletonizer/skeletonizer.dart';
 
 class UserRequestsScreen extends StatefulWidget {
-  const UserRequestsScreen({super.key});
+  const UserRequestsScreen({super.key, this.initialCategory = 0});
+
+  final int initialCategory;
 
   @override
   State<UserRequestsScreen> createState() => _UserRequestsScreenState();
 }
 
 class _UserRequestsScreenState extends State<UserRequestsScreen> {
-  int currentCategory = 0;
+  late int currentCategory;
 
   @override
   void initState() {
     super.initState();
+    currentCategory = widget.initialCategory;
     context.read<RequestsCubit>().fetchRequests(mine: true);
   }
 
@@ -87,42 +90,42 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
                               .toList();
                     if (requests.isEmpty) {
                       final bool isActiveTab = currentCategory == 1;
-                      return  Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24.w),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(height: 100.h),
-                              Icon(
-                                isActiveTab
-                                    ? Icons.hourglass_empty
-                                    : Icons.request_page,
-                                size: 80.sp,
-                                color: isActiveTab
-                                    ? AppColors.yellowNormal
-                                    : AppColors.blueGrey,
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24.w),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(height: 100.h),
+                            Icon(
+                              isActiveTab
+                                  ? Icons.hourglass_empty
+                                  : Icons.request_page,
+                              size: 80.sp,
+                              color: isActiveTab
+                                  ? AppColors.yellowNormal
+                                  : AppColors.blueGrey,
+                            ),
+                            SizedBox(height: 16.h),
+                            Text(
+                              isActiveTab
+                                  ? 'لا توجد طلبات نشطة حالياً'
+                                  : 'لا توجد طلبات سابقة',
+                              textAlign: TextAlign.center,
+                              style: TextStyles.cairoBold16.copyWith(
+                                color: AppColors.blueDarkActive,
                               ),
-                              SizedBox(height: 16.h),
-                              Text(
-                                isActiveTab
-                                    ? 'لا توجد طلبات نشطة حالياً'
-                                    : 'لا توجد طلبات سابقة',
-                                textAlign: TextAlign.center,
-                                style: TextStyles.cairoBold16.copyWith(
-                                  color: AppColors.blueDarkActive,
-                                ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Text(
+                              'يمكنك إنشاء طلب جديد أو مراجعة الطلبات السابقة.',
+                              textAlign: TextAlign.center,
+                              style: TextStyles.cairoRegular14.copyWith(
+                                color: AppColors.whiteDarkActive,
                               ),
-                              SizedBox(height: 8.h),
-                              Text(
-                                'يمكنك إنشاء طلب جديد أو مراجعة الطلبات السابقة.',
-                                textAlign: TextAlign.center,
-                                style: TextStyles.cairoRegular14.copyWith(
-                                  color: AppColors.whiteDarkActive,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                         // ),
                       );
                     }
@@ -146,5 +149,3 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
     );
   }
 }
-
-

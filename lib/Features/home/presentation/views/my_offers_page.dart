@@ -12,19 +12,22 @@ import 'package:motoverse/Features/home/presentation/widgets/my_offers_category_
 import 'package:skeletonizer/skeletonizer.dart';
 
 class MyOffersPage extends StatefulWidget {
-  const MyOffersPage({super.key});
+  const MyOffersPage({super.key, this.initialCategory = 0});
+
+  final int initialCategory;
 
   @override
   State<MyOffersPage> createState() => _MyOffersPageState();
 }
 
 class _MyOffersPageState extends State<MyOffersPage> {
-  int currentCategory = 0;
+  late int currentCategory;
   List<OfferModel> myOffers = [];
 
   @override
   void initState() {
     super.initState();
+    currentCategory = widget.initialCategory;
     context.read<MyOffersCubit>().getMyOffers();
   }
 
@@ -101,7 +104,6 @@ class _MyOffersPageState extends State<MyOffersPage> {
                     final currentOffer = myOffers.firstWhere(
                       (offer) => offer.request == state.request.id,
                     );
-                    
 
                     final List<dynamic> args = [
                       state.request,
@@ -225,5 +227,3 @@ class _MyOffersPageState extends State<MyOffersPage> {
     );
   }
 }
-
-
