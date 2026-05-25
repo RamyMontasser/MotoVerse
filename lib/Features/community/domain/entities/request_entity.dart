@@ -14,6 +14,7 @@ class RequestEntity {
   final int imagesCount;
   final String status;
   final String createdAt;
+  final String userPhone;
 
   final String? city;
   final RequestLocationModel? location;
@@ -37,5 +38,6 @@ class RequestEntity {
     this.location,
     this.distance,
     required this.averageRating,
+    required this.userPhone,
   });
 }

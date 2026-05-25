@@ -113,6 +113,9 @@ class RequestOffersScreen extends StatelessWidget {
           }
         },
         builder: (newContext, state) {
+          final bool hasAcceptedOffer =
+              state is NotificationSuccess &&
+              state.offers.any((offer) => offer.status == 'accepted');
           return Scaffold(
             bottomSheet: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -135,20 +138,20 @@ class RequestOffersScreen extends StatelessWidget {
                     fontStyle: TextStyles.cairoBold16,
                   ),
                   SizedBox(height: 8.h),
-                  if(requests.first.status == 'pending')
-                  CustomElevatedButton(
-                    text: 'الغاء الطلب',
-                    radius: CustomRadius.card12,
-                    fun: () {
-                      newContext.read<NotificationCubit>().deleteRequest(
-                        requestId: requests.first.id,
-                      );
-                    },
-                    backgColor: AppColors.redLightActive,
-                    foregColor: AppColors.redDark,
-                    height: 48,
-                    fontStyle: TextStyles.cairoBold16,
-                  ),
+                  if (!hasAcceptedOffer && requests.first.status != 'accepted')
+                    CustomElevatedButton(
+                      text: 'الغاء الطلب',
+                      radius: CustomRadius.card12,
+                      fun: () {
+                        newContext.read<NotificationCubit>().deleteRequest(
+                          requestId: requests.first.id,
+                        );
+                      },
+                      backgColor: AppColors.redLightActive,
+                      foregColor: AppColors.redDark,
+                      height: 48,
+                      fontStyle: TextStyles.cairoBold16,
+                    ),
                   SizedBox(height: 20.h),
                 ],
               ),
@@ -305,6 +308,7 @@ class RequestOffersScreen extends StatelessWidget {
         helperId: 0,
         helperVerified: true,
         memberSince: '2020',
+        helperPhone: '01067235116',
       ),
     );
   }

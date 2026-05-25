@@ -199,11 +199,9 @@ class HelpOffline extends StatelessWidget {
                     ),
 
                     SizedBox(height: 10.h),
-
+                    if(offer.status != 'accepted')
                     CustomElevatedButton(
-                      text: offer.status == 'accepted'
-                          ? 'الذهاب للدردشة'
-                          : statusText,
+                      text: statusText,
                       radius: CustomRadius.card12,
                       fun: () {
                         if (offer.status == 'accepted') {

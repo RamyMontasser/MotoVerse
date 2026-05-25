@@ -19,12 +19,14 @@ class RequestModel {
   final int imagesCount;
   final String status;
   final String createdAt;
+  final String userPhone;
 
   RequestModel({
     required this.id,
     required this.userId,
     required this.userName,
     required this.userImage,
+    required this.userPhone,
     required this.memberSince,
     required this.city,
     this.location,
@@ -45,6 +47,7 @@ class RequestModel {
       userId: json['user_id'] as int? ?? 0,
       userName: json['user']?.toString() ?? '',
       userImage: json['user_image']?.toString(),
+      userPhone: json['user_phone']?.toString() ?? '',
       memberSince: json['member_since'] as int? ?? 0,
       city: json['city']?.toString() ?? '',
       averageRating: json['average_rating'] == null
@@ -109,6 +112,7 @@ class RequestModel {
       city: requestType == 'offline' ? city : null,
       location: requestType == 'offline' ? location : null,
       distance: requestType == 'offline' ? distance : null,
+      userPhone: userPhone,
     );
   }
 
@@ -130,6 +134,6 @@ class RequestModel {
       status: entity.status,
       createdAt: entity.createdAt,
       averageRating: entity.averageRating,
-    );
+      userPhone: entity.userPhone,);
   }
 }

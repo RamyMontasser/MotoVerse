@@ -9,13 +9,19 @@ import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:motoverse/Features/community/domain/entities/request_entity.dart';
 
 class UserContactInfo extends StatelessWidget {
   final RequestModel request;
   final OfferModel offer;
   final bool isHelper;
-  const UserContactInfo({super.key, required this.request, required this.offer, required this.isHelper});
+  const UserContactInfo({
+    super.key,
+    required this.request,
+    required this.offer,
+    required this.isHelper,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +49,15 @@ class UserContactInfo extends StatelessWidget {
                   CircleAvatar(
                     radius: 25.r,
                     backgroundColor: AppColors.blueLight,
-                    backgroundImage: isHelper?
-                        request.userImage != null &&
-                            request.userImage!.isNotEmpty
-                        ? NetworkImage(
-                            request.userImage!.startsWith('http')
-                                ? request.userImage!
-                                : "${AppConstants.baseUrl}${request.userImage!}",
-                          )
-                        : null
+                    backgroundImage: isHelper
+                        ? request.userImage != null &&
+                                  request.userImage!.isNotEmpty
+                              ? NetworkImage(
+                                  request.userImage!.startsWith('http')
+                                      ? request.userImage!
+                                      : "${AppConstants.baseUrl}${request.userImage!}",
+                                )
+                              : null
                         : offer.helperImage != null &&
                               offer.helperImage!.isNotEmpty
                         ? NetworkImage(
@@ -60,11 +66,13 @@ class UserContactInfo extends StatelessWidget {
                                 : "${AppConstants.baseUrl}${offer.helperImage!}",
                           )
                         : null,
-                    child: isHelper?
-                        request.userImage == null || request.userImage!.isEmpty
-                        ? const Icon(Icons.person)
-                        : null
-                        : offer.helperImage == null || offer.helperImage!.isEmpty
+                    child: isHelper
+                        ? request.userImage == null ||
+                                  request.userImage!.isEmpty
+                              ? const Icon(Icons.person)
+                              : null
+                        : offer.helperImage == null ||
+                              offer.helperImage!.isEmpty
                         ? const Icon(Icons.person)
                         : null,
                   ),
@@ -92,9 +100,7 @@ class UserContactInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isHelper
-                    ? request.userName
-                    : offer.helperName,
+                    isHelper ? request.userName : offer.helperName,
                     style: TextStyles.cairoBold14.copyWith(
                       color: AppColors.blueNormal,
                       height: 2.h,
@@ -136,9 +142,9 @@ class UserContactInfo extends StatelessWidget {
                     SizedBox(width: 2.w),
                     Text(
                       isHelper
-                      // ?'3.5'
-                      ? request.averageRating
-                      : offer.averageRating,
+                          // ?'3.5'
+                          ? request.averageRating
+                          : offer.averageRating,
                       style: TextStyles.cairoBold12.copyWith(
                         color: AppColors.blueDarkActive,
                       ),
@@ -150,50 +156,58 @@ class UserContactInfo extends StatelessWidget {
           ),
           const Divider(height: 20, color: AppColors.blueLight),
 
-          if(offer.status == 'accepted')
-          Row(
-            children: [
-              Expanded(
-                child: CustomElevatedButton(
-                  text: 'اتصال',
-                  radius: CustomRadius.card12,
-                  fun: () {},
-                  height: 45,
-                  fontStyle: TextStyles.cairoBold16,
-                  prefixIcon: Icon(
-                    Icons.call_outlined,
-                    size: 20,
-                    color: AppColors.blueNormal,
+          if (offer.status == 'accepted')
+            Row(
+              children: [
+                Expanded(
+                  child: CustomElevatedButton(
+                    text: 'اتصال',
+                    radius: CustomRadius.card12,
+                    fun: () async {
+                      final phoneNumber = isHelper
+                          ? request.userPhone
+                          : offer.helperPhone;
+                      if (phoneNumber.isNotEmpty) {
+                        final uri = Uri(scheme: 'tel', path: phoneNumber);
+                        await launchUrl(uri);
+                      }
+                    },
+                    height: 45,
+                    fontStyle: TextStyles.cairoBold16,
+                    prefixIcon: Icon(
+                      Icons.call_outlined,
+                      size: 20,
+                      color: AppColors.blueNormal,
+                    ),
+                    backgColor: AppColors.blueGrey,
+                    foregColor: AppColors.blueDark,
                   ),
-                  backgColor: AppColors.blueGrey,
-                  foregColor: AppColors.blueDark,
                 ),
-              ),
 
-              SizedBox(width: 12.w),
+                SizedBox(width: 12.w),
 
-              Expanded(
-                child: CustomElevatedButton(
-                  text: 'دردشة',
-                  radius: CustomRadius.card12,
-                  fun: () {
-                    context.read<NotificationCubit>().enterChat(
-                          requestId: request.id,
-                        );
-                  },
-                  height: 45,
-                  fontStyle: TextStyles.cairoBold16,
-                  prefixIcon: Icon(
-                    Icons.chat_bubble_outline_outlined,
-                    size: 20,
-                    color: AppColors.blueNormal,
+                Expanded(
+                  child: CustomElevatedButton(
+                    text: 'دردشة',
+                    radius: CustomRadius.card12,
+                    fun: () {
+                      context.read<NotificationCubit>().enterChat(
+                        requestId: request.id,
+                      );
+                    },
+                    height: 45,
+                    fontStyle: TextStyles.cairoBold16,
+                    prefixIcon: Icon(
+                      Icons.chat_bubble_outline_outlined,
+                      size: 20,
+                      color: AppColors.blueNormal,
+                    ),
+                    backgColor: AppColors.blueGrey,
+                    foregColor: AppColors.blueNormal,
                   ),
-                  backgColor: AppColors.blueGrey,
-                  foregColor: AppColors.blueNormal,
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ],
       ),
     );

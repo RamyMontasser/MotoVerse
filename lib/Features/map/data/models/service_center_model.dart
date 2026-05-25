@@ -10,6 +10,7 @@ class ServiceCenterModel {
   final String closingTime;
   final double averageRating;
   final double distanceKm;
+  final String phone;
 
   ServiceCenterModel({
     required this.id,
@@ -23,6 +24,7 @@ class ServiceCenterModel {
     required this.closingTime,
     required this.averageRating,
     required this.distanceKm,
+    required this.phone,
   });
 
   factory ServiceCenterModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class ServiceCenterModel {
       closingTime: json['closing_time'] as String? ?? '',
       averageRating: (json['average_rating'] as num?)?.toDouble() ?? 0.0,
       distanceKm: (json['distance_km'] as num?)?.toDouble() ?? 0.0,
+      phone: json['phone'] as String? ?? '',
     );
   }
 
@@ -57,6 +60,7 @@ class ServiceCenterModel {
       'closing_time': closingTime,
       'average_rating': averageRating,
       'distance_km': distanceKm,
+      'phone': phone,
     };
   }
 }

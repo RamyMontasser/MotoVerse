@@ -293,6 +293,7 @@ class _MapBodyState extends State<MapBody> {
                                           closingTime: "00:00",
                                           averageRating: 0.0,
                                           distanceKm: 0.0,
+                                          phone: '',
                                           mapController: _mapController,
                                         );
                                       },
@@ -330,6 +331,7 @@ class _MapBodyState extends State<MapBody> {
                                         closingTime: center.closingTime,
                                         averageRating: center.averageRating,
                                         distanceKm: center.distanceKm,
+                                        phone: center.phone,
                                         mapController: _mapController,
                                       );
                                     },
@@ -392,6 +394,7 @@ class _MapBodyState extends State<MapBody> {
                 closingTime: center.closingTime,
                 averageRating: center.averageRating,
                 distanceKm: center.distanceKm,
+                phone: center.phone,
                 mapController: _mapController,
               ),
             ],

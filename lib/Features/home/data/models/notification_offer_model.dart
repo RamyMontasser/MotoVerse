@@ -11,6 +11,7 @@ class OfferModel {
   final String? estimatedMinutes;
   final String status;
   final String createdAt;
+  final String helperPhone;
 
   OfferModel({
     required this.id,
@@ -24,6 +25,7 @@ class OfferModel {
     required this.createdAt,
     required this.helperId,
     required this.helperVerified, required this.memberSince,
+    required this.helperPhone
   });
 
   factory OfferModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class OfferModel {
       helperId: json['helper_id'] as int? ?? 0,
       helperVerified: json['helper_verified'] as bool? ?? false,
       memberSince: json['member_since']?.toString() ?? '',
+      helperPhone: json['helper_phone'] as String? ?? '',
     );
   }
 

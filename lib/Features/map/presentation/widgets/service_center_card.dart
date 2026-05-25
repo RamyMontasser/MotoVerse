@@ -10,6 +10,7 @@ import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 import 'package:motoverse/Features/map/data/models/service_center_model.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceCenterCard extends StatelessWidget {
   const ServiceCenterCard({
@@ -23,6 +24,7 @@ class ServiceCenterCard extends StatelessWidget {
     required this.closingTime,
     required this.averageRating,
     required this.distanceKm,
+    required this.phone,
     required this.mapController,
   });
 
@@ -35,6 +37,7 @@ class ServiceCenterCard extends StatelessWidget {
   final String closingTime;
   final double averageRating;
   final double distanceKm;
+  final String? phone;
   final MapController mapController;
 
   // String get _secureImageUrl {
@@ -53,7 +56,7 @@ class ServiceCenterCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // debugPrint('the image :  $image');
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 20.h),
       margin: EdgeInsets.only(bottom: 20.h),
       decoration: BoxDecoration(
         borderRadius: CustomRadius.card,
@@ -134,18 +137,11 @@ class ServiceCenterCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          name,
-                          style: TextStyles.cairoRegular16.copyWith(
-                            color: AppColors.blueDarkHover,
-                          ),
-                        ),
-                        Spacer(),
-
-                        Icon(Icons.bookmark_border, color: Colors.grey),
-                      ],
+                    Text(
+                      name,
+                      style: TextStyles.cairoRegular16.copyWith(
+                        color: AppColors.blueDarkHover,
+                      ),
                     ),
                     SizedBox(height: 2.h),
                     Text.rich(
@@ -220,10 +216,10 @@ class ServiceCenterCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                flex: 4,
+                // flex: 4,
                 child: CustomElevatedButton(
                   text: "الاتجاهات",
-                  radius: CustomRadius.r2,
+                  radius: CustomRadius.r1,
                   fun: () {
                     context.read<CurrentLocationCubit>().moveToCurrentPosition(
                       lat,
@@ -235,46 +231,56 @@ class ServiceCenterCard extends StatelessWidget {
                   fontStyle: TextStyles.cairoSemiBold16,
                   backgColor: AppColors.blueNormal,
                   foregColor: AppColors.whiteLight,
-                  width: 100.w,
-                  height: 40.h,
+                  // width: 100.w,
+                  // height: 45.h,
                   suffixIcon: Icon(Icons.directions_outlined),
+                  height: 46,
                 ),
               ),
 
-              SizedBox(width: 8.w),
+              SizedBox(width: 12.w),
 
               Expanded(
-                flex: 1,
+                // flex: 1,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: (phone?.isNotEmpty ?? false)
+                      ? () async {
+                          final phoneNumber = phone ?? '';
+                          final uri = Uri(scheme: 'tel', path: phoneNumber);
+                          await launchUrl(uri);
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 5.w,
+                      vertical: 10.h,
+                    ),
                     backgroundColor: AppColors.blueLight,
                     foregroundColor: AppColors.blueNormal,
                     shape: RoundedRectangleBorder(
-                      borderRadius: CustomRadius.r2,
+                      borderRadius: CustomRadius.r1,
                     ),
                   ),
                   icon: Icon(Icons.phone_outlined),
                 ),
               ),
 
-              SizedBox(width: 8.w),
+              // SizedBox(width: 8.w),
 
-              Expanded(
-                flex: 2,
-                child: CustomElevatedButton(
-                  text: "احجز الآن",
-                  radius: CustomRadius.r2,
-                  fun: () {},
-                  withBorder: false,
-                  fontStyle: TextStyles.cairoSemiBold16,
-                  backgColor: AppColors.blueLight,
-                  foregColor: AppColors.blueNormal,
-                  width: 70,
-                  height: 40,
-                ),
-              ),
+              // Expanded(
+              //   flex: 2,
+              //   child: CustomElevatedButton(
+              //     text: "احجز الآن",
+              //     radius: CustomRadius.r2,
+              //     fun: () {},
+              //     withBorder: false,
+              //     fontStyle: TextStyles.cairoSemiBold16,
+              //     backgColor: AppColors.blueLight,
+              //     foregColor: AppColors.blueNormal,
+              //     width: 70,
+              //     height: 40,
+              //   ),
+              // ),
             ],
           ),
         ],
@@ -285,7 +291,7 @@ class ServiceCenterCard extends StatelessWidget {
   Widget _buildTag(String label) {
     return Container(
       margin: EdgeInsets.only(left: 2.w, right: 2.w),
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
       decoration: BoxDecoration(
         color: AppColors.blueLightHover,
         borderRadius: CustomRadius.r2,

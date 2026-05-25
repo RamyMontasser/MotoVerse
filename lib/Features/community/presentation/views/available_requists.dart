@@ -75,6 +75,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                   status: 'open',
                                   createdAt: '2022-01-01 00:00:00',
                                   averageRating: '4.5',
+                                  userPhone: '01067235116',
                                 ),
                               );
                             } else if (currentCategory == 2) {
@@ -99,6 +100,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                   status: 'open',
                                   createdAt: '2022-01-01 00:00:00',
                                   averageRating: '4.5',
+                                  userPhone: '01067235116',
                                 ),
                               );
                             } else if (index % 2 == 0) {
@@ -123,6 +125,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                   status: 'open',
                                   createdAt: '2022-01-01 00:00:00',
                                   averageRating: '4.5',
+                                  userPhone: '01067235116',
                                 ),
                               );
                             }
@@ -147,6 +150,7 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                                 status: 'open',
                                 createdAt: '2022-01-01 00:00:00',
                                 averageRating: '4.5',
+                                userPhone: '01067235116',
                               ),
                             );
                           },
