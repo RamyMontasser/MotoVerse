@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
-import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
+// import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/history/data/models/car_history_model.dart';
 
 class MaintenanceCard extends StatelessWidget {
@@ -15,7 +15,7 @@ class MaintenanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 42.h, bottom: 5.h),
-      padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 4.h, bottom: 8.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: AppColors.whiteLight,
         borderRadius: CustomRadius.card,
@@ -30,40 +30,23 @@ class MaintenanceCard extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                // mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    color: AppColors.blueNormal,
-                    size: 20.w,
-                  ),
-                  SizedBox(width: 5.w),
-                  Text(
-                    historyModel.centerName,
-                    style: TextStyles.cairoMedium12.copyWith(
-                      color: AppColors.blueDarker,
-                    ),
-                  ),
-                ],
+              Icon(
+                Icons.location_on_outlined,
+                color: AppColors.blueNormal,
+                size: 20.w,
               ),
-
-              IconButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w),
-                  backgroundColor: AppColors.blueLight,
-                  foregroundColor: AppColors.blueNormal,
-                  shape: RoundedRectangleBorder(borderRadius: CustomRadius.r1),
+              SizedBox(width: 5.w),
+              Text(
+                historyModel.centerName,
+                style: TextStyles.cairoMedium12.copyWith(
+                  color: AppColors.blueDarker,
                 ),
-                icon: Icon(Icons.phone_outlined, size: 18.w),
               ),
             ],
           ),
+          SizedBox(height: 5.h),
 
-          // SizedBox(height: 5.h),
 
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
@@ -100,20 +83,29 @@ class MaintenanceCard extends StatelessWidget {
                   ],
                 ),
 
-                SizedBox(height: 6.h),
+                // SizedBox(height: 6.h),
 
-                CustomElevatedButton(
-                  text: 'تفاصيل الحجز',
-                  radius: CustomRadius.circle,
-                  fun: () {
-                    Navigator.of(context).pushNamed('history2');
-                  },
-                  withBorder: false,
-                  fontStyle: TextStyles.cairoBold12,
-                  backgColor: AppColors.yellowNormal,
-                  height: 23.h,
-                ),
+                
+
+                // CustomElevatedButton(
+                //   text: 'تفاصيل الحجز',
+                //   radius: CustomRadius.circle,
+                //   fun: () {
+                //     Navigator.of(context).pushNamed('history2');
+                //   },
+                //   withBorder: false,
+                //   fontStyle: TextStyles.cairoBold12,
+                //   backgColor: AppColors.yellowNormal,
+                //   height: 23.h,
+                // ),
               ],
+            ),
+          ),
+          SizedBox(height: 6.h),
+          Text(
+            'تم عمل ${historyModel.service} لحل المشكلة',
+            style: TextStyles.cairoBold12.copyWith(
+              color: AppColors.whiteDarker,
             ),
           ),
         ],

@@ -148,7 +148,7 @@ class HistoryPage1 extends StatelessWidget {
                 name: 'اخر صيانة',
                 desc: summary.lastMaintenance?.date ?? 'No history',
                 fun: () {
-                  Navigator.of(context).pushNamed('history2');
+                  // Navigator.of(context).pushNamed('history2');
                 },
                 iconBgColor: AppColors.greenLight,
                 iconColor: AppColors.greenNormal,
