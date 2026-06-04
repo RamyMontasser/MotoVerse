@@ -40,6 +40,13 @@ abstract class TextStyles {
     letterSpacing: _letterSpacing,
   );
 
+  static TextStyle cairoBold22 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.bold,
+    fontSize: 22.sp,
+    // height: _lineHeight,
+    letterSpacing: _letterSpacing,
+  );
   static TextStyle cairoBold20 = TextStyle(
     fontFamily: 'Cairo',
     fontWeight: FontWeight.bold,
@@ -136,6 +143,13 @@ abstract class TextStyles {
     letterSpacing: _letterSpacing,
   );
   
+  static TextStyle cairoBold17 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.bold, // Bold
+    fontSize: 17.sp,
+    // height: _lineHeight,
+    letterSpacing: _letterSpacing,
+  );
   static TextStyle cairoBold18 = TextStyle(
     fontFamily: 'Cairo',
     fontWeight: FontWeight.bold, // Bold
@@ -160,6 +174,14 @@ abstract class TextStyles {
     letterSpacing: _letterSpacing,
   );
 
+  static TextStyle cairoRegular15 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.normal, // Regular
+    fontSize: 15.sp,
+    // height: _lineHeight,
+    letterSpacing: _letterSpacing,
+  );
+
   static TextStyle cairoRegular14 = TextStyle(
     fontFamily: 'Cairo',
     fontWeight: FontWeight.normal, // Regular
@@ -167,7 +189,16 @@ abstract class TextStyles {
     // height: _lineHeight,
     letterSpacing: _letterSpacing,
   );
+  
+  static TextStyle cairoRegular13 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.normal, // Regular
+    fontSize: 13.sp,
+    // height: _lineHeight,
+    letterSpacing: _letterSpacing,
+  );
 
+ 
   static TextStyle cairoRegular11 = TextStyle(
     fontFamily: 'Cairo',
     fontWeight: FontWeight.normal, // Regular

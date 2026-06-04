@@ -35,7 +35,18 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    context.read<RequestsCubit>().fetchRequests(mine: true);
+    final currentLocationState = context.read<CurrentLocationCubit>().state;
+    double? latitude;
+    double? longitude;
+    if (currentLocationState is CurrentLocationSuccess) {
+      latitude = currentLocationState.currentLocation.latitude;
+      longitude = currentLocationState.currentLocation.longitude;
+    }
+    context.read<RequestsCubit>().fetchRequests(
+      mine: true,
+      latitude: latitude,
+      longitude: longitude,
+    );
     context.read<MyOffersCubit>().getMyOffers();
   }
 
@@ -46,12 +57,25 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _refreshData() async {
+    await context.read<CurrentLocationCubit>().getCurrentLocation(
+      forceRefresh: true,
+    );
+
+    final currentLocationState = context.read<CurrentLocationCubit>().state;
+    double? latitude;
+    double? longitude;
+    if (currentLocationState is CurrentLocationSuccess) {
+      latitude = currentLocationState.currentLocation.latitude;
+      longitude = currentLocationState.currentLocation.longitude;
+    }
+
     await Future.wait([
-      context.read<CurrentLocationCubit>().getCurrentLocation(
-        forceRefresh: true,
-      ),
       context.read<UserCubitCubit>().getUserInfo(),
-      context.read<RequestsCubit>().fetchRequests(mine: true),
+      context.read<RequestsCubit>().fetchRequests(
+        mine: true,
+        latitude: latitude,
+        longitude: longitude,
+      ),
       context.read<MyOffersCubit>().getMyOffers(),
     ]);
   }

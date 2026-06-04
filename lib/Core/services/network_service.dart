@@ -24,6 +24,12 @@ abstract class NetworkService {
     bool requiresAuth = true,
     String? local,
   });
+  Future<dynamic> patchFormData({
+    required String endPoint,
+    required dynamic data,
+    bool requiresAuth = true,
+    String? local,
+  });
   Future<dynamic> getData({
     required String endPoint,
     Map<String, dynamic>? queryParameters,

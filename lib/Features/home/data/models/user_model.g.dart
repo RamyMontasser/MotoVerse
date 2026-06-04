@@ -24,6 +24,7 @@ class UserDataModelAdapter extends TypeAdapter<UserDataModel> {
       isPhoneVerified: fields[4] as bool,
       isProfileComplete: fields[5] as bool,
       isVerified: fields[7] as bool,
+      memberSince: fields[9] as String,
       image: fields[8] as String,
       city: fields[6] as String?,
     );
@@ -32,7 +33,7 @@ class UserDataModelAdapter extends TypeAdapter<UserDataModel> {
   @override
   void write(BinaryWriter writer, UserDataModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class UserDataModelAdapter extends TypeAdapter<UserDataModel> {
       ..writeByte(7)
       ..write(obj.isVerified)
       ..writeByte(8)
-      ..write(obj.image);
+      ..write(obj.image)
+      ..writeByte(9)
+      ..write(obj.memberSince);
   }
 
   @override

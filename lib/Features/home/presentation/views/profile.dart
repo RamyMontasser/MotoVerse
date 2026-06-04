@@ -27,22 +27,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // final String name = 'رامي منتصر';
   UserDataModel? currentUser;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final userBox = Hive.box<UserDataModel>('user_box');
-  //   currentUser = userBox.get('user');
-  // }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => LogoutCubit(getIt<AuthRepo>()),
-
-      //  getIt<SocketService>()
       child: BlocListener<LogoutCubit, LogoutState>(
         listener: (context, state) {
           if (state is LogoutSuccess) {

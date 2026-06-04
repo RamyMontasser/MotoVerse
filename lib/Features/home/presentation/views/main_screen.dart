@@ -10,8 +10,8 @@ import 'package:motoverse/Features/home/presentation/cubit/current_location_cubi
 // import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/home/presentation/views/home.dart';
-import 'package:motoverse/Features/home/presentation/views/profile.dart';
 import 'package:motoverse/Features/map/presentation/views/map.dart';
+import 'package:motoverse/Features/profile/presentation/views/profile_screen.dart';
 // import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
       const AiChat1(),
       const CommunityMain(),
       const MapPage(),
-      const Profile(),
+      const ProfileScreen(),
     ];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

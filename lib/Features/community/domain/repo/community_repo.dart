@@ -4,7 +4,11 @@ import 'package:motoverse/Features/community/data/models/create_request_model.da
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 
 abstract class CommunityRepo {
-  Future<Either<Failure, List<RequestModel>>> getRequests({bool mine = false});
+  Future<Either<Failure, List<RequestModel>>> getRequests({
+    bool mine = false,
+    double? latitude,
+    double? longitude,
+  });
   Future<Either<Failure, void>> createRequest(CreateRequestModel requestModel);
   Future<Either<Failure, void>> cancelRequest({required int requestId});
   // Future<Either<Failure, void>> acceptOffer({required int offerId});

@@ -9,6 +9,7 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 
 class MyOfferPageCard extends StatelessWidget {
@@ -123,20 +124,21 @@ class MyOfferPageCard extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 25.r,
                   backgroundColor: AppColors.blueLight,
-                    backgroundImage:
-                        offerModel.helperImage != null &&
-                            offerModel.helperImage!.isNotEmpty
-                        ? NetworkImage(
-                            offerModel.helperImage!.startsWith('http')
-                                ? offerModel.helperImage!
-                                : "${AppConstants.baseUrl}${offerModel.helperImage!}",
-                          )
-                        : null,
-                    child:
-                        offerModel.helperImage == null || offerModel.helperImage!.isEmpty
-                        ? const Icon(Icons.person)
-                        : null,
-                  ),
+                  backgroundImage:
+                      offerModel.helperImage != null &&
+                          offerModel.helperImage!.isNotEmpty
+                      ? NetworkImage(
+                          offerModel.helperImage!.startsWith('http')
+                              ? offerModel.helperImage!
+                              : "${AppConstants.baseUrl}${offerModel.helperImage!}",
+                        )
+                      : null,
+                  child:
+                      offerModel.helperImage == null ||
+                          offerModel.helperImage!.isEmpty
+                      ? const Icon(Icons.person)
+                      : null,
+                ),
               ),
               SizedBox(width: 10.w),
               Text(
@@ -216,23 +218,20 @@ class MyOfferPageCard extends StatelessWidget {
           CustomElevatedButton(
             text: 'عرض التفاصيل',
             radius: CustomRadius.card12,
-            fun: ()  {
+            fun: () {
+              final locationState = context.read<CurrentLocationCubit>().state;
+              double latitude = 0.0;
+              double longitude = 0.0;
+              if (locationState is CurrentLocationSuccess) {
+                latitude = locationState.currentLocation.latitude;
+                longitude = locationState.currentLocation.longitude;
+              }
 
               context.read<MyOffersCubit>().getRequestDetails(
-          requestId: offerModel.request,
-        );
-              // var result =
-              //      context.read<MyOffersCubit>().getRequestDetails(
-              //       requestId: offerModel.request,
-              //     );
-
-              // if (result is RequestDetailsFailure) {
-              //   return;
-              // }
-              // var requestDetails = result as RequestDetailsSuccess;
-              // final List<dynamic> args = [requestDetails.request, offerModel.status];
-              // debugPrint(args.toString());
-              // Navigator.of(context).pushNamed('HelpOffline', arguments: args);
+                requestId: offerModel.request,
+                latitude: latitude,
+                longitude: longitude,
+              );
             },
             backgColor: statusColor,
             foregColor: AppColors.whiteLight,

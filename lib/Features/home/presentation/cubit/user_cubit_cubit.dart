@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,6 +49,32 @@ class UserCubitCubit extends Cubit<UserCubitState> {
         var checkUser = box.get('user');
         debugPrint("🔍 Check Hive immediately: ${checkUser?.name}");
         emit(GetUserInfoSuccess(user: user));
+      },
+    );
+  }
+
+  Future<void> updateUserInfo({
+    // required int id,
+    required String name,
+    required String email,
+    File? image,
+    bool removeImage = false,
+  }) async {
+    emit(UpdateUserInfoLoading());
+    final result = await homeRepo.updateUserInfo(
+      // id: id,
+      name: name,
+      email: email,
+      image: image,
+      removeImage: removeImage,
+    );
+
+    result.fold(
+      (failure) => emit(UpdateUserInfoFailure(errMsg: failure.errorMsg)),
+      (user) async {
+        final box = Hive.box<UserDataModel>('user_box');
+        await box.put('user', user);
+        emit(UpdateUserInfoSuccess(user: user));
       },
     );
   }

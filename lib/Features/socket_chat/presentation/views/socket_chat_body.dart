@@ -12,17 +12,17 @@ import 'package:motoverse/Features/socket_chat/presentation/widgets/socket_messa
 
 class SocketChatBody extends StatefulWidget {
   final String chatId;
-  final String otherUserId;
-  final String helperName;
+  final String chatUserId;
+  final String chatUserName;
   final String? helperAvatar;
   final bool isHelper;
   final String requestId;
   final String offerId;
   final String averageRating;
   final bool helperVerified;
-
+  final bool isOnline;
   const SocketChatBody({
-    super.key, required this.chatId, required this.otherUserId, required this.helperName, this.helperAvatar, required this.isHelper, required this.requestId, required this.offerId, required this.averageRating, required this.helperVerified,});
+    super.key, required this.chatId, required this.chatUserId, required this.chatUserName, this.helperAvatar, required this.isHelper, required this.requestId, required this.offerId, required this.averageRating, required this.helperVerified, required this.isOnline,});
 
   @override
   State<SocketChatBody> createState() => _SocketChatBodyState();
@@ -50,9 +50,9 @@ class _SocketChatBodyState extends State<SocketChatBody> {
   //         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
   //     if (args != null) {
   //       chatId = args['chatId']?.toString() ?? '';
-  //       otherUserId = args['otherUserId']?.toString() ?? '';
-  //       helperName = args['otherUserName'] ?? '';
-  //       helperAvatar = args['otherUserAvatar'];
+  //       chatUserId = args['chatUserId']?.toString() ?? '';
+  //       chatUserName = args['chatUserName'] ?? '';
+  //       helperAvatar = args['helperAvatar'];
   //       isHelper = args['isHelper'] ?? false;
   //       requestId = args['requestId']?.toString() ?? '';
   //       offerId = args['offerId']?.toString() ?? '';
@@ -108,11 +108,12 @@ class _SocketChatBodyState extends State<SocketChatBody> {
 
   @override
   Widget build(BuildContext context) {
+   debugPrint( 'the user user status : ${widget.isOnline}');
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: ChatAppBar(
-        name: widget.helperName,
-        status: 'متصل',
+        name: widget.chatUserName,
+        status: widget.isOnline ? 'متصل' : 'غير متصل',
         avatarUrl: widget.helperAvatar,
         onDeleteChat: widget.isHelper ? () {} : _confirmCompleteRequest,
         isHelper: widget.isHelper,

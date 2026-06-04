@@ -26,6 +26,8 @@ import 'package:motoverse/Features/settings/data/repo/settings_repo_impl.dart';
 import 'package:motoverse/Core/services/socket_service.dart';
 import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
 import 'package:motoverse/Features/socket_chat/data/repo/chat_socket_repo_impl.dart';
+import 'package:motoverse/Features/profile/domain/repo/profile_car_repo.dart';
+import 'package:motoverse/Features/profile/data/repo/profile_car_repo_impl.dart';
 
 
 
@@ -91,6 +93,10 @@ void getitsetup() {
 
   getIt.registerSingleton<SettingsRepo>(
     SettingsRepoImpl(networkService:  getIt<NetworkService>() ),
+  );
+
+  getIt.registerSingleton<ProfileCarRepo>(
+    ProfileCarRepoImpl(networkService: getIt<NetworkService>()),
   );
   
   // getIt.registerSingleton<ChatRepo>(

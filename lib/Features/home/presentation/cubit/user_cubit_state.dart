@@ -27,3 +27,15 @@ final class GetUserInfoFailure extends UserCubitState {
   GetUserInfoFailure({required this.errMsg});
 }
 
+final class UpdateUserInfoLoading extends UserCubitState {}
+
+final class UpdateUserInfoSuccess extends UserCubitState {
+  final UserDataModel user;
+  UpdateUserInfoSuccess({required this.user});
+}
+
+final class UpdateUserInfoFailure extends UserCubitState {
+  final String errMsg;
+  UpdateUserInfoFailure({required this.errMsg});
+}
+

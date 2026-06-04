@@ -46,6 +46,9 @@ import 'package:motoverse/Features/home/presentation/views/main_screen.dart';
 import 'package:motoverse/Features/home/presentation/views/my_offers_page.dart';
 import 'package:motoverse/Features/home/presentation/views/profile.dart';
 import 'package:motoverse/Features/home/presentation/views/request_offers_screen.dart';
+import 'package:motoverse/Features/profile/presentation/views/add_or_update_car_screen.dart';
+import 'package:motoverse/Features/profile/presentation/views/edit_profile_screen.dart';
+import 'package:motoverse/Features/profile/presentation/views/profile_screen.dart';
 import 'package:motoverse/Features/settings/presentation/views/identity_varification1.dart';
 import 'package:motoverse/Features/settings/presentation/views/settings_screen.dart';
 import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat.dart';
@@ -131,7 +134,9 @@ class MyApp extends StatelessWidget {
                   'otp page': (context) => OtpPage(),
                   'otp forget': (context) => OtpForget(),
                   'reset pass': (context) => ResetPass(),
-                  'profile': (context) => Profile(),
+                  'profile': (context) => const Profile(),
+                  'profile screen': (context) => const ProfileScreen(),
+                  'EditProfile': (context) => const EditProfileScreen(),
                   'main screen': (context) => MainScreen(),
                   'RequestOffersScreen': (context) => RequestOffersScreen(),
                   'settings': (context) => Settings(),
@@ -150,6 +155,8 @@ class MyApp extends StatelessWidget {
                   'UserRequests': (context) => const UserRequestsScreen(),
                   'MyOffersPage': (context) => const MyOffersPage(),
                   'ReviewScreen': (context) => const ReviewScreen(),
+                  'AddOrUpdateCarScreen': (context) =>
+                      const AddOrUpdateCarScreen(),
                 },
 
                 debugShowCheckedModeBanner: false,

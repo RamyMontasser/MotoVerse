@@ -10,6 +10,7 @@ import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
 import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
 import 'package:motoverse/Features/community/presentation/widgets/category_tabs.dart';
 import 'package:motoverse/Features/community/presentation/widgets/request_card.dart';
+import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AvailableRequests extends StatefulWidget {
@@ -22,15 +23,37 @@ class AvailableRequests extends StatefulWidget {
 class _AvailableRequestsState extends State<AvailableRequests> {
   int currentCategory = 0;
 
+  double? get _currentLatitude {
+    final state = context.read<CurrentLocationCubit>().state;
+    if (state is CurrentLocationSuccess) {
+      return state.currentLocation.latitude;
+    }
+    return null;
+  }
+
+  double? get _currentLongitude {
+    final state = context.read<CurrentLocationCubit>().state;
+    if (state is CurrentLocationSuccess) {
+      return state.currentLocation.longitude;
+    }
+    return null;
+  }
+
   Future<void> _refreshRequests() async {
-    await context.read<RequestsCubit>().fetchRequests();
+    await context.read<RequestsCubit>().fetchRequests(
+          latitude: _currentLatitude,
+          longitude: _currentLongitude,
+        );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          RequestsCubit(communityRepo: getIt<CommunityRepo>())..fetchRequests(),
+      create: (context) => RequestsCubit(communityRepo: getIt<CommunityRepo>())
+        ..fetchRequests(
+          latitude: _currentLatitude,
+          longitude: _currentLongitude,
+        ),
       child: Scaffold(
         body: CustomScrollViewWithAppBar(
           onRefresh: _refreshRequests,

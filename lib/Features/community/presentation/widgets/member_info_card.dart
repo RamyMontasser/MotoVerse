@@ -101,8 +101,8 @@ class MemberInfoCard extends StatelessWidget {
                 ),
                 SizedBox(width: 2.w),
                 Text(
-                  // request.avarageRating ??
-                   '4.8',
+                  request.averageRating,
+                  //  '4.8',
                   style: TextStyles.cairoBold12.copyWith(
                     color: AppColors.blueDarkActive,
                   ),

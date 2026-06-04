@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
@@ -28,13 +29,23 @@ class RequestCard extends StatelessWidget {
           ),
         ],
         border: Border(
-          right: BorderSide(
-            color: isChat ? AppColors.yellowNormal : AppColors.blueNormal,
-            width: 4,
-          ),
+          right: isEN()
+              ? BorderSide.none
+              : BorderSide(
+                  color: isChat ? AppColors.yellowNormal : AppColors.blueNormal,
+                  width: 4,
+                ),
+          left: isEN()
+              ? BorderSide(
+                  color: isChat ? AppColors.yellowNormal : AppColors.blueNormal,
+                  width: 4,
+                )
+              : BorderSide.none,
         ),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,27 +67,35 @@ class RequestCard extends StatelessWidget {
               ),
               SizedBox(width: 10.w),
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    request.userName,
-                    style: TextStyles.cairoBold16.copyWith(
-                      color: AppColors.blueDarkActive,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      request.userName,
+                      style: TextStyles.cairoBold16.copyWith(
+                        color: AppColors.blueDarkActive,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Text(
-                    request.distance != null
-                        ? "${request.city}, ${request.distance} km away "
-                        : request.city,
-                    style: TextStyles.cairoRegular11.copyWith(
-                      color: AppColors.whiteDarkActive,
+                    Text(
+                      request.requestType == 'offline'
+                      // request.distance != null
+                          ? "${request.city}, ${request.distance} km away "
+                          : request.city,
+                      style: TextStyles.cairoRegular11.copyWith(
+                        color: AppColors.whiteDarkActive,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
-              Spacer(),
+              // Spacer(),
+              SizedBox(width: 8.w),
 
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
@@ -96,11 +115,21 @@ class RequestCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15.h),
-          Text(
-            request.description,
-            style: TextStyles.cairoMedium12.copyWith(
-              color: AppColors.whiteDarker,
-            ),
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  request.description,
+                  style: TextStyles.cairoMedium12.copyWith(
+                    color: AppColors.whiteDarker,
+                  ),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 15.h),
           CustomElevatedButton(
@@ -142,5 +171,9 @@ class RequestCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool isEN() {
+    return Intl.getCurrentLocale() == 'en';
   }
 }

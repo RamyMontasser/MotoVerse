@@ -8,6 +8,7 @@ import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
 import 'package:motoverse/Features/community/presentation/widgets/user_request_page_card.dart';
 import 'package:motoverse/Features/community/presentation/widgets/user_requests_category_tabs.dart';
+import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class UserRequestsScreen extends StatefulWidget {
@@ -26,7 +27,18 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
   void initState() {
     super.initState();
     currentCategory = widget.initialCategory;
-    context.read<RequestsCubit>().fetchRequests(mine: true);
+    final currentLocationState = context.read<CurrentLocationCubit>().state;
+    double? latitude;
+    double? longitude;
+    if (currentLocationState is CurrentLocationSuccess) {
+      latitude = currentLocationState.currentLocation.latitude;
+      longitude = currentLocationState.currentLocation.longitude;
+    }
+    context.read<RequestsCubit>().fetchRequests(
+          mine: true,
+          latitude: latitude,
+          longitude: longitude,
+        );
   }
 
   @override

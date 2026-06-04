@@ -96,12 +96,12 @@ class HelpOffline extends StatelessWidget {
               'SocketChat',
               arguments: ChatArguments(
                 chatId: state.chat.id.toString(),
-                otherUserId: isHelper
+                chatUserId: isHelper
                     ? state.chat.requestUser.id.toString()
                     : offer.helperId.toString(),
-                helperName: isHelper
-                    ? (state.chat.requestUser.name )
-                    : (offer.helperName ),
+                chatUserName: isHelper
+                    ? (state.chat.requestUser.name)
+                    : (offer.helperName),
                 helperAvatar: isHelper
                     ? state.chat.requestUser.image
                     : offer.helperImage,
@@ -110,12 +110,15 @@ class HelpOffline extends StatelessWidget {
                     ? state.chat.id.toString()
                     : request.id.toString(),
                 offerId: offer.id.toString(),
-                averageRating: offer.averageRating.toString() ,
-                helperVerified: offer.helperVerified ,
+                averageRating: offer.averageRating.toString(),
+                helperVerified: offer.helperVerified,
+                isOnline: isHelper
+                    ? state.chat.requestUser.isOnline
+                    : state.chat.offerUser.isOnline,
               ),
             );
           } else if (state is CreateChatFailure) {
-            Navigator.pop(context); 
+            Navigator.pop(context);
             customSnackBar(
               context: context,
               msg: state.errMessage,
@@ -152,7 +155,7 @@ class HelpOffline extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5.h),
+                    SizedBox(height: 10.h),
                     displayRequest.requestType == 'offline'
                         ? RequestLocationCard(
                             isAccepted: true,
@@ -163,7 +166,11 @@ class HelpOffline extends StatelessWidget {
                         : SizedBox.shrink(),
                     SizedBox(height: 15.h),
 
-                    UserContactInfo(request: displayRequest, offer: offer, isHelper: isHelper),
+                    UserContactInfo(
+                      request: displayRequest,
+                      offer: offer,
+                      isHelper: isHelper,
+                    ),
 
                     SizedBox(height: 20.h),
 
@@ -199,28 +206,28 @@ class HelpOffline extends StatelessWidget {
                     ),
 
                     SizedBox(height: 10.h),
-                    if(offer.status != 'accepted')
-                    CustomElevatedButton(
-                      text: statusText,
-                      radius: CustomRadius.card12,
-                      fun: () {
-                        if (offer.status == 'accepted') {
-                          context.read<NotificationCubit>().enterChat(
-                            requestId: request.id,
-                          );
-                        } else if (offer.status == 'pending') {
-                          debugPrint(offer.id.toString());
-                          context.read<MyOffersCubit>().deleteOffer(
-                            offerId: offer.id,
-                          );
-                          Navigator.pop(context);
-                        }
-                      },
-                      backgColor: statusLightColor,
-                      foregColor: statusColor,
-                      height: 50,
-                      fontStyle: TextStyles.cairoBold16,
-                    ),
+                    if (offer.status != 'accepted')
+                      CustomElevatedButton(
+                        text: statusText,
+                        radius: CustomRadius.card12,
+                        fun: () {
+                          if (offer.status == 'accepted') {
+                            context.read<NotificationCubit>().enterChat(
+                              requestId: request.id,
+                            );
+                          } else if (offer.status == 'pending') {
+                            debugPrint(offer.id.toString());
+                            context.read<MyOffersCubit>().deleteOffer(
+                              offerId: offer.id,
+                            );
+                            Navigator.pop(context);
+                          }
+                        },
+                        backgColor: statusLightColor,
+                        foregColor: statusColor,
+                        height: 50,
+                        fontStyle: TextStyles.cairoBold16,
+                      ),
                   ],
                 ),
               ),

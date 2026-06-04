@@ -12,6 +12,12 @@ class CustomTextfeildWithBorder extends StatelessWidget {
     this.maxLines = 1,
     this.validator,
     this.isNumber = false,
+    // this.fontSize,
+    this.textColor,
+    this.hintColor,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.readOnly = false,
   });
 
   final TextEditingController controller;
@@ -19,6 +25,12 @@ class CustomTextfeildWithBorder extends StatelessWidget {
   final int maxLines;
   final String? Function(String?)? validator;
   final bool isNumber;
+  // final double? fontSize;
+  final Color? textColor;
+  final Color? hintColor;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +40,19 @@ class CustomTextfeildWithBorder extends StatelessWidget {
       cursorColor: AppColors.yellowNormal,
       validator: validator ?? AppValidator.validateEmpty,
       keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-      style: TextStyles.cairoRegular14.copyWith(color: AppColors.blueNormal),
+      readOnly: readOnly,
+      style: TextStyles.cairoRegular14.copyWith(
+        color: textColor ?? AppColors.blueNormal,
+        // fontSize: fontSize,
+      ),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyles.cairoRegular14.copyWith(
-          color: AppColors.whiteDarkHover,
+          color: hintColor ?? AppColors.whiteDarkHover,
+          // fontSize: fontSize,
         ),
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
         filled: true,
         fillColor: AppColors.whiteLight,
         contentPadding: const EdgeInsets.symmetric(
@@ -44,13 +63,18 @@ class CustomTextfeildWithBorder extends StatelessWidget {
           borderRadius: CustomRadius.card12,
           borderSide: const BorderSide(color: AppColors.blueLightHover),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: CustomRadius.card12,
-          borderSide: const BorderSide(
-            color: AppColors.blueNormalHover,
-            width: 1.5,
-          ),
-        ),
+        focusedBorder: readOnly
+            ? OutlineInputBorder(
+                borderRadius: CustomRadius.card12,
+                borderSide: const BorderSide(color: AppColors.blueLightHover),
+              )
+            : OutlineInputBorder(
+                borderRadius: CustomRadius.card12,
+                borderSide: const BorderSide(
+                  color: AppColors.blueNormalHover,
+                  width: 1.5,
+                ),
+              ),
         errorBorder: OutlineInputBorder(
           borderRadius: CustomRadius.card12,
           borderSide: const BorderSide(color: AppColors.redNormal),

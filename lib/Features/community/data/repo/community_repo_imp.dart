@@ -13,14 +13,20 @@ class CommunityRepoImp implements CommunityRepo {
   CommunityRepoImp({required this.networkService});
 
   @override
-  Future<Either<Failure, List<RequestModel>>> getRequests({bool mine = false}) async {
+  Future<Either<Failure, List<RequestModel>>> getRequests({
+    bool mine = false,
+    double? latitude,
+    double? longitude,
+  }) async {
     try {
-      final  response = await networkService.getData(
+      final response = await networkService.getData(
         endPoint: '/community/requests/',
         queryParameters: {
           'mine': mine,
-        }
-      ) ;
+          if (latitude != null) 'latitude': latitude,
+          if (longitude != null) 'longitude': longitude,
+        },
+      );
 
       List<RequestModel> requests = [];
       if (response is List) {
@@ -43,26 +49,32 @@ class CommunityRepoImp implements CommunityRepo {
   }
 
   @override
-  Future<Either<Failure, void>> createRequest(CreateRequestModel requestModel) async {
+  Future<Either<Failure, void>> createRequest(
+    CreateRequestModel requestModel,
+  ) async {
     try {
       // final formData = requestModel.toJson();
-      
+
       final formData = FormData.fromMap({
         'description': requestModel.description,
         'problem_type': requestModel.problemType,
         'request_type': requestModel.requestType,
         'city': requestModel.city,
-        if (requestModel.latitude != null) 'latitude': requestModel.latitude.toString(),
-        if (requestModel.longitude != null) 'longitude': requestModel.longitude.toString(),
-        
+        if (requestModel.latitude != null)
+          'latitude': requestModel.latitude.toString(),
+        if (requestModel.longitude != null)
+          'longitude': requestModel.longitude.toString(),
+
         // if (requestModel.city != null) 'city': requestModel.city,
       });
 
       for (var image in requestModel.images) {
-        formData.files.add(MapEntry(
-          'images',
-          await MultipartFile.fromFile(image.path, filename: image.name),
-        ));
+        formData.files.add(
+          MapEntry(
+            'images',
+            await MultipartFile.fromFile(image.path, filename: image.name),
+          ),
+        );
       }
       await networkService.addFormData(
         endPoint: '/community/requests/',
@@ -76,22 +88,22 @@ class CommunityRepoImp implements CommunityRepo {
       return left(ApiFailure(errorMsg: e.toString()));
     }
   }
-  
+
   @override
   Future<Either<Failure, void>> cancelRequest({required int requestId}) {
     throw UnimplementedError();
   }
-  
+
   @override
-  Future<Either<Failure, void>> makeOffer({required int requestId, double? lat, double? long}) async {
+  Future<Either<Failure, void>> makeOffer({
+    required int requestId,
+    double? lat,
+    double? long,
+  }) async {
     try {
       var response = await networkService.addData(
         endPoint: '${AppConstants.communityRequests}$requestId/offers/',
-        data: {
-          "latitude": lat,
-          "longitude": long,
-        }
-        
+        data: {"latitude": lat, "longitude": long},
       );
       return Right(response);
     } on DioException catch (e) {

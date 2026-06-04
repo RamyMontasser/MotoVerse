@@ -22,6 +22,8 @@ class UserDataModel extends HiveObject {
   final bool isVerified;
   @HiveField(8)
   final String image;
+  @HiveField(9)
+  final String memberSince;
 
   UserDataModel({
     required this.id,
@@ -31,21 +33,31 @@ class UserDataModel extends HiveObject {
     required this.isPhoneVerified,
     required this.isProfileComplete,
     required this.isVerified,
+    required this.memberSince,
     required this.image,
     this.city,
   });
 
   factory UserDataModel.fromJson(Map<String, dynamic> json) {
     return UserDataModel(
-      id: json['id'],
-      phone: json['phone'],
-      name: json['name'],
-      email: json['email'],
-      isPhoneVerified: json['is_phone_verified'],
-      isProfileComplete: json['is_profile_complete'],
-      city: json['city']??"",
-      isVerified: json['is_verified'],
-      image: json['image']??"",
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id']?.toString() ?? '') ?? 0,
+      phone: json['phone']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      isPhoneVerified: json['is_phone_verified'] is bool
+          ? json['is_phone_verified']
+          : json['is_phone_verified']?.toString().toLowerCase() == 'true',
+      isProfileComplete: json['is_profile_complete'] is bool
+          ? json['is_profile_complete']
+          : json['is_profile_complete']?.toString().toLowerCase() == 'true',
+      city: json['city']?.toString(),
+      isVerified: json['is_verified'] is bool
+          ? json['is_verified']
+          : json['is_verified']?.toString().toLowerCase() == 'true',
+      image: json['image']?.toString() ?? '',
+      memberSince: json['member_since']?.toString() ?? '',
     );
   }
 

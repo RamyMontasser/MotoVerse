@@ -130,6 +130,30 @@ class ApiService extends NetworkService {
   }
 
   @override
+  Future<dynamic> patchFormData({
+    required String endPoint,
+    required dynamic data,
+    bool requiresAuth = true,
+    String? local,
+  }) async {
+    Map<String, dynamic> header = {};
+
+    if (local != null) {
+      header["Local"] = local;
+    }
+
+    var response = await dio.patch(
+      endPoint,
+      data: data,
+      options: Options(
+        headers: header,
+        extra: {'requiresAuth': requiresAuth},
+      ),
+    );
+    return response.data;
+  }
+
+  @override
   Future<dynamic> deleteData({
     required String endPoint,
     bool requiresAuth = true,

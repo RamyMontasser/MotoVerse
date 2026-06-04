@@ -16,8 +16,8 @@ class SocketChat extends StatefulWidget {
 class _SocketChatState extends State<SocketChat> {
 
   String chatId = '';
-  String helperName = '';
-  String otherUserId = '';
+  String chatUserName = '';
+  String chatUserId = '';
   String helperAvatar = '';
   bool isHelper = false;
   String requestId = '';
@@ -44,14 +44,15 @@ class _SocketChatState extends State<SocketChat> {
       },
       child: SocketChatBody(
         chatId: args.chatId,
-        otherUserId: args.otherUserId,
-        helperName: args.helperName,
+        chatUserId: args.chatUserId,
+        chatUserName: args.chatUserName,
         helperAvatar: args.helperAvatar,
         isHelper: args.isHelper,
         requestId: args.requestId,
         offerId: args.offerId,
         averageRating: args.averageRating,
         helperVerified: args.helperVerified,
+        isOnline: args.isOnline,
       ),
     );
   }

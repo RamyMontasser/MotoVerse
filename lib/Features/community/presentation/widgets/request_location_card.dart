@@ -8,13 +8,18 @@ import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
-import 'package:motoverse/Features/community/presentation/widgets/user_listtile.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/Features/community/presentation/widgets/user_listtile.dart';
 import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 
 class RequestLocationCard extends StatelessWidget {
-  const RequestLocationCard({super.key, this.isAccepted, required this.request, this.offer});
+  const RequestLocationCard({
+    super.key,
+    this.isAccepted,
+    required this.request,
+    this.offer,
+  });
 
   final bool? isAccepted;
   final RequestModel request;
@@ -22,6 +27,7 @@ class RequestLocationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(request.distance.toString());
     return BlocBuilder<CurrentLocationCubit, CurrentLocationState>(
       builder: (context, state) {
         LatLng? currentLatLng;
@@ -36,13 +42,13 @@ class RequestLocationCard extends StatelessWidget {
           request.location?.longitude ?? 31.814,
         );
 
-        LatLng centerLatLng = requestLatLng;
-        if (currentLatLng != null) {
-          centerLatLng = LatLng(
-            (requestLatLng.latitude + currentLatLng.latitude) / 2,
-            (requestLatLng.longitude + currentLatLng.longitude) / 2,
-          );
-        }
+        // LatLng centerLatLng = requestLatLng;
+        // if (currentLatLng != null) {
+        //   centerLatLng = LatLng(
+        //     (requestLatLng.latitude + currentLatLng.latitude) / 2,
+        //     (requestLatLng.longitude + currentLatLng.longitude) / 2,
+        //   );
+        // }
 
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
@@ -60,6 +66,7 @@ class RequestLocationCard extends StatelessWidget {
             ],
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
@@ -68,7 +75,7 @@ class RequestLocationCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.r),
                   child: FlutterMap(
                     options: MapOptions(
-                      initialCenter: centerLatLng,
+                      initialCenter: requestLatLng,
                       initialZoom: 13.0,
                     ),
                     children: [
@@ -103,31 +110,39 @@ class RequestLocationCard extends StatelessWidget {
                 ),
               ),
 
-          SizedBox(height: isAccepted == true ? 5.h : 15.h),
+              SizedBox(height: isAccepted == true ? 5.h : 15.h),
 
-          isAccepted == true
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'المسافة والوقت',
-                      style: TextStyles.cairoBold12.copyWith(
-                        color: AppColors.whiteDarker,
-                      ),
-                    ),
-                    Text(
-                      '${request.distance ?? 0} كم - ${offer?.estimatedMinutes ?? 0} د',
-                      style: TextStyles.cairoBold16.copyWith(
-                        color: AppColors.blueNormal,
-                      ),
-                    ),
-                  ],
-                )
-              : UserListtile(
-                  request: request,
-                ),
-        ],
-      ),
+              isAccepted == true
+                  ? Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'المسافة والوقت',
+                                style: TextStyles.cairoBold12.copyWith(
+                                  color: AppColors.whiteDarker,
+                                ),
+                              ),
+                              Text(
+                                '${request.distance?? 0 } كم - ${offer?.estimatedMinutes?? 0} د',
+                                style: TextStyles.cairoBold16.copyWith(
+                                  color: AppColors.blueNormal,
+                                ),
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                                // maxLines: 2,
+                                // overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : UserListtile(request: request),
+            ],
+          ),
         );
       },
     );

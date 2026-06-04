@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +22,66 @@ class HomeRepoImp implements HomeRepo {
   Future<Either<Failure, void>> updateProfile({required String city}) async {
     try {
       await networkService.patchData(
-        endPoint: 'accounts/profile/update/',
+        endPoint: '/accounts/profile/update/',
         data: {'city': city},
       );
       debugPrint(city);
       return const Right(null);
+    } on DioException catch (e) {
+      return Left(ApiFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(errorMsg: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserDataModel>> updateUserInfo({
+    // required int id,
+    required String name,
+    required String email,
+    File? image,
+    bool removeImage = false,
+  }) async {
+    try {
+      dynamic response;
+
+      if (image != null || removeImage) {
+        final formData = FormData.fromMap({
+          // 'id': id,
+          'name': name,
+          'email': email,
+          if (removeImage) 'image': '',
+          if (image != null)
+            'image': await MultipartFile.fromFile(
+              image.path,
+              filename: image.path.split(Platform.pathSeparator).last,
+            ),
+        });
+
+        response = await networkService.patchFormData(
+          endPoint: '/accounts/profile/update/',
+          data: formData,
+        );
+      } else {
+        response = await networkService.patchData(
+          endPoint: '/accounts/profile/update/',
+          data: {
+            // 'id': id,
+            'name': name,
+            'email': email,
+          },
+        );
+      }
+
+      if (response is Map<String, dynamic>) {
+        return Right(UserDataModel.fromJson(response));
+      }
+
+      final userResult = await getUserInfo();
+      return userResult.fold(
+        (failure) => Left(failure),
+        (user) => Right(user),
+      );
     } on DioException catch (e) {
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
@@ -58,7 +115,7 @@ class HomeRepoImp implements HomeRepo {
   // Future<Either<Failure, String>> getUserToken() async {
   //   try {
   //     var response = await networkService.addData(
-  //       endPoint: AppConstants.getUserToken, 
+  //       endPoint: AppConstants.getUserToken,
   //       data: {},
   //     );
   //     debugPrint(response['token']);
@@ -155,10 +212,13 @@ class HomeRepoImp implements HomeRepo {
   @override
   Future<Either<Failure, RequestModel>> getRequestDetails({
     required int requestId,
+    required double latitude,
+    required double longitude,
   }) async {
     try {
       var response = await networkService.getData(
         endPoint: '${AppConstants.communityRequests}$requestId/',
+        queryParameters: {'latitude': latitude, 'longitude': longitude},
       );
       return Right(RequestModel.fromJson(response));
     } on DioException catch (e) {
@@ -186,7 +246,6 @@ class HomeRepoImp implements HomeRepo {
   //     return Left(ServerFailure(errorMsg: e.toString()));
   //   }
   // }
-
 
   @override
   Future<Either<Failure, ConversationModel>> enterChat({

@@ -32,37 +32,51 @@ class UserListtile extends StatelessWidget {
         ),
         SizedBox(width: 10.w),
 
-        Column(
+        Expanded(
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               request.userName,
               style: TextStyles.cairoBold16.copyWith(
                 color: AppColors.blueDarkActive,
               ),
+              maxLines: 2,
+                overflow: TextOverflow.ellipsis,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
+                Padding(
+                padding: EdgeInsets.only(top: 2.h), 
+                    child:Icon(
                   Icons.location_on_outlined,
                   color: AppColors.whiteDarkActive,
                   size: 13.sp,
-                ),
+                ),),
 
                 SizedBox(width: 2.w),
 
-                Text(
-                  "${request.city}, ${request.distance} km away ",
-                  style: TextStyles.cairoRegular11.copyWith(
-                    color: AppColors.whiteDarkActive,
+                Expanded(
+                  child: Text(
+                    "${request.city}, ${request.distance} km away ",
+                    style: TextStyles.cairoRegular11.copyWith(
+                      color: AppColors.whiteDarkActive,
+                    ),
+                    softWrap: true,
+                    maxLines: 3,
+                      overflow: TextOverflow.visible,
                   ),
                 ),
               ],
             ),
           ],
-        ),
+        ),),
 
-        Spacer(),
+        // Spacer(),
+
+        SizedBox(width: 10.w),
 
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),

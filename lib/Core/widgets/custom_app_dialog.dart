@@ -13,7 +13,11 @@ class CustomAppDialog extends StatelessWidget {
     required this.title,
     required this.desc,
     this.btnText,
-    this.btnText2, this.icon, this.iconBgColor,
+    this.btnText2,
+    this.icon,
+    this.iconBgColor,
+    this.primaryButtonColor,
+    this.secondaryButtonColor,
   });
 
   final VoidCallback? onTap;
@@ -24,6 +28,8 @@ class CustomAppDialog extends StatelessWidget {
   final String? btnText2;
   final Icon? icon;
   final Color? iconBgColor;
+  final Color? primaryButtonColor;
+  final Color? secondaryButtonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,29 +44,30 @@ class CustomAppDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if(icon != null)...[
+            if (icon != null) ...[
               CircleAvatar(
-                backgroundColor: AppColors.greenLight,
+                backgroundColor: iconBgColor ?? AppColors.greenLight,
                 radius: 30.r,
                 child: icon,
               ),
               // icon!,
-              SizedBox(height: 12.h,),],
+              SizedBox(height: 12.h),
+            ],
             Text(
               title,
               style: TextStyles.cairoBold18.copyWith(
                 color: AppColors.blueNormal,
               ),
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(height: 10.h),
             Text(
               desc,
               style: TextStyles.cairoRegular16.copyWith(
                 color: AppColors.whiteDarkActive,
               ),
             ),
-            SizedBox(height: 20.h,),
-            btnText2 == null 
+            SizedBox(height: 20.h),
+            btnText2 == null
                 ? btnText != null && btnText!.isNotEmpty
                       ? CustomElevatedButton(
                           text: btnText!,
@@ -71,7 +78,8 @@ class CustomAppDialog extends StatelessWidget {
                           height: 48,
                           radius: BorderRadius.circular(12.r),
                           withBorder: false,
-                          backgColor: AppColors.blueNormal,
+                          backgColor:
+                              primaryButtonColor ?? AppColors.blueNormal,
                           foregColor: AppColors.whiteLight,
                           fontStyle: TextStyles.cairoBold16,
                         )
@@ -89,7 +97,8 @@ class CustomAppDialog extends StatelessWidget {
                             height: 48,
                             radius: BorderRadius.circular(12.r),
                             withBorder: false,
-                            backgColor: AppColors.blueNormal,
+                            backgColor:
+                                primaryButtonColor ?? AppColors.blueNormal,
                             foregColor: AppColors.whiteLight,
                             fontStyle: TextStyles.cairoBold16,
                           ),
@@ -105,7 +114,8 @@ class CustomAppDialog extends StatelessWidget {
                             height: 48,
                             radius: BorderRadius.circular(12.r),
                             withBorder: false,
-                            backgColor: AppColors.blueNormal,
+                            backgColor:
+                                secondaryButtonColor ?? AppColors.blueNormal,
                             foregColor: AppColors.whiteLight,
                             fontStyle: TextStyles.cairoBold16,
                           ),
