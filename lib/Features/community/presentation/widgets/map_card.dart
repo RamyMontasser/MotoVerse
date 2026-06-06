@@ -53,7 +53,7 @@ class _MapCardState extends State<MapCard> {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.whiteLight,
             borderRadius: BorderRadius.circular(20.r),
             border: Border.all(color: AppColors.whiteNormalActive),
             boxShadow: [
@@ -169,7 +169,7 @@ class _MapCardState extends State<MapCard> {
                         //   width: 44.w,
                         //   height: 44.h,
                         //   decoration: BoxDecoration(
-                        //     color: Colors.white,
+                        //     color: AppColors.whiteLight,
                         //     shape: BoxShape.circle, // جعل الحاوية دائرية
                         //     boxShadow: [
                         //       BoxShadow(

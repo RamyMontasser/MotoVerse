@@ -81,7 +81,7 @@ class RequestCard extends StatelessWidget {
                     ),
                     Text(
                       request.requestType == 'offline'
-                      // request.distance != null
+                          // request.distance != null
                           ? "${request.city}, ${request.distance} km away "
                           : request.city,
                       style: TextStyles.cairoRegular11.copyWith(
@@ -161,7 +161,7 @@ class RequestCard extends StatelessWidget {
           //         borderRadius: CustomRadius.card12,
           //       ),
           //     ),
-          //     icon: Icon(Icons.details, color: Colors.white, size: 18.sp),
+          //     icon: Icon(Icons.details, color: AppColors.whiteLight, size: 18.sp),
           //     label: Text(
           //       "تفاصيل المشكلة",
           //       style: TextStyles.cairoBold12.copyWith(color: AppColors.whiteLight),

@@ -52,33 +52,36 @@ class CustomDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             isSuccess
-            ? Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                decoration: BoxDecoration(
-                  color: AppColors.greenLight,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.check_circle_outline,
-                    color: AppColors.greenNormal,
-                    size: 65.sp,
+                ? Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 10.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.greenLight,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.check_circle_outline,
+                        color: AppColors.greenNormal,
+                        size: 65.sp,
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    width: 50.w,
+                    height: 50.h,
+                    child: CircularProgressIndicator(
+                      color: AppColors.blueNormal,
+                      strokeWidth: 4.w,
+                    ),
                   ),
-                ),
-              )
-            : SizedBox(
-              width: 50.w,
-              height: 50.h,
-              child: CircularProgressIndicator(
-                color: AppColors.blueNormal,
-                strokeWidth: 4.w,
-              ),
-            ),
-            
+
             SizedBox(height: 10.h),
 
             Text(
-              isSuccess? 'تم التأكيد بنجاح': 'جاري التحقق من الهوية',
+              isSuccess ? 'تم التأكيد بنجاح' : 'جاري التحقق من الهوية',
               style: TextStyles.cairoBold24.copyWith(
                 color: AppColors.blueNormal,
               ),
@@ -87,7 +90,9 @@ class CustomDialog extends StatelessWidget {
             SizedBox(height: 8.h),
 
             Text(
-              isSuccess? 'تهانينا!\nتم تأكيد هوية حسابك': 'يرجي الانتظار بضع دقائق',
+              isSuccess
+                  ? 'تهانينا!\nتم تأكيد هوية حسابك'
+                  : 'يرجي الانتظار بضع دقائق',
               style: TextStyles.cairoRegular14.copyWith(
                 color: AppColors.whiteDarkActive,
               ),
@@ -96,20 +101,20 @@ class CustomDialog extends StatelessWidget {
             SizedBox(height: 12.h),
 
             if (isSuccess)
-            CustomElevatedButton(
-              text: 'تقديم المساعدة',
-              fun: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-                // Navigator.of(context).popAndPushNamed('HelpOffline');
-              },
-              height: 48,
-              radius: BorderRadius.circular(12.r),
-              withBorder: false,
-              backgColor:  AppColors.greenNormal,
-              foregColor: Colors.white,
-              fontStyle: TextStyles.cairoBold16,
-            ),
+              CustomElevatedButton(
+                text: 'تقديم المساعدة',
+                fun: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  // Navigator.of(context).popAndPushNamed('HelpOffline');
+                },
+                height: 48,
+                radius: BorderRadius.circular(12.r),
+                withBorder: false,
+                backgColor: AppColors.greenNormal,
+                foregColor: AppColors.whiteLight,
+                fontStyle: TextStyles.cairoBold16,
+              ),
           ],
         ),
       ),

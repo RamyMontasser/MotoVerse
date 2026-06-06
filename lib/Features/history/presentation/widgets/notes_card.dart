@@ -12,7 +12,7 @@ class NotesCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteLight,
         borderRadius: CustomRadius.card12,
         border: Border.all(color: AppColors.blueLight),
       ),
@@ -24,8 +24,8 @@ class NotesCard extends StatelessWidget {
             style: TextStyles.med13Tajawal.copyWith(color: AppColors.black),
           ),
 
-          SizedBox(height: 15.h,),
-          
+          SizedBox(height: 15.h),
+
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
             decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class NotesCard extends StatelessWidget {
                   color: AppColors.blueNormal,
                   size: 22.sp,
                 ),
-                SizedBox(width: 10.w,),
+                SizedBox(width: 10.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +60,6 @@ class NotesCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                
               ],
             ),
           ),

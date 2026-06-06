@@ -1,4 +1,3 @@
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,13 +12,11 @@ import 'package:motoverse/Core/services/secure_storage.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat1.dart';
 import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat2.dart';
-// import 'package:motoverse/Features/chat/presentation/views/chat_page.dart';
 import 'package:motoverse/Features/auth/presentation/views/log_in.dart';
 import 'package:motoverse/Features/auth/presentation/views/onboarding.dart';
 import 'package:motoverse/Features/auth/presentation/views/otp_forget.dart';
 import 'package:motoverse/Features/auth/presentation/views/otp_page.dart';
 import 'package:motoverse/Features/auth/presentation/views/phone_num.dart';
-// import 'package:motoverse/Features/auth/presentation/views/onboarding.dart';
 import 'package:motoverse/Features/auth/presentation/views/reset_pass.dart';
 import 'package:motoverse/Features/auth/presentation/views/restore_pass.dart';
 import 'package:motoverse/Features/auth/presentation/views/sign_up.dart';
@@ -31,7 +28,6 @@ import 'package:motoverse/Features/community/presentation/views/help_offline.dar
 import 'package:motoverse/Features/community/presentation/views/request_details.dart';
 import 'package:motoverse/Features/community/presentation/views/request_help1.dart';
 import 'package:motoverse/Features/community/presentation/views/review_screen.dart';
-// import 'package:motoverse/Features/community/presentation/views/requist_done.dart';
 import 'package:motoverse/Features/community/presentation/views/user_requests_screen.dart';
 import 'package:motoverse/Features/history/presentation/views/history_page1.dart';
 import 'package:motoverse/Features/history/presentation/views/history_page2.dart';
@@ -48,6 +44,7 @@ import 'package:motoverse/Features/home/presentation/views/profile.dart';
 import 'package:motoverse/Features/home/presentation/views/request_offers_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/add_or_update_car_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/edit_profile_screen.dart';
+import 'package:motoverse/Features/profile/presentation/views/language_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/profile_screen.dart';
 import 'package:motoverse/Features/settings/presentation/views/identity_varification1.dart';
 import 'package:motoverse/Features/settings/presentation/views/settings_screen.dart';
@@ -155,8 +152,8 @@ class MyApp extends StatelessWidget {
                   'UserRequests': (context) => const UserRequestsScreen(),
                   'MyOffersPage': (context) => const MyOffersPage(),
                   'ReviewScreen': (context) => const ReviewScreen(),
-                  'AddOrUpdateCarScreen': (context) =>
-                      const AddOrUpdateCarScreen(),
+                  'AddOrUpdateCarScreen': (context) => const AddOrUpdateCarScreen(),
+                  'LanguageScreen': (context) => const LanguageScreen(),
                 },
 
                 debugShowCheckedModeBanner: false,
@@ -173,6 +170,7 @@ class MyApp extends StatelessWidget {
                 ),
 
                 home:
+                    // LanguageScreen(),
                     // ReviewScreen()
                     // ChatPage(),
                     isLoggedIn ? const MainScreen() : const OnBoarding(),

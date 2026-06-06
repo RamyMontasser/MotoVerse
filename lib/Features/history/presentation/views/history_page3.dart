@@ -30,7 +30,6 @@ class _HistoryPage3State extends State<HistoryPage3> {
   // TextEditingController reading = TextEditingController();
   TextEditingController centerName = TextEditingController();
 
- 
   DateTime _focusDate = DateTime.now();
 
   @override
@@ -51,136 +50,156 @@ class _HistoryPage3State extends State<HistoryPage3> {
         child: BlocListener<HistoryCubit, HistoryState>(
           listener: (context, state) {
             if (state is AddHistorySuccess) {
-              Navigator.of(context).pop(true); 
+              Navigator.of(context).pop(true);
             } else if (state is AddHistoryFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errMessage)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.errMessage)));
             }
           },
           child: CustomScrollViewWithAppBar(
-        child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(
-            horizontal: 18.w,
-            vertical: 15.h,
-          ),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: CustomRadius.auth,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.25),
-                  blurRadius: 2,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'سجل صيانة جديد',
-                    style: TextStyles.cairoSemiBold20.copyWith(
-                      color: AppColors.blueDark,
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-
-                  Text(
-                    "التاريخ",
-                    style: TextStyles.cairoRegular14.copyWith(
-                      color: AppColors.blueDarkHover,
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-                  DateSelector(focusDate: _focusDate, onChange: (selectedDate) {
-                      setState(() {
-                        _focusDate = selectedDate;
-                        date.text = DateFormat('yyyy-MM-dd', 'en').format(selectedDate);
-                      });
-                    },),
-                  SizedBox(height: 16.h),
-                  // _buildField(
-                  //   label: "الوقت",
-                  //   controller: time,
-                  //   readOnly: true,
-                  //   onTap: () => _selectTime(context),
-                  //   suffixIcon: const Icon(Icons.access_time),
-                  // ),
-                  _buildField(label: "مركز الصيانة", controller: centerName),
-                  _buildField(label: "نوع الصيانة", controller: type),
-                  _buildField(label: "الوصف", controller: desc, maxLines: 3),
-                  _buildField(
-                    label: "التكلفة (جنية)",
-                    controller: price,
-                    isNumber: true,
-                  ),
-                  // _buildField(
-                  //   label: "قراءة العداد (كم)",
-                  //   controller: reading,
-                  //   isNumber: true,
-                  // ),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: BlocBuilder<HistoryCubit, HistoryState>(
-                            builder: (context, state) {
-                              return CustomElevatedButton(
-                                text: state is AddHistoryLoading ? 'جاري الحفظ...' : 'حفظ',
-                                radius: CustomRadius.r1,
-                                fun: state is AddHistoryLoading ? () {} : () {
-                                  if (_formKey.currentState!.validate()) {
-                                    context.read<HistoryCubit>().addHistory(
-                                      CarHistoryModel(
-                                        date: date.text,
-                                        // time: time.text,
-                                        centerName: centerName.text,
-                                        service: type.text,
-                                        description: desc.text,
-                                        cost: price.text,
-                                        // reading: reading.text,
-                                      ),
-                                    );
-                                  }
-                                },
-                                height: 40,
-                                withBorder: false,
-                                fontStyle: TextStyles.cairoRegular16,
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: CustomElevatedButton(
-                            text: 'إلغاء',
-                            radius: CustomRadius.r1,
-                            fun: () {
-                              Navigator.of(context).pop();
-                            },
-                            height: 40,
-                            withBorder: false,
-                            fontStyle: TextStyles.cairoRegular16,
-                            backgColor: AppColors.blueLight,
-                            foregColor: AppColors.blueNormal,
-                          ),
-                        ),
-                      ],
+            child: Padding(
+              padding: EdgeInsetsGeometry.symmetric(
+                horizontal: 18.w,
+                vertical: 15.h,
+              ),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                decoration: BoxDecoration(
+                  color: AppColors.whiteLight,
+                  borderRadius: CustomRadius.auth,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.25),
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                     ),
                   ],
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'سجل صيانة جديد',
+                        style: TextStyles.cairoSemiBold20.copyWith(
+                          color: AppColors.blueDark,
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+
+                      Text(
+                        "التاريخ",
+                        style: TextStyles.cairoRegular14.copyWith(
+                          color: AppColors.blueDarkHover,
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      DateSelector(
+                        focusDate: _focusDate,
+                        onChange: (selectedDate) {
+                          setState(() {
+                            _focusDate = selectedDate;
+                            date.text = DateFormat(
+                              'yyyy-MM-dd',
+                              'en',
+                            ).format(selectedDate);
+                          });
+                        },
+                      ),
+                      SizedBox(height: 16.h),
+                      // _buildField(
+                      //   label: "الوقت",
+                      //   controller: time,
+                      //   readOnly: true,
+                      //   onTap: () => _selectTime(context),
+                      //   suffixIcon: const Icon(Icons.access_time),
+                      // ),
+                      _buildField(
+                        label: "مركز الصيانة",
+                        controller: centerName,
+                      ),
+                      _buildField(label: "نوع الصيانة", controller: type),
+                      _buildField(
+                        label: "الوصف",
+                        controller: desc,
+                        maxLines: 3,
+                      ),
+                      _buildField(
+                        label: "التكلفة (جنية)",
+                        controller: price,
+                        isNumber: true,
+                      ),
+
+                      // _buildField(
+                      //   label: "قراءة العداد (كم)",
+                      //   controller: reading,
+                      //   isNumber: true,
+                      // ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: BlocBuilder<HistoryCubit, HistoryState>(
+                              builder: (context, state) {
+                                return CustomElevatedButton(
+                                  text: state is AddHistoryLoading
+                                      ? 'جاري الحفظ...'
+                                      : 'حفظ',
+                                  radius: CustomRadius.r1,
+                                  fun: state is AddHistoryLoading
+                                      ? () {}
+                                      : () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            context
+                                                .read<HistoryCubit>()
+                                                .addHistory(
+                                                  CarHistoryModel(
+                                                    date: date.text,
+                                                    // time: time.text,
+                                                    centerName: centerName.text,
+                                                    service: type.text,
+                                                    description: desc.text,
+                                                    cost: price.text,
+                                                    // reading: reading.text,
+                                                  ),
+                                                );
+                                          }
+                                        },
+                                  height: 40,
+                                  withBorder: false,
+                                  fontStyle: TextStyles.cairoRegular16,
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: CustomElevatedButton(
+                              text: 'إلغاء',
+                              radius: CustomRadius.r1,
+                              fun: () {
+                                Navigator.of(context).pop();
+                              },
+                              height: 40,
+                              withBorder: false,
+                              fontStyle: TextStyles.cairoRegular16,
+                              backgColor: AppColors.blueLight,
+                              foregColor: AppColors.blueNormal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
       ),
-      )
     );
   }
 

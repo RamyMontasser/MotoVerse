@@ -383,7 +383,7 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                                 onTap2: () => Navigator.of(dialogCtx).pop(true),
                                 icon: const Icon(
                                   Icons.delete,
-                                  color: Colors.white,
+                                  color: AppColors.whiteLight,
                                 ),
                                 iconBgColor: AppColors.redLightActive,
                                 secondaryButtonColor: AppColors.redNormal,

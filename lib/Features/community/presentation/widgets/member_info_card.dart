@@ -50,7 +50,7 @@ class MemberInfoCard extends StatelessWidget {
               CircleAvatar(
                 radius: 9.r,
                 backgroundColor: AppColors.blueLight,
-                // backgroundColor: Colors.white,
+                // backgroundColor: AppColors.whiteLight,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
                   child: Icon(

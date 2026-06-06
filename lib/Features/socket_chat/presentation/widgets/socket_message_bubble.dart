@@ -123,7 +123,7 @@ class SocketMessageBubble extends StatelessWidget {
                                                 child: IconButton(
                                                   icon: const Icon(
                                                     Icons.close,
-                                                    color: Colors.white,
+                                                    color: AppColors.whiteLight,
                                                   ),
                                                   onPressed: () {
                                                     Navigator.of(context).pop();

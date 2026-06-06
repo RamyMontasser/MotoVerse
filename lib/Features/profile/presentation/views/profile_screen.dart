@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
+import 'package:motoverse/Core/providers/localization_provider.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
@@ -23,6 +24,7 @@ import 'package:motoverse/Features/profile/presentation/widgets/profile_section.
 import 'package:motoverse/Features/profile/presentation/widgets/profile_switch_item.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_user_info_widget.dart';
 import 'package:motoverse/generated/l10n.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -45,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LocalizationProvider>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LogoutCubit(getIt<AuthRepo>())),
@@ -133,7 +136,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(height: 20.h),
 
-                        // --- Current Car Card ---
                         BlocBuilder<ProfileCarCubit, ProfileCarState>(
                           builder: (context, state) {
                             if (state is ProfileCarLoading) {
@@ -163,7 +165,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(height: 24.h),
 
-                        // --- مركز الأنشطة ---
                         ProfileSection(
                           title: 'مركز الأنشطة',
                           children: [
@@ -219,17 +220,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(height: 18.h),
 
-                        // --- الإعدادات ---
                         ProfileSection(
                           title: 'الإعدادات',
                           children: [
                             ProfileMenuItem(
                               title: 'لغة التطبيق',
                               icon: Icons.language,
-                              trailingText: 'العربية',
+                              trailingText: (languageProvider.local == 'en')
+                                  ? 'English'
+                                  : 'العربية',
                               trailingTextColor: AppColors.blueNormal,
                               onTap: () =>
-                                  Navigator.of(context).pushNamed('settings'),
+                                  Navigator.of(context).pushNamed('LanguageScreen'),
                             ),
                             ProfileSection.divider(),
                             ProfileSwitchItem(

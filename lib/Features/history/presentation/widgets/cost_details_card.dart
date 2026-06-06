@@ -12,7 +12,7 @@ class CostDetailsCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteLight,
         borderRadius: CustomRadius.card12,
         border: Border.all(color: AppColors.blueLight),
       ),

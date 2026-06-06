@@ -73,7 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           AndroidUiSettings(
             toolbarTitle: 'تعديل صورة البروفايل',
             toolbarColor: AppColors.blueNormal,
-            toolbarWidgetColor: Colors.white,
+            toolbarWidgetColor: AppColors.whiteLight,
             initAspectRatio: CropAspectRatioPreset.square,
             lockAspectRatio: true,
           ),
@@ -148,7 +148,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 (currentUser?.image.isNotEmpty ?? false))
               ListTile(
                 leading: const Icon(Icons.delete_outline, color: Colors.red),
-                title:  Text(
+                title: Text(
                   'إزالة الصورة الحالية',
                   style: TextStyles.cairoBold14.copyWith(
                     color: AppColors.redNormal,
@@ -237,193 +237,198 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-              Text(
-                'تعديل معلوماتك',
-                style: TextStyles.cairoBold20.copyWith(
-                  color: AppColors.blueNormal,
-                ),
-              ),
-              SizedBox(height: 30.h),
-              // ProfileAvatarWidget(
-              //   imageUrl: currentUser?.image ?? '',
-              //   onEditTap: () {},
-              // ),
-              Center(
-                child: Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.whiteLight,
-                          width: 4.w,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.black.withValues(alpha: 0.1),
-                            blurRadius: 8.r,
-                            offset: Offset(0, 4.h),
-                          ),
-                        ],
-                      ),
-                      child: CircleAvatar(
-                        radius: 55.r,
-                        backgroundColor: AppColors.yellowNormal,
-                        backgroundImage: imageProvider,
-                        child: imageProvider == null
-                            ? Icon(
-                                Icons.person,
-                                size: 50.sp,
-                                color: AppColors.yellowLight,
-                              )
-                            : null,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap:
-                          _showImageSourceOptions, // ربط الزرار هنا بالـ Bottom Sheet
-                      child: CircleAvatar(
-                        radius: 19.r,
-                        backgroundColor: AppColors.whiteLight,
-                        child: CircleAvatar(
-                          radius: 17.r,
-                          backgroundColor: AppColors.blueNormal,
-                          child: Icon(
-                            _isImageDeleted || imageProvider == null
-                                ? Icons.add_a_photo_outlined
-                                : Icons
-                                      .edit_outlined, // يتغير الأيقونة لو الصورة موجودة
-                            size: 19.sp,
-                            color: AppColors.blueLight,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30.h),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    S.of(context).fullName,
-                    style: TextStyles.cairoBold16.copyWith(
-                      color: AppColors.blueNormal,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  CustomTextfeildWithBorder(
-                    controller: _nameController,
-                    hint: S.of(context).fullName,
-                    hintColor: AppColors.blueDarker,
-                    validator: AppValidator.validateEmpty,
-                    prefixIcon: const Icon(
-                      Icons.person_outlined,
-                      color: AppColors.blueNormal,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'رقم الهاتف',
-                    style: TextStyles.cairoBold16.copyWith(
-                      color: AppColors.blueNormal,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  CustomTextfeildWithBorder(
-                    controller: _phoneController,
-                    // hint: 'رقم الهاتف',
-                    isNumber: true,
-                    readOnly: true,
-                    prefixIcon: const Icon(
-                      Icons.mobile_friendly_rounded,
-                      color: AppColors.blueNormal,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'البريد الإلكتروني',
-                    style: TextStyles.cairoBold16.copyWith(
-                      color: AppColors.blueNormal,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  CustomTextfeildWithBorder(
-                    controller: _emailController,
-                    hint: 'البريد الإلكتروني',
-                    hintColor: AppColors.blueDarker,
-                    validator: AppValidator.validateEmail,
-                    prefixIcon: const Icon(
-                      Icons.email_outlined,
-                      color: AppColors.blueNormal,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                decoration: BoxDecoration(
-                  color: AppColors.blueGrey,
-                  borderRadius: CustomRadius.card12,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.verified_user_outlined,
-                      color: AppColors.blueNormal,
-                    ),
-                    SizedBox(width: 12.w),
-                    Expanded(
-                      child: Text(
-                        'تتم معالجة جميع بياناتك الشخصية وتخزينها بشكل آمن وفقاً لسياسة الخصوصية الخاصة بنا',
-                        style: TextStyles.cairoRegular11.copyWith(
+                      Text(
+                        'تعديل معلوماتك',
+                        style: TextStyles.cairoBold20.copyWith(
                           color: AppColors.blueNormal,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30.h),
+                      SizedBox(height: 30.h),
+                      // ProfileAvatarWidget(
+                      //   imageUrl: currentUser?.image ?? '',
+                      //   onEditTap: () {},
+                      // ),
+                      Center(
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.whiteLight,
+                                  width: 4.w,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.black.withValues(
+                                      alpha: 0.1,
+                                    ),
+                                    blurRadius: 8.r,
+                                    offset: Offset(0, 4.h),
+                                  ),
+                                ],
+                              ),
+                              child: CircleAvatar(
+                                radius: 55.r,
+                                backgroundColor: AppColors.yellowNormal,
+                                backgroundImage: imageProvider,
+                                child: imageProvider == null
+                                    ? Icon(
+                                        Icons.person,
+                                        size: 50.sp,
+                                        color: AppColors.yellowLight,
+                                      )
+                                    : null,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap:
+                                  _showImageSourceOptions, // ربط الزرار هنا بالـ Bottom Sheet
+                              child: CircleAvatar(
+                                radius: 19.r,
+                                backgroundColor: AppColors.whiteLight,
+                                child: CircleAvatar(
+                                  radius: 17.r,
+                                  backgroundColor: AppColors.blueNormal,
+                                  child: Icon(
+                                    _isImageDeleted || imageProvider == null
+                                        ? Icons.add_a_photo_outlined
+                                        : Icons
+                                              .edit_outlined, // يتغير الأيقونة لو الصورة موجودة
+                                    size: 19.sp,
+                                    color: AppColors.blueLight,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 30.h),
 
-              CustomElevatedButton(
-                text: 'حفظ التغييرات',
-                radius: CustomRadius.card,
-                fun: _saveChanges,
-                backgColor: AppColors.blueNormal,
-                foregColor: AppColors.whiteLight,
-                height: 50,
-                fontStyle: TextStyles.cairoBold16,
-              ),
-              SizedBox(height: 12.h),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            S.of(context).fullName,
+                            style: TextStyles.cairoBold16.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          CustomTextfeildWithBorder(
+                            controller: _nameController,
+                            hint: S.of(context).fullName,
+                            hintColor: AppColors.blueDarker,
+                            validator: AppValidator.validateEmpty,
+                            prefixIcon: const Icon(
+                              Icons.person_outlined,
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.h),
 
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  'إلغاء',
-                  style: TextStyles.cairoBold16.copyWith(
-                    color: AppColors.blueNormal,
-                  ),
-                ),
-              ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'رقم الهاتف',
+                            style: TextStyles.cairoBold16.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          CustomTextfeildWithBorder(
+                            controller: _phoneController,
+                            // hint: 'رقم الهاتف',
+                            isNumber: true,
+                            readOnly: true,
+                            prefixIcon: const Icon(
+                              Icons.mobile_friendly_rounded,
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.h),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'البريد الإلكتروني',
+                            style: TextStyles.cairoBold16.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          CustomTextfeildWithBorder(
+                            controller: _emailController,
+                            hint: 'البريد الإلكتروني',
+                            hintColor: AppColors.blueDarker,
+                            validator: AppValidator.validateEmail,
+                            prefixIcon: const Icon(
+                              Icons.email_outlined,
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.h),
+
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 12.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.blueGrey,
+                          borderRadius: CustomRadius.card12,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.verified_user_outlined,
+                              color: AppColors.blueNormal,
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: Text(
+                                'تتم معالجة جميع بياناتك الشخصية وتخزينها بشكل آمن وفقاً لسياسة الخصوصية الخاصة بنا',
+                                style: TextStyles.cairoRegular11.copyWith(
+                                  color: AppColors.blueNormal,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 30.h),
+
+                      CustomElevatedButton(
+                        text: 'حفظ التغييرات',
+                        radius: CustomRadius.card,
+                        fun: _saveChanges,
+                        backgColor: AppColors.blueNormal,
+                        foregColor: AppColors.whiteLight,
+                        height: 50,
+                        fontStyle: TextStyles.cairoBold16,
+                      ),
+                      SizedBox(height: 12.h),
+
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          'إلغاء',
+                          style: TextStyles.cairoBold16.copyWith(
+                            color: AppColors.blueNormal,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
