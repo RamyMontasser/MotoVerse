@@ -5,4 +5,8 @@ import 'package:motoverse/Core/errors/failure.dart';
 abstract class MapRepo {
   Future<Either<Failure, Position>> getCurrentLocation();
   Future<Either<Failure, String>> getCurrentCity({required Position position});
+  Future<Either<Failure, int>> getNearestCentersCount({
+    required double latitude,
+    required double longitude,
+  });
 }

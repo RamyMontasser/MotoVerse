@@ -29,7 +29,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         listen: false,
       );
       setState(() {
-        tempSelectedLanguage = languageProvider.local ?? 'ar';
+        tempSelectedLanguage = languageProvider.local ;
       });
     });
   }

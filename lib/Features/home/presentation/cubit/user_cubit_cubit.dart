@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
@@ -25,8 +26,6 @@ class UserCubitCubit extends Cubit<UserCubitState> {
   //     (failure) async=> emit(GetUserTokenFailure(errMsg: failure.errorMsg)),
   //     (token) async {
   //       debugPrint(token);
-  //       // debugPrint('📏 Token Length: ${token.length}');
-  //       // debugPrint('🔍 Clean Token: ${token.trim()}');
   //       // await loginWithToken(token);
   //       emit(GetUserTokenSuccess());
   //     },
@@ -47,8 +46,9 @@ class UserCubitCubit extends Cubit<UserCubitState> {
         var box = Hive.box<UserDataModel>('user_box');
         await box.put('user', user);
         var checkUser = box.get('user');
-        debugPrint("🔍 Check Hive immediately: ${checkUser?.name}");
+        debugPrint("Check Hive immediately: ${checkUser?.name}");
         emit(GetUserInfoSuccess(user: user));
+        await getAndSendFCMToken();
       },
     );
   }
@@ -79,27 +79,69 @@ class UserCubitCubit extends Cubit<UserCubitState> {
     );
   }
 
+
+  Future<void> getAndSendFCMToken() async {
+    try {
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+      NotificationSettings settings = await messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        String? token = await messaging.getToken();
+
+        if (token != null) {
+          debugPrint("🎯 FCM Token Found: $token");
+
+          final result = await homeRepo.sendDeviceToken(token: token);
+
+          result.fold(
+            (failure) => debugPrint(
+              "❌ Failed to sync token to backend: ${failure.errorMsg}",
+            ),
+            (_) {
+              debugPrint("✅ FCM Token synced successfully with backend!");
+              _monitorTokenRefresh();
+            },
+          );
+        }
+      } else {
+        debugPrint("⚠️ User denied notification permissions");
+      }
+    } catch (e) {
+      debugPrint("❌ Error in getAndSendFCMToken: $e");
+    }
+  }
+
+  void _monitorTokenRefresh() {
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+      debugPrint("🔄 FCM Token Refreshed: $newToken");
+      await homeRepo.sendDeviceToken(token: newToken);
+    });
+  }
+
   // Future<void> loginWithToken(String token) async {
   //   await FirebaseAuthService().login(token);
   // }
 
   // Future<void> loginWithToken(String token) async {
   //   try {
-  //     debugPrint('🚀 Sending token to Firebase...');
+  //     debugPrint('Sending token to Firebase...');
 
-  //     // هنسجل دخول هنا مباشرة عشان نقطع الشك باليقين ونشوف رد الفايربيس
   //     UserCredential userCredential = await FirebaseAuth.instance
   //         .signInWithCustomToken(token);
 
   //     debugPrint(
-  //       '✅ Firebase Auth Success! User UID: ${userCredential.user?.uid}',
+  //       'Firebase Auth Success! User UID: ${userCredential.user?.uid}',
   //     );
   //   } on FirebaseAuthException catch (e) {
-  //     // هنا الفايربيس لو رفض التوكن هيقولنا السبب الصريح (مثلاً: invalid-custom-token)
-  //     debugPrint('❌ Firebase Auth Error Code: ${e.code}');
-  //     debugPrint('❌ Firebase Auth Error Message: ${e.message}');
+  //     debugPrint('Firebase Auth Error Code: ${e.code}');
+  //     debugPrint('Firebase Auth Error Message: ${e.message}');
   //   } catch (e) {
-  //     debugPrint('❌ General Auth Error: ${e.toString()}');
+  //     debugPrint('General Auth Error: ${e.toString()}');
   //   }
   // }
 }

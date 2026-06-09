@@ -36,7 +36,7 @@ class ProfileAvatarWidget extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: 55.r,
-              backgroundColor: AppColors.yellowNormal,
+              backgroundColor: AppColors.yellowLightActive,
               backgroundImage: imageUrl.isNotEmpty
                   ? NetworkImage(
                       imageUrl.startsWith('http')

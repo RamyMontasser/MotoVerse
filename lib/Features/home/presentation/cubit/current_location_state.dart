@@ -4,13 +4,21 @@ part of 'current_location_cubit.dart';
 sealed class CurrentLocationState {}
 
 final class CurrentLocationInitial extends CurrentLocationState {}
+
 final class CurrentLocationLoading extends CurrentLocationState {}
+
 final class CurrentLocationSuccess extends CurrentLocationState {
   final Position currentLocation;
   final String? cityName;
+  final int nearestCentersCount;
 
-  CurrentLocationSuccess({required this.currentLocation, this.cityName});
+  CurrentLocationSuccess({
+    required this.currentLocation,
+    this.cityName,
+    this.nearestCentersCount = 0,
+  });
 }
+
 final class CurrentLocationFailure extends CurrentLocationState {
   final String errMsg;
 

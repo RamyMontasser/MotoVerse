@@ -262,4 +262,25 @@ class HomeRepoImp implements HomeRepo {
       return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
+
+
+
+  @override
+  Future<Either<Failure, void>> sendDeviceToken({required String token}) async {
+    try {
+      await networkService.addData(
+        endPoint:
+            '/notifications/fcm-token/', 
+        data: {
+          'token': token,
+          // 'device_type': Platform.isAndroid ? 'android' : 'ios',
+        },
+      );
+      return const Right(null);
+    } on DioException catch (e) {
+      return Left(ApiFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(errorMsg: e.toString()));
+    }
+  }
 }

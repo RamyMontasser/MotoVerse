@@ -69,7 +69,8 @@ void getitsetup() {
 
   //   Map
   getIt.registerSingleton<MapRepo>(
-    MapRepoImp(locationService: LocationService()),
+    MapRepoImp(locationService: LocationService(), networkService: getIt<NetworkService>(),
+),
   );
 
   getIt.registerSingleton<ServiceCenterRepo>(

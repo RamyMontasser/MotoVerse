@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
@@ -15,6 +14,7 @@ import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart'
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/home/presentation/widgets/greating_card.dart';
 import 'package:motoverse/Features/home/presentation/widgets/history_listtile.dart';
+import 'package:motoverse/Features/home/presentation/widgets/home_map_card.dart';
 import 'package:motoverse/Features/home/presentation/widgets/my_offer_card.dart';
 import 'package:motoverse/Features/home/presentation/widgets/request_status_card.dart';
 import 'package:motoverse/Features/home/presentation/widgets/tool_card.dart';
@@ -187,26 +187,61 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ToolCard(
-                  iconPath: Icons.sos,
-                  name: 'طلب مساعدة',
-                  desc: 'دعم  للحالات الطارئة',
-                  fun: () {
-                    Navigator.of(context).pushNamed('RequestHelp1');
-                  },
-                  iconBgColor: AppColors.greenLight,
-                  iconColor: AppColors.greenNormal,
+                Expanded(
+                  child: ToolCard(
+                    iconPath: Icons.sos,
+                    name: 'طلب مساعدة',
+                    desc: 'دعم  للحالات الطارئة',
+                    fun: () {
+                      Navigator.of(context).pushNamed('RequestHelp1');
+                    },
+                    iconBgColor: AppColors.greenLight,
+                    iconColor: AppColors.greenNormal,
+                  ),
                 ),
-                ToolCard(
-                  iconPath: Icons.location_on_outlined,
-                  name: ' مراكز صيانة قريبة',
-                  desc: '12 مركز  قريب منك',
-                  fun: () {
-                    context.read<NavigationProvider>().changeIndex(3);
-                  },
-                  iconBgColor: AppColors.orangeLight,
-                  iconColor: AppColors.orangeNormal,
+                SizedBox(width: 12.w),
+
+                Expanded(
+                  child:
+                      BlocBuilder<CurrentLocationCubit, CurrentLocationState>(
+                        builder: (context, state) {
+                          int centersCount = 0;
+                          if (state is CurrentLocationSuccess) {
+                            centersCount = state.nearestCentersCount;
+                          }
+                          if (state is CurrentLocationLoading) {
+                            return Skeletonizer(
+                              child: ToolCard(
+                                iconPath: Icons.location_on_outlined,
+                                name: ' مراكز صيانة قريبة',
+                                desc: '$centersCount مركز قريب منك',
+                                fun: () {
+                                  context
+                                      .read<NavigationProvider>()
+                                      .changeIndex(3);
+                                },
+                                iconBgColor: AppColors.orangeLight,
+                                iconColor: AppColors.orangeNormal,
+                              ),
+                            );
+                          }
+
+                          return ToolCard(
+                            iconPath: Icons.location_on_outlined,
+                            name: ' مراكز صيانة قريبة',
+                            desc:centersCount != 0? 
+                            '$centersCount مركز قريب منك'
+                            : "لا توجد مراكز صيانة قريبة حالياً",
+                            fun: () {
+                              context.read<NavigationProvider>().changeIndex(3);
+                            },
+                            iconBgColor: AppColors.orangeLight,
+                            iconColor: AppColors.orangeNormal,
+                          );
+                        },
+                      ),
                 ),
+
               ],
             ),
 
@@ -223,71 +258,12 @@ class _HomeState extends State<Home> {
 
             SizedBox(height: 20.h),
 
-            Container(
-              width: double.infinity,
-              height: 150.h,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.black.withAlpha(20),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/images/Mapbox.png',
-                      fit: BoxFit.cover,
-                      color: AppColors.blueNormal.withValues(alpha: 0.1),
-                      colorBlendMode: BlendMode.luminosity,
-                    ),
-                  ),
 
-                  Positioned(
-                    top: 20.h,
-                    right: 70.w,
-                    child: SvgPicture.asset('assets/icons/map/blue_pin.svg'),
-                  ),
-                  Positioned(
-                    top: 50.h,
-                    left: 90.w,
-                    child: SvgPicture.asset('assets/icons/map/blue_pin.svg'),
-                  ),
-                  Positioned(
-                    bottom: 50.h,
-                    right: 120.w,
-                    child: SvgPicture.asset('assets/icons/map/blue_pin.svg'),
-                  ),
+           GestureDetector(
+            onTap: () => context.read<NavigationProvider>().changeIndex(3),
+            child: const HomeMapCard()),
 
-                  Positioned(
-                    bottom: 10.h,
-                    right: 20.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "اعثر على مراكز صيانة قريبة",
-                          style: TextStyles.cairoBold12.copyWith(
-                            color: AppColors.whiteDarker,
-                          ),
-                        ),
-                        Text(
-                          "استكشف أكثر من 24 مركزاً",
-                          style: TextStyles.reg10Tajawal.copyWith(
-                            color: AppColors.whiteDarkActive,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+           
             SizedBox(height: 100.h),
           ],
         ),

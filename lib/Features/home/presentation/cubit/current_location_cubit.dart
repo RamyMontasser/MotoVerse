@@ -47,8 +47,25 @@ class CurrentLocationCubit extends Cubit<CurrentLocationState> {
         String? cityName;
         cityResponse.fold((l) => null, (city) => cityName = city);
 
+        var countResponse = await mapRepo.getNearestCentersCount(
+          latitude: location.latitude,
+          longitude: location.longitude,
+        );
+
+        int centersCount = 0;
+        countResponse.fold(
+          (fail) => debugPrint(
+            '❌ Failed to get nearest centers count: ${fail.errorMsg}',
+          ),
+          (count) => centersCount = count,
+        );
+
         emit(
-          CurrentLocationSuccess(currentLocation: location, cityName: cityName),
+          CurrentLocationSuccess(
+            currentLocation: location,
+            cityName: cityName,
+            nearestCentersCount: centersCount,
+          ),
         );
 
         if (cityName != null) {

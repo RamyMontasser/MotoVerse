@@ -36,4 +36,6 @@ abstract class HomeRepo {
   Future<Either<Failure, ConversationModel>> enterChat({
     required int requestId,
   });
+
+  Future<Either<Failure, void>> sendDeviceToken({required String token});
 }

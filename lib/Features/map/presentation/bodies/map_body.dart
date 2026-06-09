@@ -32,12 +32,12 @@ class _MapBodyState extends State<MapBody> {
   void initState() {
     super.initState();
     _mapController = MapController();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      final lat = widget.currentPosition?.latitude ?? 31.4128;
-      final lng = widget.currentPosition?.longitude ?? 31.8148;
-      _mapController.move(LatLng(lat, lng), 15.0);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (!mounted) return;
+    //   final lat = widget.currentPosition?.latitude ?? 31.4128;
+    //   final lng = widget.currentPosition?.longitude ?? 31.8148;
+    //   _mapController.move(LatLng(lat, lng), 15.0);
+    // });
   }
 
   @override
@@ -92,7 +92,7 @@ class _MapBodyState extends State<MapBody> {
                         widget.currentPosition!.longitude,
                       )
                     : LatLng(31.41285350124312, 31.81483832922779),
-                initialZoom: 17.0,
+                initialZoom: 16.0,
                 interactionOptions: const InteractionOptions(
                   flags: InteractiveFlag.all,
                 ),
@@ -112,6 +112,7 @@ class _MapBodyState extends State<MapBody> {
                   },
                   subdomains: ['a', 'b', 'c', 'd'],
                   userAgentPackageName: 'com.example.motoverse',
+                  tileProvider: NetworkTileProvider(),
                 ),
                 BlocBuilder<ServiceCenterCubit, ServiceCenterState>(
                   builder: (context, state) {

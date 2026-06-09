@@ -29,9 +29,9 @@ class ToolCard extends StatelessWidget {
     return GestureDetector(
       onTap: fun,
       child: Container(
-        width: 155.w,
+        // width: 155.w,
         // height: 98.h,
-        padding: EdgeInsets.symmetric(vertical: 18.h),
+        padding: EdgeInsets.symmetric(vertical: 18.h,horizontal: 2.w),
         // margin: EdgeInsets.symmetric(vertical: 5.h),
         decoration: BoxDecoration(
           borderRadius: CustomRadius.card,

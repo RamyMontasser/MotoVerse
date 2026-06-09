@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
+import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
-import 'package:motoverse/Features/history/presentation/widgets/maintenance_card.dart';
-import 'package:motoverse/Features/home/presentation/widgets/tool_card.dart';
-import 'package:timelines_plus/timelines_plus.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-import 'package:motoverse/Core/services/getit.dart';
-import 'package:motoverse/Features/history/domain/repo/history_repo.dart';
-import 'package:motoverse/Features/history/presentation/cubit/history_cubit.dart';
 import 'package:motoverse/Features/history/data/models/car_history_model.dart';
 import 'package:motoverse/Features/history/data/models/history_summary_model.dart';
-import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/Features/history/domain/repo/history_repo.dart';
+import 'package:motoverse/Features/history/presentation/cubit/history_cubit.dart';
+import 'package:motoverse/Features/history/presentation/widgets/maintenance_card.dart';
+import 'package:motoverse/Features/home/presentation/widgets/tool_card.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:timelines_plus/timelines_plus.dart';
 
 class HistoryPage1 extends StatelessWidget {
   const HistoryPage1({super.key});
@@ -27,12 +27,15 @@ class HistoryPage1 extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.startFloat,
             floatingActionButton: FloatingActionButton(
               heroTag: null,
               shape: RoundedRectangleBorder(borderRadius: CustomRadius.circle),
               onPressed: () async {
-                final result = await Navigator.of(context).pushNamed('history3');
+                final result = await Navigator.of(
+                  context,
+                ).pushNamed('history3');
                 if (result == true && context.mounted) {
                   context.read<HistoryCubit>().getCarHistory();
                 }
@@ -95,9 +98,7 @@ class HistoryPage1 extends StatelessWidget {
         SizedBox(height: 30.h),
         Text(
           'لا يوجد سجل صيانة',
-          style: TextStyles.cairoBold24.copyWith(
-            color: AppColors.blueNormal,
-          ),
+          style: TextStyles.cairoBold24.copyWith(color: AppColors.blueNormal),
         ),
         SizedBox(height: 15.h),
         Padding(
@@ -141,25 +142,30 @@ class HistoryPage1 extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ToolCard(
-                iconPath: Icons.sos,
-                name: 'اخر صيانة',
-                desc: summary.lastMaintenance?.date ?? 'No history',
-                fun: () {
-                  // Navigator.of(context).pushNamed('history2');
-                },
-                iconBgColor: AppColors.greenLight,
-                iconColor: AppColors.greenNormal,
+              Expanded(
+                child: ToolCard(
+                  iconPath: Icons.sos,
+                  name: 'اخر صيانة',
+                  desc: summary.lastMaintenance?.date ?? 'No history',
+                  fun: () {
+                    // Navigator.of(context).pushNamed('history2');
+                  },
+                  iconBgColor: AppColors.greenLight,
+                  iconColor: AppColors.greenNormal,
+                ),
               ),
-              ToolCard(
-                iconPath: Icons.payment_outlined,
-                name: 'اجمال الدفع',
-                desc: '${summary.totalCost} EGP',
-                fun: () {},
-                iconBgColor: AppColors.orangeLight,
-                iconColor: AppColors.orangeNormal,
+              SizedBox(width: 12.w),
+              Expanded(
+                child: ToolCard(
+                  iconPath: Icons.payment_outlined,
+                  name: 'اجمال الدفع',
+                  desc: '${summary.totalCost} EGP',
+                  fun: () {},
+                  iconBgColor: AppColors.orangeLight,
+                  iconColor: AppColors.orangeNormal,
+                ),
               ),
             ],
           ),
@@ -172,9 +178,9 @@ class HistoryPage1 extends StatelessWidget {
               indicatorPositionBuilder: (context, index) => 0.0,
               connectorBuilder: (context, index, type) =>
                   const SolidLineConnector(
-                thickness: 1,
-                color: AppColors.black,
-              ),
+                    thickness: 1,
+                    color: AppColors.black,
+                  ),
               lastConnectorBuilder: (context) => const SolidLineConnector(
                 thickness: 1,
                 color: AppColors.black,
@@ -186,9 +192,7 @@ class HistoryPage1 extends StatelessWidget {
                     color: AppColors.blueLight,
                     shape: BoxShape.circle,
                   ),
-                  child: SvgPicture.asset(
-                    'assets/icons/home/maintenance.svg',
-                  ),
+                  child: SvgPicture.asset('assets/icons/home/maintenance.svg'),
                 );
               },
               contentsBuilder: (context, index) {
@@ -212,7 +216,7 @@ class HistoryPage1 extends StatelessWidget {
         description: 'وصف الصيانة',
         date: '2023-09-28',
         // time: '04:45 PM',
-        cost: '1000', 
+        cost: '1000',
         // reading: '100000',
       ),
     );
