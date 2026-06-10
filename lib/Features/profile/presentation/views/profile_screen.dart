@@ -1,13 +1,12 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
+import 'package:motoverse/Core/cache/app_pref.dart';
 import 'package:motoverse/Core/providers/localization_provider.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/services/getit.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:motoverse/Core/cache/app_pref.dart';
-import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
@@ -16,6 +15,7 @@ import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Features/auth/domain/repo/auth_repo.dart';
 import 'package:motoverse/Features/auth/presentation/cubit/logout_cubit.dart';
 import 'package:motoverse/Features/home/data/models/user_model.dart';
+import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/profile/data/models/car_model.dart';
 import 'package:motoverse/Features/profile/domain/repo/profile_car_repo.dart';
@@ -276,8 +276,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ? 'English'
                                   : 'العربية',
                               trailingTextColor: AppColors.blueNormal,
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed('LanguageScreen'),
+                              onTap: () => Navigator.of(
+                                context,
+                              ).pushNamed('LanguageScreen'),
                             ),
                             ProfileSection.divider(),
                             ProfileSwitchItem(
@@ -289,7 +290,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   isNotificationsEnabled = val;
                                 });
                                 await AppPref.setBool(
-                                    key: 'notifications_enabled', val: val);
+                                  key: 'notifications_enabled',
+                                  val: val,
+                                );
                                 await _applyNotificationSetting(val);
                               },
                             ),

@@ -160,10 +160,19 @@ class RequestOffersScreen extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 20.h),
-                    _buildLoadingHeader(newContext, requests),
-                    SizedBox(height: 20.h),
+                    Text(
+                      'العروض المتاحة',
+                      style: TextStyles.cairoBold20.copyWith(
+                        color: AppColors.blueNormal,),),
+                        // SizedBox(height: 20.h),
+                     if (!hasAcceptedOffer &&
+                        requests.first.status != 'accepted')
+                      _buildLoadingHeader(newContext, requests),
+                    // SizedBox(height: 20.h),
                     BlocBuilder<NotificationCubit, NotificationState>(
                       buildWhen: (previous, current) =>
                           current is NotificationLoading ||
@@ -321,6 +330,7 @@ class RequestOffersScreen extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
+            margin: EdgeInsets.only(top:10.h),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: AppColors.blueGrey,

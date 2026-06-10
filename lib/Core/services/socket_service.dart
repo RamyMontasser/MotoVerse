@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as status;
+// import 'package:web_socket_channel/status.dart' as status;
 
 class SocketService {
   WebSocketChannel? _channel;
@@ -109,7 +109,8 @@ class SocketService {
     _reconnectTimer?.cancel();
     _reconnectTimer = null;
     try {
-      _channel?.sink.close(status.goingAway);
+      // _channel?.sink.close(status.goingAway);
+      _channel?.sink.close();
     } catch (e) {
       debugPrint('Error closing WebSocket channel sink: $e');
     }

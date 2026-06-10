@@ -200,7 +200,7 @@ class SocketMessageBubble extends StatelessWidget {
                       //     : MainAxisAlignment.end,
                       children: [
                         Text(
-                          DateFormat('hh:mm a').format(message.timestamp),
+                          DateFormat('hh:mm a').format(message.timestamp.toLocal()),
                           style: TextStyles.cairoRegular11.copyWith(
                             color: message.isMe
                                 ? AppColors.whiteDark

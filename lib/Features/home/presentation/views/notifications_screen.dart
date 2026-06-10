@@ -91,6 +91,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         ),
                       );
                     }
+                    debugPrint('latest notification: ${apiNotifications.first.createdAt}');
 
                     final todayNotifications = apiNotifications.where((n) {
                       return n.createdAt.year == now.year &&
@@ -135,7 +136,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           Padding(
                             padding: EdgeInsets.only(top: 20.h, bottom: 10.h),
                             child: Text(
-                              'الأسبوع الماضي',
+                              'سابقاً',
                               style: TextStyles.cairoBold16.copyWith(
                                 color: AppColors.blueNormal,
                               ),

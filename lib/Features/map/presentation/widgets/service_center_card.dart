@@ -118,33 +118,33 @@ class ServiceCenterCard extends StatelessWidget {
                         color: AppColors.blueDarkHover,
                       ),
                     ),
-                    SizedBox(height: 2.h),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "(120+ reviews)",
-                            style: TextStyles.cairoRegular11.copyWith(
-                              color: AppColors.whiteDarkHover,
-                            ),
-                          ),
-                          const TextSpan(text: "  "),
-                          TextSpan(
-                            text: "$averageRating ",
-                            style: TextStyles.med13Tajawal,
-                          ),
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.middle,
-                            child: Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 16.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
+                    // SizedBox(height: 2.h),
+                    // Text.rich(
+                    //   TextSpan(
+                    //     children: [
+                    //       TextSpan(
+                    //         text: "(120+ reviews)",
+                    //         style: TextStyles.cairoRegular11.copyWith(
+                    //           color: AppColors.whiteDarkHover,
+                    //         ),
+                    //       ),
+                    //       const TextSpan(text: "  "),
+                    //       TextSpan(
+                    //         text: "$averageRating ",
+                    //         style: TextStyles.med13Tajawal,
+                    //       ),
+                    //       WidgetSpan(
+                    //         alignment: PlaceholderAlignment.middle,
+                    //         child: Icon(
+                    //           Icons.star,
+                    //           color: Colors.amber,
+                    //           size: 16.sp,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    SizedBox(height: 10.h),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(

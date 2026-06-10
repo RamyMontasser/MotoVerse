@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:motoverse/Core/errors/failure.dart';
 import 'package:motoverse/Features/home/data/models/notificaion_model.dart';
@@ -31,6 +32,8 @@ class DeviceNotificationCubit extends Cubit<DeviceNotificationState> {
         }
       },
       (notifications) {
+        debugPrint('latest notification: ${notifications.first.createdAt}');
+
         _cachedNotifications = notifications;
         emit(DeviceNotificationSuccess(notifications));
       },

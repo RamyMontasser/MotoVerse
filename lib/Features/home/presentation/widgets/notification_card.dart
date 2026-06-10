@@ -14,7 +14,8 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final String formattedTime = DateFormat(
       'hh:mm a',
-    ).format(notification.createdAt).toLowerCase();
+    ).format(notification.createdAt.toLocal());
+    // .format(notification.createdAt).toLowerCase();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
