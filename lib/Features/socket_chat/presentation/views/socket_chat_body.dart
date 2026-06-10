@@ -22,7 +22,18 @@ class SocketChatBody extends StatefulWidget {
   final bool helperVerified;
   final bool isOnline;
   const SocketChatBody({
-    super.key, required this.chatId, required this.chatUserId, required this.chatUserName, this.helperAvatar, required this.isHelper, required this.requestId, required this.offerId, required this.averageRating, required this.helperVerified, required this.isOnline,});
+    super.key,
+    required this.chatId,
+    required this.chatUserId,
+    required this.chatUserName,
+    this.helperAvatar,
+    required this.isHelper,
+    required this.requestId,
+    required this.offerId,
+    required this.averageRating,
+    required this.helperVerified,
+    required this.isOnline,
+  });
 
   @override
   State<SocketChatBody> createState() => _SocketChatBodyState();
@@ -69,7 +80,7 @@ class _SocketChatBodyState extends State<SocketChatBody> {
   // }
 
   Future<void> _confirmCompleteRequest() async {
-      final shouldComplete = await showDialog<bool>(
+    final shouldComplete = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => CustomAppDialog(
         title: 'تأكيد إنهاء الطلب',
@@ -84,7 +95,9 @@ class _SocketChatBodyState extends State<SocketChatBody> {
 
     if (shouldComplete != true) return;
 
-    context.read<SocketChatCubit>().completeRequest(requestId: widget.requestId);
+    context.read<SocketChatCubit>().completeRequest(
+      requestId: widget.requestId,
+    );
   }
 
   void _showSnackBar(String message) {
@@ -102,115 +115,124 @@ class _SocketChatBodyState extends State<SocketChatBody> {
 
   @override
   void dispose() {
+    // context.read<SocketChatCubit>().disconnectFromChat();
     _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-   debugPrint( 'the user user status : ${widget.isOnline}');
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: ChatAppBar(
-        name: widget.chatUserName,
-        status: widget.isOnline ? 'متصل' : 'غير متصل',
-        avatarUrl: widget.helperAvatar,
-        onDeleteChat: widget.isHelper ? () {} : _confirmCompleteRequest,
-        isHelper: widget.isHelper,
-        helperVerified: widget.helperVerified,
-      ),
-      bottomSheet: SocketMessageInput(chatId: widget.chatId),
-      body: BlocListener<SocketChatCubit, SocketChatState>(
-        listenWhen: (previous, current) =>
-            current is SocketRequestCompleteSuccess ||
-            current is SocketRequestCompleteError,
-        listener: (context, state) {
-          if (state is SocketRequestCompleteSuccess) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              'ReviewScreen',
-              (route) => false,
-              arguments: {'offerId': int.tryParse(widget.offerId) ?? 0},
-            );
-          } else if (state is SocketRequestCompleteError) {
-            _showSnackBar(state.errorMsg);
-          }
-        },
-        child: Column(
-          children: [
-            Expanded(
-              child: BlocBuilder<SocketChatCubit, SocketChatState>(
-                buildWhen: (previous, current) =>
-                    current is SocketMessagesLoading ||
-                    current is SocketMessagesSuccess ||
-                    current is SocketMessagesError ||
-                    current is SocketChatConnectLoading ||
-                    current is SocketChatConnectError,
-                builder: (context, state) {
-                  if (state is SocketChatConnectLoading ||
-                      state is SocketMessagesLoading) {
+    debugPrint('the user user status : ${widget.isOnline}');
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          context.read<SocketChatCubit>().disconnectFromChat();
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: ChatAppBar(
+          name: widget.chatUserName,
+          status: widget.isOnline ? 'متصل' : 'غير متصل',
+          avatarUrl: widget.helperAvatar,
+          onDeleteChat: widget.isHelper ? () {} : _confirmCompleteRequest,
+          isHelper: widget.isHelper,
+          helperVerified: widget.helperVerified,
+        ),
+        bottomSheet: SocketMessageInput(chatId: widget.chatId),
+        body: BlocListener<SocketChatCubit, SocketChatState>(
+          listenWhen: (previous, current) =>
+              current is SocketRequestCompleteSuccess ||
+              current is SocketRequestCompleteError,
+          listener: (context, state) {
+            if (state is SocketRequestCompleteSuccess) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                'ReviewScreen',
+                (route) => false,
+                arguments: {'offerId': int.tryParse(widget.offerId) ?? 0},
+              );
+            } else if (state is SocketRequestCompleteError) {
+              _showSnackBar(state.errorMsg);
+            }
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<SocketChatCubit, SocketChatState>(
+                  buildWhen: (previous, current) =>
+                      current is SocketMessagesLoading ||
+                      current is SocketMessagesSuccess ||
+                      current is SocketMessagesError ||
+                      current is SocketChatConnectLoading ||
+                      current is SocketChatConnectError,
+                  builder: (context, state) {
+                    if (state is SocketChatConnectLoading ||
+                        state is SocketMessagesLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.yellowNormal,
+                        ),
+                      );
+                    }
+
+                    if (state is SocketChatConnectError) {
+                      return Center(
+                        child: Text(
+                          state.errorMsg,
+                          style: const TextStyle(color: AppColors.redNormal),
+                        ),
+                      );
+                    }
+
+                    if (state is SocketMessagesSuccess) {
+                      final messages = state.messages;
+
+                      if (messages.isEmpty) {
+                        return const Center(child: Text('لا توجد رسائل بعد'));
+                      }
+
+                      return ListView.builder(
+                        controller: _scrollController,
+                        reverse: true,
+                        padding: EdgeInsets.only(
+                          top: 10.h,
+                          bottom: 85.h,
+                          left: 2.w,
+                          right: 2.w,
+                        ),
+                        itemCount: messages.length,
+                        itemBuilder: (context, index) {
+                          final message = messages[index];
+                          return SocketMessageBubble(
+                            message: message,
+                            receiverAvatar: widget.helperAvatar,
+                          );
+                        },
+                      );
+                    }
+
+                    if (state is SocketMessagesError) {
+                      return Center(
+                        child: Text(
+                          state.errorMsg,
+                          style: const TextStyle(color: AppColors.redNormal),
+                        ),
+                      );
+                    }
+
                     return const Center(
                       child: CircularProgressIndicator(
                         color: AppColors.yellowNormal,
                       ),
                     );
-                  }
-
-                  if (state is SocketChatConnectError) {
-                    return Center(
-                      child: Text(
-                        state.errorMsg,
-                        style: const TextStyle(color: AppColors.redNormal),
-                      ),
-                    );
-                  }
-
-                  if (state is SocketMessagesSuccess) {
-                    final messages = state.messages;
-
-                    if (messages.isEmpty) {
-                      return const Center(child: Text('لا توجد رسائل بعد'));
-                    }
-
-                    return ListView.builder(
-                      controller: _scrollController,
-                      reverse: true,
-                      padding: EdgeInsets.only(
-                        top: 10.h,
-                        bottom: 85.h,
-                        left: 2.w,
-                        right: 2.w,
-                      ),
-                      itemCount: messages.length,
-                      itemBuilder: (context, index) {
-                        final message = messages[index];
-                        return SocketMessageBubble(
-                          message: message,
-                          receiverAvatar: widget.helperAvatar,
-                        );
-                      },
-                    );
-                  }
-
-                  if (state is SocketMessagesError) {
-                    return Center(
-                      child: Text(
-                        state.errorMsg,
-                        style: const TextStyle(color: AppColors.redNormal),
-                      ),
-                    );
-                  }
-
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.yellowNormal,
-                    ),
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-            // SizedBox(height: 90.h),
-          ],
+              // SizedBox(height: 90.h),
+            ],
+          ),
         ),
       ),
     );

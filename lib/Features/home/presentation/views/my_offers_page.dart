@@ -5,7 +5,7 @@ import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
-import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/widgets/my_offer_page_card.dart';
 import 'package:motoverse/Features/home/presentation/widgets/my_offers_category_tabs.dart';

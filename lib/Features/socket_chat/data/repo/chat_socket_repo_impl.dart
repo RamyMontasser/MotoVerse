@@ -45,8 +45,6 @@ class ChatSocketRepositoryImpl implements ChatSocketRepository {
         );
       }
 
-      _messages.clear();
-
       if (_messagesController == null || _messagesController!.isClosed) {
         _messagesController =
             StreamController<List<TextMessageModel>>.broadcast();
@@ -96,11 +94,24 @@ class ChatSocketRepositoryImpl implements ChatSocketRepository {
     }
   }
 
+  // @override
+  // void disconnect() {
+  //   _socketSubscription?.cancel();
+  //   _socketSubscription = null;
+  //   socketService.disconnect();
+  //   _messagesController?.close();
+  //   _messagesController = null;
+  // }
+
   @override
   void disconnect() {
     _socketSubscription?.cancel();
     _socketSubscription = null;
+
     socketService.disconnect();
+
+    _messages.clear();
+
     _messagesController?.close();
     _messagesController = null;
   }

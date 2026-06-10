@@ -10,7 +10,7 @@ import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
-import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
 import 'package:motoverse/Features/home/presentation/widgets/request_offer_card.dart';

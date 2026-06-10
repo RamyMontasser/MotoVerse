@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
-import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 
 part 'my_offers_state.dart';

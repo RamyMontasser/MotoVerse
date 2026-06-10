@@ -12,7 +12,7 @@ import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/widgets/car_info_card.dart';
 import 'package:motoverse/Features/community/presentation/widgets/request_location_card.dart';
 import 'package:motoverse/Features/community/presentation/widgets/user_contact_info.dart';
-import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';

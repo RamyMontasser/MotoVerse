@@ -194,6 +194,15 @@ class SocketChatCubit extends Cubit<SocketChatState> {
     );
   }
 
+  void disconnectFromChat() {
+    _messagesSubscription?.cancel();
+    _messagesSubscription = null;
+
+    chatSocketRepo.disconnect();
+
+    emit(SocketChatInitial());
+  }
+
   @override
   Future<void> close() {
     _messagesSubscription?.cancel();

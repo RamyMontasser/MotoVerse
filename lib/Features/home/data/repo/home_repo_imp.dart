@@ -7,8 +7,9 @@ import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/errors/failure.dart';
 import 'package:motoverse/Core/services/network_service.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/Features/home/data/models/notificaion_model.dart';
 // import 'package:motoverse/Features/home/data/models/chat_model.dart';
-import 'package:motoverse/Features/home/data/models/notification_offer_model.dart';
+import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/data/models/user_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/socket_chat/data/models/conversation_model.dart';
@@ -283,4 +284,25 @@ class HomeRepoImp implements HomeRepo {
       return Left(ServerFailure(errorMsg: e.toString()));
     }
   }
+
+
+  @override
+  Future<Either<Failure, List<NotificationModel>>> getNotifications() async {
+    try {
+      List<dynamic> response = await networkService.getData(
+        endPoint: '/notifications/',
+      );
+
+      List<NotificationModel> notifications = response
+          .map((item) => NotificationModel.fromJson(item))
+          .toList();
+
+      return Right(notifications);
+    } on DioException catch (e) {
+      return Left(ApiFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(errorMsg: e.toString()));
+    }
+  }
+  
 }

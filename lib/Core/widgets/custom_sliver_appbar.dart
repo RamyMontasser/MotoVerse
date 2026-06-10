@@ -30,7 +30,7 @@ class CustomSliverAppbar extends StatelessWidget {
         if (!Navigator.canPop(context))
          IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, 'NotificationPage');
+            Navigator.pushNamed(context, 'NotificationsScreen');
           },
           icon:
               SvgPicture.asset(

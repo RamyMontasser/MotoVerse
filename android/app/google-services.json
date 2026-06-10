@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "546354781705",
-    "project_id": "motoverse-1",
-    "storage_bucket": "motoverse-1.firebasestorage.app"
+    "project_number": "168890118036",
+    "project_id": "motoverse-6b1ae",
+    "storage_bucket": "motoverse-6b1ae.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:546354781705:android:27ba9a603d85becad922d8",
+        "mobilesdk_app_id": "1:168890118036:android:c12252a6f3d27963056981",
         "android_client_info": {
-          "package_name": "com.example.motoverse"
+          "package_name": "motoverse.com"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCQKbpgoXo0UDS2k08OVRPhrHoZ2IosUuk"
+          "current_key": "AIzaSyCsx-qo70KMzjE1OPNU-0H-4iIU6REHkog"
         }
       ],
       "services": {

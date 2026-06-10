@@ -9,6 +9,7 @@ import 'package:motoverse/Core/providers/localization_provider.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/services/navigator_service.dart';
+import 'package:motoverse/Core/services/push_notification_service.dart';
 import 'package:motoverse/Core/services/secure_storage.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat1.dart';
@@ -41,6 +42,7 @@ import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart'
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/home/presentation/views/main_screen.dart';
 import 'package:motoverse/Features/home/presentation/views/my_offers_page.dart';
+import 'package:motoverse/Features/home/presentation/views/notifications_screen.dart';
 import 'package:motoverse/Features/home/presentation/views/profile.dart';
 import 'package:motoverse/Features/home/presentation/views/request_offers_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/add_or_update_car_screen.dart';
@@ -50,6 +52,7 @@ import 'package:motoverse/Features/profile/presentation/views/profile_screen.dar
 import 'package:motoverse/Features/settings/presentation/views/identity_varification1.dart';
 import 'package:motoverse/Features/settings/presentation/views/settings_screen.dart';
 import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat.dart';
+import 'package:motoverse/Features/home/presentation/cubit/device_notification_cubit.dart';
 import 'package:motoverse/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +64,11 @@ void main() async {
   Hive.registerAdapter(UserDataModelAdapter());
   await Hive.openBox<UserDataModel>('user_box');
   getitsetup();
+
+  final pushNotificationService = PushNotificationService(
+    homeRepo: getIt<HomeRepo>(),
+  );
+  await pushNotificationService.initialize();
 
   final secureStorage = getIt<SecureStorage>();
   final String? token = await secureStorage.getAccessToken();
@@ -85,6 +93,11 @@ void main() async {
               RequestsCubit(communityRepo: getIt<CommunityRepo>()),
         ),
         BlocProvider(create: (context) => MyOffersCubit(getIt<HomeRepo>())),
+
+        BlocProvider(
+          create: (context) =>
+              DeviceNotificationCubit(homeRepo: getIt<HomeRepo>()),
+        ),
       ],
       child: MyApp(isLoggedIn: isLoggedIn),
     ),
@@ -156,6 +169,7 @@ class MyApp extends StatelessWidget {
                   'ReviewScreen': (context) => const ReviewScreen(),
                   'AddOrUpdateCarScreen': (context) => const AddOrUpdateCarScreen(),
                   'LanguageScreen': (context) => const LanguageScreen(),
+                  'NotificationsScreen': (context) => const NotificationsScreen(),
                 },
 
                 debugShowCheckedModeBanner: false,
