@@ -92,7 +92,7 @@ class CustomDialog extends StatelessWidget {
             Text(
               isSuccess
                   ? 'تهانينا!\nتم تأكيد هوية حسابك'
-                  : 'يرجي الانتظار بضع دقائق',
+                  : 'يرجي الانتظار بضع لحظات',
               style: TextStyles.cairoRegular14.copyWith(
                 color: AppColors.whiteDarkActive,
               ),
@@ -102,7 +102,7 @@ class CustomDialog extends StatelessWidget {
 
             if (isSuccess)
               CustomElevatedButton(
-                text: 'تقديم المساعدة',
+                text: 'العودة للرئيسية',
                 fun: () {
                   Navigator.pop(context);
                   Navigator.pop(context);

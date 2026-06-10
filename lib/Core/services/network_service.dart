@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 abstract class NetworkService {
   Future<dynamic> addData({
     required String endPoint,
@@ -10,6 +12,7 @@ abstract class NetworkService {
     required dynamic data,
     bool requiresAuth = true,
     String? local,
+    Options? options, 
   });
   Future<dynamic> patchDataForSignUp({
     required String endPoint,

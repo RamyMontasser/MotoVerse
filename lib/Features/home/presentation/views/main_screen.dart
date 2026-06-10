@@ -6,6 +6,7 @@ import 'package:motoverse/Core/widgets/custom_navigationbar.dart';
 import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat1.dart';
 // import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
 import 'package:motoverse/Features/community/presentation/views/community.dart';
+// import 'package:motoverse/Features/history/presentation/cubit/history_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 // import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
@@ -29,6 +30,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     pages = [
       const Home(),
+
       const AiChat1(),
       const CommunityMain(),
       const MapPage(),
@@ -58,6 +60,9 @@ class _MainScreenState extends State<MainScreen> {
     return BlocListener<CurrentLocationCubit, CurrentLocationState>(
       listener: (context, state) {
         if (state is CurrentLocationSuccess) {
+          context.read<UserCubitCubit>().getUserInfo();
+        }
+        if (state is CurrentLocationFailure) {
           context.read<UserCubitCubit>().getUserInfo();
         }
       },

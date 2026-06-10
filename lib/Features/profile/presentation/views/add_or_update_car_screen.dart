@@ -11,7 +11,7 @@ import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Core/widgets/custom_textfeild_with_border.dart';
 import 'package:motoverse/Features/profile/data/models/car_model.dart';
-import 'package:motoverse/Features/profile/presentation/cubit/profile_car/profile_car_cubit.dart';
+import 'package:motoverse/Features/profile/presentation/cubit/profile_car_cubit.dart';
 
 class AddOrUpdateCarScreen extends StatefulWidget {
   const AddOrUpdateCarScreen({super.key});

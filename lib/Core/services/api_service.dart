@@ -34,25 +34,55 @@ class ApiService extends NetworkService {
     return response.data;
   }
 
+  // @override
+  // Future<dynamic> addFormData({
+  //   required String endPoint,
+  //   required dynamic data,
+  //   bool requiresAuth = true,
+  //   String? local,
+  // }) async {
+  //   Map<String, dynamic> header = {};
+  //   if (local != null) {
+  //     header["Local"] = local;
+  //   }
+  //   var response = await dio.post(
+  //     endPoint,
+  //     data: data,
+  //     options: Options(
+  //       headers: header,
+  //       extra: {'requiresAuth': requiresAuth},
+  //     ),
+  //   );
+  //   return response.data;
+  // }
+
+
+
   @override
   Future<dynamic> addFormData({
     required String endPoint,
     required dynamic data,
     bool requiresAuth = true,
     String? local,
+    Options? options, 
   }) async {
     Map<String, dynamic> header = {};
+
     if (local != null) {
       header["Local"] = local;
     }
-    var response = await dio.post(
+
+    final response = await dio.post(
       endPoint,
       data: data,
-      options: Options(
-        headers: header,
-        extra: {'requiresAuth': requiresAuth},
-      ),
+      options:
+          options?.copyWith(
+            headers: {...header, ...?options.headers},
+            extra: {'requiresAuth': requiresAuth, ...?options.extra},
+          ) ??
+          Options(headers: header, extra: {'requiresAuth': requiresAuth}),
     );
+
     return response.data;
   }
 

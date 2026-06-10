@@ -5,6 +5,9 @@ import 'package:hive/hive.dart';
 import 'package:motoverse/Core/providers/localization_provider.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/services/getit.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:motoverse/Core/cache/app_pref.dart';
+import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
@@ -16,7 +19,7 @@ import 'package:motoverse/Features/home/data/models/user_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/profile/data/models/car_model.dart';
 import 'package:motoverse/Features/profile/domain/repo/profile_car_repo.dart';
-import 'package:motoverse/Features/profile/presentation/cubit/profile_car/profile_car_cubit.dart';
+import 'package:motoverse/Features/profile/presentation/cubit/profile_car_cubit.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/current_car_card.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_avatar_widget.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_menu_item.dart';
@@ -37,6 +40,49 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   UserDataModel? currentUser;
   bool isNotificationsEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final bool? saved = AppPref.getBool(key: 'notifications_enabled');
+    if (saved != null) {
+      isNotificationsEnabled = saved;
+    } else {
+      isNotificationsEnabled = true;
+      AppPref.setBool(key: 'notifications_enabled', val: true);
+    }
+
+    // apply saved value (ensure backend/client token state matches)
+    _applyNotificationSetting(isNotificationsEnabled);
+  }
+
+  Future<void> _applyNotificationSetting(bool enabled) async {
+    try {
+      final homeRepo = getIt<HomeRepo>();
+      if (enabled) {
+        final messaging = FirebaseMessaging.instance;
+        final settings = await messaging.requestPermission(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+
+        if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+          final token = await messaging.getToken();
+          if (token != null) {
+            await homeRepo.sendDeviceToken(token: token);
+          }
+        }
+      } else {
+        // remove local token and inform backend to stop sending pushes for this device
+        await FirebaseMessaging.instance.deleteToken();
+        await homeRepo.sendDeviceToken(token: '');
+      }
+    } catch (e) {
+      debugPrint('Error applying notification setting: $e');
+    }
+  }
 
   Future<void> _refreshProfile(BuildContext blocContext) async {
     await Future.wait([
@@ -238,10 +284,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               title: 'التنبيهات',
                               icon: Icons.notifications_active_outlined,
                               value: isNotificationsEnabled,
-                              onChanged: (val) {
+                              onChanged: (val) async {
                                 setState(() {
                                   isNotificationsEnabled = val;
                                 });
+                                await AppPref.setBool(
+                                    key: 'notifications_enabled', val: val);
+                                await _applyNotificationSetting(val);
                               },
                             ),
                             ProfileSection.divider(thickness: 0.7),

@@ -9,10 +9,11 @@ import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_dialog.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
+import 'package:motoverse/Features/profile/domain/repo/profile_car_repo.dart';
 import 'package:motoverse/Features/settings/data/models/identity_feild_model.dart';
-import 'package:motoverse/Features/settings/data/repo/settings_repo.dart';
-import 'package:motoverse/Features/settings/presentation/cubit/identity_verification_cubit.dart';
-import 'package:motoverse/Features/settings/presentation/widgets/identity_picker_card.dart';
+// import 'package:motoverse/Features/settings/data/repo/settings_repo.dart';
+import 'package:motoverse/Features/profile/presentation/cubit/identity_verification_cubit.dart';
+import 'package:motoverse/Features/profile/presentation/widgets/identity_picker_card.dart';
 
 class IdentityVarification extends StatefulWidget {
   const IdentityVarification({super.key});
@@ -45,22 +46,25 @@ class _IdentityVarificationState extends State<IdentityVarification> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => IdentityVerificationCubit(getIt<SettingsRepo>()),
+      create: (context) => IdentityVerificationCubit( profileCarRepo: getIt<ProfileCarRepo>()),
       child: BlocConsumer<IdentityVerificationCubit, IdentityVerificationState>(
         listener: (context, state) {
           if (state is IdentityVerificationLoading) {
             CustomDialog.show(context: context, isSuccess: false);
           } else if (state is IdentityVerificationSuccess) {
-            Navigator.pop(context); // Pop loading dialog
-            CustomDialog.show(context: context, isSuccess: true);
+            if (context.mounted) {
+              Navigator.pop(context);
+
+              CustomDialog.show(context: context, isSuccess: true);
+            }
 
             
           } else if (state is IdentityVerificationFailure) {
-            Navigator.pop(context); // Pop loading dialog
+            Navigator.pop(context); 
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.errMessage),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColors.redNormal,
               ),
             );
           }
@@ -134,7 +138,7 @@ class _IdentityVarificationState extends State<IdentityVarification> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('يرجى تحميل جميع الصور المطلوبة'),
-                              backgroundColor: Colors.orange,
+                              backgroundColor: AppColors.orangeNormal,
                             ),
                           );
                         }

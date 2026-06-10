@@ -5,7 +5,7 @@ import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/profile/data/models/car_model.dart';
-import 'package:motoverse/Features/profile/presentation/cubit/profile_car/profile_car_cubit.dart';
+import 'package:motoverse/Features/profile/presentation/cubit/profile_car_cubit.dart';
 import 'package:motoverse/Features/profile/presentation/views/add_or_update_car_screen.dart';
 
 class CurrentCarCard extends StatelessWidget {

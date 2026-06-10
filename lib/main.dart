@@ -49,7 +49,7 @@ import 'package:motoverse/Features/profile/presentation/views/add_or_update_car_
 import 'package:motoverse/Features/profile/presentation/views/edit_profile_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/language_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/profile_screen.dart';
-import 'package:motoverse/Features/settings/presentation/views/identity_varification1.dart';
+import 'package:motoverse/Features/profile/presentation/views/identity_varification1.dart';
 import 'package:motoverse/Features/settings/presentation/views/settings_screen.dart';
 import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat.dart';
 import 'package:motoverse/Features/home/presentation/cubit/device_notification_cubit.dart';
