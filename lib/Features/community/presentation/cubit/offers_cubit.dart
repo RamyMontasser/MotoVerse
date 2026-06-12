@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
 
 part 'offers_state.dart';

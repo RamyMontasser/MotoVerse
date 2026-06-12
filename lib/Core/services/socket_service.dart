@@ -1,14 +1,12 @@
-// ignore_for_file: unused_field
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-// import 'package:web_socket_channel/status.dart' as status;
 
 class SocketService {
   WebSocketChannel? _channel;
   StreamController<dynamic>? _messageStreamController;
+  // ignore: unused_field
   bool _isConnecting = false;
   bool _userClosed = false;
   Timer? _reconnectTimer;
@@ -25,7 +23,6 @@ class SocketService {
       return;
     }
 
-    // Clean up previous connection if any
     _cleanupConnection();
 
     _currentUrl = url;
@@ -73,7 +70,6 @@ class SocketService {
     if (_userClosed) return;
     _isConnecting = false;
     
-    // Exponential backoff reconnect: 1s, 2s, 4s, 8s, 16s, max out at 32s
     final delaySeconds = _reconnectAttempts < 6 ? (1 << _reconnectAttempts) : 32;
     _reconnectAttempts++;
     
@@ -109,7 +105,6 @@ class SocketService {
     _reconnectTimer?.cancel();
     _reconnectTimer = null;
     try {
-      // _channel?.sink.close(status.goingAway);
       _channel?.sink.close();
     } catch (e) {
       debugPrint('Error closing WebSocket channel sink: $e');

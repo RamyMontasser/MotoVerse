@@ -35,11 +35,11 @@ void onError(DioException err, ErrorInterceptorHandler handler) async {
       _isRefreshing = true;
 
       try {
-        debugPrint('🔄 بدأت عملية تجديد التوكن (Refresh Token)...');
+        debugPrint(' بدأت عملية تجديد التوكن (Refresh Token)...');
         final refreshToken = await secureStorage.getRefreshToken();
         
         if (refreshToken == null) {
-          debugPrint('❌ لم يتم العثور على Refresh Token في التخزين الآمن!');
+          debugPrint(' لم يتم العثور على Refresh Token في التخزين الآمن!');
           _isRefreshing = false;
           await secureStorage.deleteTokens();
           NavigatorService.pushNamedAndRemoveUntil('log in');
@@ -60,7 +60,7 @@ void onError(DioException err, ErrorInterceptorHandler handler) async {
         );
 
         if (response.statusCode == 200 || response.statusCode == 201) {
-          debugPrint('✅ تم تجديد التوكن بنجاح من السيرفر.');
+          debugPrint(' تم تجديد التوكن بنجاح من السيرفر.');
           
           final newAccessToken = response.data['access'] ?? response.data['access_token'];
           final newRefreshToken = response.data['refresh'] ?? response.data['refresh_token'];
@@ -91,7 +91,7 @@ void onError(DioException err, ErrorInterceptorHandler handler) async {
       } catch (e) {
         _isRefreshing = false;
         _failedRequests.clear();
-        debugPrint('🚨 فشلت عملية الـ Refresh تماماً بسبب خطأ: $e');
+        debugPrint(' فشلت عملية الـ Refresh تماماً بسبب خطأ: $e');
         await secureStorage.deleteTokens();
         NavigatorService.pushNamedAndRemoveUntil('log in');
         return handler.next(err); 

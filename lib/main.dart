@@ -12,8 +12,8 @@ import 'package:motoverse/Core/services/navigator_service.dart';
 import 'package:motoverse/Core/services/push_notification_service.dart';
 import 'package:motoverse/Core/services/secure_storage.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
-import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat1.dart';
-import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat2.dart';
+import 'package:motoverse/Features/bot/presentation/views/ai_chat1.dart';
+import 'package:motoverse/Features/bot/presentation/views/ai_assistant.dart';
 import 'package:motoverse/Features/auth/presentation/views/log_in.dart';
 import 'package:motoverse/Features/auth/presentation/views/onboarding.dart';
 import 'package:motoverse/Features/auth/presentation/views/otp_forget.dart';
@@ -22,6 +22,7 @@ import 'package:motoverse/Features/auth/presentation/views/phone_num.dart';
 import 'package:motoverse/Features/auth/presentation/views/reset_pass.dart';
 import 'package:motoverse/Features/auth/presentation/views/restore_pass.dart';
 import 'package:motoverse/Features/auth/presentation/views/sign_up.dart';
+import 'package:motoverse/Features/bot/presentation/views/ai_options_screen.dart';
 import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
 import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
 import 'package:motoverse/Features/community/presentation/views/available_requists.dart';
@@ -155,8 +156,8 @@ class MyApp extends StatelessWidget {
                   'history1': (context) => HistoryPage1(),
                   'history2': (context) => HistoryPage2(),
                   'history3': (context) => HistoryPage3(),
-                  'ai1': (context) => AiChat1(),
-                  'ai2': (context) => AiChat2(),
+                  // 'ai1': (context) => AiChat1(),
+                  
                   'RequestHelp1': (context) => RequestHelp1(),
                   'CreateRequest': (context) => CreateRequest(),
                   'AvailableRequests': (context) => AvailableRequests(),
@@ -170,6 +171,8 @@ class MyApp extends StatelessWidget {
                   'AddOrUpdateCarScreen': (context) => const AddOrUpdateCarScreen(),
                   'LanguageScreen': (context) => const LanguageScreen(),
                   'NotificationsScreen': (context) => const NotificationsScreen(),
+                  'AiOptionsScreen': (context) => const AiOptionsScreen(),
+                  'AiAssistant': (context) => AiAssistant(),
                 },
 
                 debugShowCheckedModeBanner: false,

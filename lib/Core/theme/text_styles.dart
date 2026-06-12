@@ -110,6 +110,13 @@ abstract class TextStyles {
     // height: _lineHeight,
     letterSpacing: _letterSpacing,
   );
+  static TextStyle cairoMedium14 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.w500, // Medium
+    fontSize: 14.sp,
+    // height: _lineHeight,
+    letterSpacing: _letterSpacing,
+  );
 
   static TextStyle cairoMedium16 = TextStyle(
     fontFamily: 'Cairo',

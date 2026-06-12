@@ -94,31 +94,31 @@ class UserCubitCubit extends Cubit<UserCubitState> {
         String? token = await messaging.getToken();
 
         if (token != null) {
-          debugPrint("🎯 FCM Token Found: $token");
+          debugPrint("FCM Token Found: $token");
 
           final result = await homeRepo.sendDeviceToken(token: token);
 
           result.fold(
             (failure) => debugPrint(
-              "❌ Failed to sync token to backend: ${failure.errorMsg}",
+              "Failed to sync token to backend: ${failure.errorMsg}",
             ),
             (_) {
-              debugPrint("✅ FCM Token synced successfully with backend!");
+              debugPrint("FCM Token synced successfully with backend!");
               _monitorTokenRefresh();
             },
           );
         }
       } else {
-        debugPrint("⚠️ User denied notification permissions");
+        debugPrint("User denied notification permissions");
       }
     } catch (e) {
-      debugPrint("❌ Error in getAndSendFCMToken: $e");
+      debugPrint("Error in getAndSendFCMToken: $e");
     }
   }
 
   void _monitorTokenRefresh() {
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
-      debugPrint("🔄 FCM Token Refreshed: $newToken");
+      debugPrint("FCM Token Refreshed: $newToken");
       await homeRepo.sendDeviceToken(token: newToken);
     });
   }

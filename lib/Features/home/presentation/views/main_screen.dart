@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/widgets/custom_navigationbar.dart';
-import 'package:motoverse/Features/ai_chat/presentation/views/ai_chat1.dart';
+import 'package:motoverse/Features/bot/presentation/views/ai_options_screen.dart';
 // import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
 import 'package:motoverse/Features/community/presentation/views/community.dart';
 // import 'package:motoverse/Features/history/presentation/cubit/history_cubit.dart';
@@ -31,7 +31,8 @@ class _MainScreenState extends State<MainScreen> {
     pages = [
       const Home(),
 
-      const AiChat1(),
+      // const AiChat1(),
+      const AiOptionsScreen(),
       const CommunityMain(),
       const MapPage(),
       const ProfileScreen(),

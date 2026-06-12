@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  Future<void> _refreshData() async {
+  Future<void> _refreshData(BuildContext context) async {
     await context.read<CurrentLocationCubit>().getCurrentLocation(
       forceRefresh: true,
     );
@@ -86,6 +86,7 @@ class _HomeState extends State<Home> {
         longitude: longitude,
       ),
       context.read<MyOffersCubit>().getMyOffers(),
+      context.read<HistoryCubit>().getCarHistory(),
     ]);
   }
 
@@ -93,219 +94,228 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HistoryCubit(getIt<HistoryRepo>())..getCarHistory(),
-      child: CustomScrollViewWithAppBar(
-        onRefresh: _refreshData,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Column(
-            children: [
-              CustomSearch(hint: S.of(context).homeSearchHint, search: search),
-
-              SizedBox(height: 15.h),
-
-              GreatingCard(),
-
-              BlocBuilder<MyOffersCubit, MyOffersState>(
-                buildWhen: (previous, current) =>
-                    current is MyOffersLoading ||
-                    current is MyOffersSuccess ||
-                    current is MyOffersFailure,
-
-                builder: (context, state) {
-                  if (state is MyOffersLoading) {
-                    return Column(
-                      children: [
-                        SizedBox(height: 15.h),
-                        Skeletonizer(child: const MyOfferCard(offers: [])),
-                      ],
-                    );
-                  }
-                  if (state is MyOffersSuccess &&
-                      (state.offers
-                              .where((request) => request.status == 'pending')
-                              .toList()
-                              .isNotEmpty ||
-                          state.offers
-                              .where((request) => request.status == 'accepted')
-                              .toList()
-                              .isNotEmpty)) {
-                    List<OfferModel> offers = state.offers
-                        .where(
-                          (request) =>
-                              request.status == 'pending' ||
-                              request.status == 'accepted',
-                        )
-                        .toList();
-                    return Padding(
-                      padding: EdgeInsets.only(top: 15.h),
-                      child: MyOfferCard(offers: offers),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
-              BlocBuilder<RequestsCubit, RequestsState>(
-                builder: (context, state) {
-                  if (state is RequestsLoading) {
-                    return Padding(
-                      padding: EdgeInsets.only(top: 15.h),
-                      child: const Skeletonizer(
-                        child: RequestStatusCard(requests: []),
-                      ),
-                    );
-                  }
-
-                  if (state is RequestsSuccess &&
-                      (state.requests
-                              .where((request) => request.status == 'pending')
-                              .toList()
-                              .isNotEmpty ||
-                          state.requests
-                              .where((request) => request.status == 'accepted')
-                              .toList()
-                              .isNotEmpty)) {
-                    return Padding(
-                      padding: EdgeInsets.only(top: 15.h),
-                      child: RequestStatusCard(
-                        requests: state.requests,
-                        // requestId: state.requests.first.id,
-                      ),
-                    );
-                  }
-                  return SizedBox.shrink();
-                },
-              ),
-
-              // SizedBox(height: 10.h),
-              ListTile(
-                title: Text(
-                  'الخدمات السريعة',
-                  style: TextStyles.cairoBold18.copyWith(
-                    color: AppColors.blueDarkActive,
-                  ),
+      child: Builder(
+        builder: (innerContext){
+        return CustomScrollViewWithAppBar(
+          onRefresh: () =>_refreshData(innerContext),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomSearch(hint: S.of(context).homeSearchHint, search: search),
+        
+                SizedBox(height: 15.h),
+        
+                GreatingCard(),
+        
+                BlocBuilder<MyOffersCubit, MyOffersState>(
+                  buildWhen: (previous, current) =>
+                      current is MyOffersLoading ||
+                      current is MyOffersSuccess ||
+                      current is MyOffersFailure,
+        
+                  builder: (context, state) {
+                    if (state is MyOffersLoading) {
+                      return Column(
+                        children: [
+                          SizedBox(height: 15.h),
+                          Skeletonizer(child: const MyOfferCard(offers: [])),
+                        ],
+                      );
+                    }
+                    if (state is MyOffersSuccess &&
+                        (state.offers
+                                .where((request) => request.status == 'pending')
+                                .toList()
+                                .isNotEmpty ||
+                            state.offers
+                                .where((request) => request.status == 'accepted')
+                                .toList()
+                                .isNotEmpty)) {
+                      List<OfferModel> offers = state.offers
+                          .where(
+                            (request) =>
+                                request.status == 'pending' ||
+                                request.status == 'accepted',
+                          )
+                          .toList();
+                      return Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: MyOfferCard(offers: offers),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
-                trailing: GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    S.of(context).viewAll,
-                    style: TextStyles.cairoMedium12.copyWith(
-                      color: AppColors.whiteDarker,
-                    ),
-                  ),
-                ),
-              ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: ToolCard(
-                      iconPath: Icons.sos,
-                      name: 'طلب مساعدة',
-                      desc: 'دعم  للحالات الطارئة',
-                      fun: () {
-                        Navigator.of(context).pushNamed('RequestHelp1');
-                      },
-                      iconBgColor: AppColors.greenLight,
-                      iconColor: AppColors.greenNormal,
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-
-                  Expanded(
-                    child:
-                        BlocBuilder<CurrentLocationCubit, CurrentLocationState>(
-                          builder: (context, state) {
-                            int centersCount = 0;
-                            if (state is CurrentLocationSuccess) {
-                              centersCount = state.nearestCentersCount;
-                            }
-                            if (state is CurrentLocationLoading) {
-                              return Skeletonizer(
-                                child: ToolCard(
-                                  iconPath: Icons.location_on_outlined,
-                                  name: ' مراكز صيانة قريبة',
-                                  desc: '$centersCount مركز قريب منك',
-                                  fun: () {
-                                    context
-                                        .read<NavigationProvider>()
-                                        .changeIndex(3);
-                                  },
-                                  iconBgColor: AppColors.orangeLight,
-                                  iconColor: AppColors.orangeNormal,
-                                ),
-                              );
-                            }
-
-                            return ToolCard(
-                              iconPath: Icons.location_on_outlined,
-                              name: ' مراكز صيانة قريبة',
-                              desc: centersCount != 0
-                                  ? '$centersCount مركز قريب منك'
-                                  : "لا توجد مراكز صيانة قريبة حالياً",
-                              fun: () {
-                                context.read<NavigationProvider>().changeIndex(
-                                  3,
-                                );
-                              },
-                              iconBgColor: AppColors.orangeLight,
-                              iconColor: AppColors.orangeNormal,
-                            );
-                          },
+                BlocBuilder<RequestsCubit, RequestsState>(
+                  builder: (context, state) {
+                    if (state is RequestsLoading) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: const Skeletonizer(
+                          child: RequestStatusCard(requests: []),
                         ),
+                      );
+                    }
+        
+                    if (state is RequestsSuccess &&
+                        (state.requests
+                                .where((request) => request.status == 'pending')
+                                .toList()
+                                .isNotEmpty ||
+                            state.requests
+                                .where((request) => request.status == 'accepted')
+                                .toList()
+                                .isNotEmpty)) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: RequestStatusCard(
+                          requests: state.requests,
+                          // requestId: state.requests.first.id,
+                        ),
+                      );
+                    }
+                    return SizedBox.shrink();
+                  },
+                ),
+        
+                SizedBox(height: 15.h),
+                 Text(
+                    'الخدمات السريعة',
+                    style: TextStyles.cairoBold18.copyWith(
+                      color: AppColors.blueDarkActive,
+                    ),
                   ),
-                ],
-              ),
+                  SizedBox(height: 10.h),
+                  
+        
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ToolCard(
+                        iconPath: Icons.sos,
+                        name: 'طلب مساعدة',
+                        desc: 'دعم  للحالات الطارئة',
+                        fun: () {
+                          Navigator.of(context).pushNamed('RequestHelp1');
+                        },
+                        iconBgColor: AppColors.greenLight,
+                        iconColor: AppColors.greenNormal,
+                      ),
+                    ),
+                    SizedBox(width: 12.w),
+        
+                    Expanded(
+                      child:
+                          BlocBuilder<CurrentLocationCubit, CurrentLocationState>(
+                            builder: (context, state) {
+                              int centersCount = 0;
+                              if (state is CurrentLocationSuccess) {
+                                centersCount = state.nearestCentersCount;
+                              }
+                              if (state is CurrentLocationLoading) {
+                                return Skeletonizer(
+                                  child: ToolCard(
+                                    iconPath: Icons.location_on_outlined,
+                                    name: ' مراكز صيانة قريبة',
+                                    desc: '$centersCount مركز قريب منك',
+                                    fun: () {
+                                      context
+                                          .read<NavigationProvider>()
+                                          .changeIndex(3);
+                                    },
+                                    iconBgColor: AppColors.orangeLight,
+                                    iconColor: AppColors.orangeNormal,
+                                  ),
+                                );
+                              }
+        
+                              return ToolCard(
+                                iconPath: Icons.location_on_outlined,
+                                name: ' مراكز صيانة قريبة',
+                                desc: centersCount != 0
+                                    ? '$centersCount مركز قريب منك'
+                                    : "لا توجد مراكز صيانة قريبة حالياً",
+                                fun: () {
+                                  context.read<NavigationProvider>().changeIndex(
+                                    3,
+                                  );
+                                },
+                                iconBgColor: AppColors.orangeLight,
+                                iconColor: AppColors.orangeNormal,
+                              );
+                            },
+                          ),
+                    ),
+                  ],
+                ),
+        
+                SizedBox(height: 20.h),
+        
+                BlocBuilder<HistoryCubit, HistoryState>(
+                  builder: (context, state) {
+                    if (state is HistoryLoading) {
+                        return Skeletonizer(
+                          enabled: true,
+                          child: HistoryListtile(
+                            title: 'سجل الصيانات',
+                            iconPath: Icons.history,
+                            desc: 'آخر صيانة: تحميل البيانات الفنية الحالية...',
+                            fun: (){},
+                          ),
+                        );
+                      }
 
-              SizedBox(height: 20.h),
-
-              BlocBuilder<HistoryCubit, HistoryState>(
-                builder: (context, state) {
-                  if (state is HistorySuccess && state.history.isNotEmpty) {
-                    final lastHistory = state.history.first;
-
+                    if (state is HistorySuccess && state.history.isNotEmpty) {
+                      final lastHistory = state.history.first;
+        
+                      return HistoryListtile(
+                        title: 'سجل الصيانات',
+                        iconPath: Icons.history,
+                        desc:
+                            'آخر صيانة: ${lastHistory.service} – ${formatDate(lastHistory.date)}',
+                        fun: () {
+                          Navigator.of(context).pushNamed('history1');
+                        },
+                      );
+                    }
+        
                     return HistoryListtile(
                       title: 'سجل الصيانات',
                       iconPath: Icons.history,
-                      desc:
-                          'آخر صيانة: ${lastHistory.service} – ${formatDate(lastHistory.date)}',
+                      desc: 'لا يوجد سجل صيانة بعد',
                       fun: () {
                         Navigator.of(context).pushNamed('history1');
                       },
                     );
-                  }
-
-                  return HistoryListtile(
-                    title: 'سجل الصيانات',
-                    iconPath: Icons.history,
-                    desc: 'لا يوجد سجل صيانة بعد',
-                    fun: () {
-                      Navigator.of(context).pushNamed('history1');
-                    },
-                  );
-                },
-              ),
-
-              // HistoryListtile(
-              //   title: 'سجل الصيانات',
-              //   iconPath: Icons.history,
-              //   desc: 'آخر صيانة: تغيير زيت – منذ أسبوعين',
-              //   fun: () {
-              //     Navigator.of(context).pushNamed('history1');
-              //   },
-              // ),
-              SizedBox(height: 20.h),
-
-              GestureDetector(
-                onTap: () => context.read<NavigationProvider>().changeIndex(3),
-                child: const HomeMapCard(),
-              ),
-
-              SizedBox(height: 100.h),
-            ],
+                  },
+                ),
+        
+                // HistoryListtile(
+                //   title: 'سجل الصيانات',
+                //   iconPath: Icons.history,
+                //   desc: 'آخر صيانة: تغيير زيت – منذ أسبوعين',
+                //   fun: () {
+                //     Navigator.of(context).pushNamed('history1');
+                //   },
+                // ),
+                SizedBox(height: 20.h),
+        
+                GestureDetector(
+                  onTap: () => context.read<NavigationProvider>().changeIndex(3),
+                  child: const HomeMapCard(),
+                ),
+        
+                SizedBox(height: 100.h),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      
+      }),
     );
   }
 }

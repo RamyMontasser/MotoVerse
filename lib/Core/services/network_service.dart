@@ -6,6 +6,7 @@ abstract class NetworkService {
     required Map<String, dynamic> data,
     bool requiresAuth = true,
     String? local,
+    Options? options, 
   });
   Future<dynamic> addFormData({
     required String endPoint,

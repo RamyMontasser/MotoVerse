@@ -13,12 +13,12 @@ class AudioPlayerWidget extends StatefulWidget {
   final Function()? onStateChanged;
 
   const AudioPlayerWidget({
-    Key? key,
+    super.key,
     required this.audioUrl,
     required this.isMe,
     this.width,
     this.onStateChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<AudioPlayerWidget> createState() => _AudioPlayerWidgetState();

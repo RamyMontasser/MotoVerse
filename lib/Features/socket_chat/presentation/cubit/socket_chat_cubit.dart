@@ -18,7 +18,6 @@ class SocketChatCubit extends Cubit<SocketChatState> {
   Future<void> connectToChatRoom({required String chatId}) async {
     emit(SocketChatConnectLoading());
 
-    // Fetch user access token from secure storage
     final token = await getIt<SecureStorage>().getAccessToken() ?? '';
     if (token.isEmpty) {
       emit(
@@ -44,7 +43,6 @@ class SocketChatCubit extends Cubit<SocketChatState> {
       (_) async {
         emit(SocketChatConnectSuccess());
 
-        // Fetch old messages/conversation history from the REST endpoint
         final historyResult = await chatSocketRepo.getConversationHistory(
           chatId: chatId,
         );
@@ -59,7 +57,6 @@ class SocketChatCubit extends Cubit<SocketChatState> {
           },
         );
 
-        // Listen to messages stream automatically
         _listenToMessages();
       },
     );
@@ -104,7 +101,7 @@ class SocketChatCubit extends Cubit<SocketChatState> {
   Future<void> sendMediaMessage({
     required String chatId,
     required String filePath,
-    required String fileType, // 'image' or 'audio'
+    required String fileType, 
   }) async {
     emit(SocketSendMessageLoading());
     debugPrint("---------------- Sending media message: $filePath, type: $fileType ----------------");

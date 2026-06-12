@@ -55,7 +55,7 @@ class CurrentLocationCubit extends Cubit<CurrentLocationState> {
         int centersCount = 0;
         countResponse.fold(
           (fail) => debugPrint(
-            '❌ Failed to get nearest centers count: ${fail.errorMsg}',
+            'Failed to get nearest centers count: ${fail.errorMsg}',
           ),
           (count) => centersCount = count,
         );

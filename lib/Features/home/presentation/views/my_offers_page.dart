@@ -170,14 +170,18 @@ class _MyOffersPageState extends State<MyOffersPage> {
                     }
 
                     final filteredOffers = myOffers.where((offer) {
-                      if (currentCategory == 1)
+                      if (currentCategory == 1) {
                         return offer.status == 'accepted';
-                      if (currentCategory == 2)
+                      }
+                      if (currentCategory == 2) {
                         return offer.status == 'pending';
-                      if (currentCategory == 3)
+                      }
+                      if (currentCategory == 3) {
                         return offer.status == 'completed';
-                      if (currentCategory == 4)
+                      }
+                      if (currentCategory == 4) {
                         return offer.status == 'rejected';
+                      }
                       return true;
                     }).toList();
 

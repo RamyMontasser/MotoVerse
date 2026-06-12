@@ -9,6 +9,8 @@ import 'package:motoverse/Core/services/network_service.dart';
 import 'package:motoverse/Core/services/secure_storage.dart';
 import 'package:motoverse/Features/auth/data/repo/auth_repo_imp.dart';
 import 'package:motoverse/Features/auth/domain/repo/auth_repo.dart';
+import 'package:motoverse/Features/bot/data/repo/ai_repo_imp.dart';
+import 'package:motoverse/Features/bot/domain/repo/ai_repo.dart';
 // import 'package:motoverse/Features/chat/data/repo/chat_repo_imp.dart';
 // import 'package:motoverse/Features/chat/domain/repo/chat_repo.dart';
 import 'package:motoverse/Features/home/data/repo/map_repo_imp.dart';
@@ -98,6 +100,10 @@ void getitsetup() {
 
   getIt.registerSingleton<ProfileCarRepo>(
     ProfileCarRepoImpl(networkService: getIt<NetworkService>()),
+  );
+
+  getIt.registerSingleton<AiRepo>(
+    AiRepoImp(networkService: getIt<NetworkService>()),
   );
   
   // getIt.registerSingleton<ChatRepo>(
