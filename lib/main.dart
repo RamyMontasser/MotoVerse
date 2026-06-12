@@ -12,7 +12,6 @@ import 'package:motoverse/Core/services/navigator_service.dart';
 import 'package:motoverse/Core/services/push_notification_service.dart';
 import 'package:motoverse/Core/services/secure_storage.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
-import 'package:motoverse/Features/bot/presentation/views/ai_chat1.dart';
 import 'package:motoverse/Features/bot/presentation/views/ai_assistant.dart';
 import 'package:motoverse/Features/auth/presentation/views/log_in.dart';
 import 'package:motoverse/Features/auth/presentation/views/onboarding.dart';
