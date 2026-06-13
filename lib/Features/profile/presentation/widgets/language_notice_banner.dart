@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class LanguageNoticeBanner extends StatelessWidget {
   const LanguageNoticeBanner({super.key});
@@ -25,7 +26,7 @@ class LanguageNoticeBanner extends StatelessWidget {
           SizedBox(width: 10.w  ),
           Expanded(
             child: Text(
-              'سيتم تطبيق تغييرات اللغة فوراً على جميع الأقسام والخدمات.',
+              S.of(context).languageNoticeText,
               style: TextStyles.cairoRegular14.copyWith(
                 color: AppColors.blueNormal,
               ),

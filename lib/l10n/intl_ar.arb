@@ -3,8 +3,7 @@
     
     "appName": "MotoServe",
     "language": "اللغة",
-    "arabic": "العربية",
-    "english": "English",
+
     "next": "التالي",
     "update": "تحديث",
     "search": "بحث",
@@ -12,19 +11,7 @@
     "details": "عرض التفاصيل",
     "compare": "قارن",
     "loading": "جاري التحميل...",
-    "currency": "{price} ج.م",
-    "@currency": { "placeholders": { "price": {} } },
-    "priceInMillions": "{price} مليون ج.م",
-    "@priceInMillions": { "placeholders": { "price": {} } },
-    "priceInThousands": "{price} ألف ج.م",
-    "@priceInThousands": { "placeholders": { "price": {} } },
-    "priceRange": "نطاق السعر: {min} - {max}",
-    "@priceRange": {
-        "placeholders": {
-            "min": {},
-            "max": {}
-        }
-    },
+   
 
     "welcomeTitle": "أهلا وسهلا",
     "welcomeSubtitle": "مرحبا بك معنا مجددا، قم بتسجيل الدخول الي حسابك أو قم ب  ",
@@ -56,73 +43,137 @@
     "restorePassword": "استعادة كلمة المرور",
     "restorePasswordSubtitle": "قم بإدخال رقم هاتفك لاستعادة كلمة المرور",
 
-    "onboarding1": "دليلك الذكي لعالم السيارات",
-    "onboarding2": "خليك أذكى في اختيار عربيتك",
-    "onboarding3": "كل احتياجات عربيتك في مكان واحد",
+ 
     "startJourney": "ابدأ رحلتك معنا",
-    "onboarding4": "ابدأ رحلتك الذكية الان",
-    "smartDiagnosisSubtitle": "افهم مشكلة سيارتك من خلال تحليل يعتمد على الذكاء الاصطناعي.",
-    "startDiagnosis": "ابدأ التشخيص",
+    
+    
 
-    "homePage": "الصفحة الرئيسية",
+    
+    
+
+    
+    
+
+
+    "selectCountry": "اختيار الدولة",
+    "searchCountry": "البحث عن دولة",
+
+
     "homeSearchHint": "ابحث عن سيارة، خدمة، أو مركز...",
     "marketSearchHint": "اكتب ما تريد البحث عنه",
     "newAdvantage": "ميزة جديدة",
     "smartDiagnosis": "تشخيص ذكي للأعطال",
-    "featuredCars": "سيارات مميزة",
-    "newCars": "الجديد",
-    "usedCars": "المستعمل",
-    "allCars": "الكل",
-    "newCar": "جديدة",
-    "usedCar": "مستعملة",
-    
-    "featureCompare": "مقارنة السيارات",
-    "featureCompareDesc": "قارِن الموديلات والمواصفات بسهولة لاتخاذ القرار الأفضل.",
-    "featureCost": "تقدير التكلفة",
-    "featureCostDesc": "احسب تكلفة امتلاك وصيانة السيارة قبل ما تشتريها.",
-    "featureMap": "خريطة المراكز",
-    "featureMapDesc": "اعرف أقرب مركز صيانة موثوق بخدمة تحديد الموقع.",
-    "featureMaintenance": "تتبع الصيانة",
-    "featureMaintenanceDesc": "تابع حالة سيارتك وتذكّر مواعيد الصيانة بسهولة.",
-    "featurePricePredict": "توقع الأسعار",
-    "featurePricePredictDesc": "اعرف القيمة المستقبلية لسيارتك قبل البيع أو الشراء.",
-    "featureRecommend": "توصية ذكية",
-    "featureRecommendDesc": "نساعدك تختار السيارة المثالية حسب ميزانيتك واحتياجاتك.",
-    "tipsTitle": "💡 نصائح استخدام الأدوات",
-    "tipsBody": "• استخدم التوصية الذكية إذا كنت محتاراً في الاختيار \n• قارن بين عدة سيارات قبل اتخاذ القرار النهائي \n• احسب التكلفة الإجمالية لتجنب المفاجآت المالية \n• تابع صيانة سيارتك بانتظام للحفاظ على قيمتها",
+    "smartDiagnosisSubtitle": "افهم مشكلة سيارتك من خلال تحليل يعتمد على الذكاء الاصطناعي.",
+    "startDiagnosis": "ابدأ التشخيص",
+    "quickServices": "الخدمات السريعة",
+    "requestHelp": "طلب مساعدة",
+    "emergencySupport": "دعم للحالات الطارئة",
+    "nearbyMaintenance": "مراكز صيانة قريبة",
+    "nearestCentersCount": "{count} مركز قريب منك",
+    "noNearbyCenters": "لا توجد مراكز صيانة قريبة حالياً",
+    "maintenanceHistory": "سجل الصيانات",
+    "loadingTechnicalData": "آخر صيانة: تحميل البيانات الفنية الحالية...",
+    "lastMaintenanceDetails": "آخر صيانة: {service} – {date}",
+    "noMaintenanceHistory": "لا يوجد سجل صيانة بعد",
+    "myCurrentOffers": "عروضي الحالية",
+    "activeChatExists": "يوجد محادثة نشطة",
+    "viewOffers": "عرض العروض",
+    "ongoingRequests": "طلبات جارية",
+    "trackRequest": "تتبع الطلب",
+    "findNearbyCenters": "اعثر على مراكز صيانة قريبة",
+    "exploreNearbyCentersCount": "استكشف أكثر من {count} مركزاً قريبك",
+    "locatingNearbyCenters": "جاري تحديد المراكز القريبة...",
 
-    "selectCountry": "اختيار الدولة",
-    "searchCountry": "البحث عن دولة",
-    "brand": "الماركة",
-    "selectBrand": "اختر الماركة",
-    "carType": "نوع السيارة",
-    "selectCarType": "اختر النوع",
-    "year": "السنة",
-    "selectYear": "اختر السنة",
-    "automatic": "أوتوماتيك",
-    "manual": "مانيوال",
 
-    "profile": "الملف الشخصي",
-    "profileDesc": "عرض وتعديل معلوماتك الشخصية",
-    "dashboard": "لوحة التحكم",
-    "myCars": "سياراتي وسجل الصيانة",
-    "aboutUs": "من نحن",
-    "aboutUsDesc": "تعرف على منصة MotoServe",
-    "settings": "الإعدادات",
-    "settingsDesc": "إعدادات التطبيق والإشعارات",
-    "logout": "تسجيل الخروج",
-    "personalSettings": "الإعدادات الشخصية",
-    "editProfile": "تعديل الملف الشخصي",
-    "updateInfo": "تحديث معلوماتك الشخصية",
-    "appLanguage": "لغة التطبيق",
-    "notifications": "الإشعارات",
-    "privacySecurity": "الخصوصية والأمان",
-    "privacyPolicy": "سياسة الخصوصية",
-    "privacyPolicyDesc":" اطلع على سياسة الخصوصية",
-    "termsOfUse": "شروط الاستخدام",
-    "termsOfUseDesc": "شروط وأحكام استخدام التطبيق",
-    "deleteAccount": "حذف الحساب",
-    "copyrights": "© 2025 جميع الحقوق محفوظة",
+
+
+    "notifications1": "الإشعارات",
+    "noNotifications": "لا توجد إشعارات حالياً",
+    "today": "اليوم",
+    "past": "سابقاً",
+
+
+
+    "myOffers": "عروضي",
+    "deleteOfferSuccess": "تم حذف العرض بنجاح",
+    "noAcceptedOffers": "لا توجد عروض مقبولة حالياً",
+    "noPendingOffers": "لا توجد عروض قيد الانتظار حالياً",
+    "noCompletedOffers": "لا توجد عروض مكتملة حالياً",
+    "noRejectedOffers": "لا توجد عروض مرفوضة حالياً",
+    "noSubmittedOffers": "لا توجد عروض مقدمة حالياً",
+    "accepted": "مقبول",
+    "rejected": "مرفوض",
+    "completed": "مكتمل",
+    "pending": "قيد الانتظار",
+    "yesterday": "أمس",
+    "pm": "مساءً",
+    "am": "صباحاً",
+    "helpType": "نوع المساعدة",
+    "fieldHelp": "مساعدة ميدانية",
+    "dateTime": "التاريخ والوقت",
+    "viewDetails": "عرض التفاصيل",
+
+    "attachedImages": "الصور المرفقة",
+    "imagesCount": "{count} صور",
+    "requestCancelledSuccessfully": "تم الغاء الطلب بنجاح",
+    "helpOfferSubmittedSuccessfully": "تم تقديم عرض المساعدة بنجاح",
+    "sendingOffer": "جاري إرسال العرض...",
+    "provideHelp": "تقديم المساعدة",
+    "battery": "بطارية",
+    "engine": "محرك",
+    "tires": "الإطارات",
+    "other": "غير ذلك",
+
+    "roadsideHelpDesc": "تريد طلب المساعدة مباشرة علي الطريق",
+    "requestHelpButton": "طلب مساعدة",
+    "onlineChatHelpDesc": "تريد مساعدة أونلاين عن طريق الشات",
+
+    "problemDetails": "تفاصيل المشكلة",
+
+
+    "away": "{distance} كم بعيداً",
+
+    "distanceAndTime": "المسافة والوقت",
+    "distanceAndMinutes": "{distance} كم - {minutes} د",
+
+    "call": "اتصال",
+    "chat": "دردشة",
+
+
+    "active": "نشط",
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "errorLoadingData": "حدث خطأ في تحميل البيانات",
+    "offerStatusUpdated": "تم تحديث حالة العرض بنجاح",
+    "requestCancelled": "تم الغاء الطلب بنجاح",
+    "chatCreated": "تم إنشاء المحادثة بنجاح",
+    "viewRequestDetails": "عرض تفاصيل الطلب",
+    "cancelRequest": "الغاء الطلب",
+    "availableOffers": "العروض المتاحة",
+    "noOffers": "لا توجد عروض",
+    "receivingOffers": "جاري استقبال العروض المتاحة...",
+    "arrivalTime": "وقت الوصول",
+    "minutesDuration": "{minutes} د",
+    "distanceLabel": "المسافة",
+    "distanceKm": "{distance} كم",
+    "offerAccepted": "تم قبول العرض",
+    "accept": "قبول",
+    "reject": "رفض",
+
+
+
+
     
     "notifNewCars": "إشعارات السيارات الجديدة",
     "notifNewCarsDesc": "تنبيهات عند إضافة سيارات جديدة",
@@ -131,5 +182,296 @@
     "notifMaintenance": "تذكيرات الصيانة",
     "notifMaintenanceDesc": "تذكيرك بمواعيد الصيانة الدورية",
     "notifMessages": "الرسائل",
-    "notifMessagesDesc": "إشعارات الرسائل من البائعين ومراكز الصيانة"
+    "notifMessagesDesc": "إشعارات الرسائل من البائعين ومراكز الصيانة",
+
+
+
+
+
+
+    "startDocumentingJourney": "ابدأ بتوثيق رحلة صيانة سيارتك لتنبيهك بالمواعيد القادمة.",
+    "addMaintenanceHistory": "اضافة سجل صيانة",
+    "lastMaintenance": "اخر صيانة",
+    "noHistory": "لا يوجد سجل",
+    "totalPayment": "اجمال الدفع",
+    "egpCurrency": "{cost} ج.م",
+    "newMaintenanceRecord": "سجل صيانة جديد",
+    "dateLabel": "التاريخ",
+    "maintenanceCenter": "مركز الصيانة",
+    "maintenanceType": "نوع الصيانة",
+    "descriptionLabel": "الوصف",
+    "costEgp": "التكلفة (جنية)",
+    "saving": "جاري الحفظ...",
+    "save": "حفظ",
+    "maintenanceDoneReason": "تم عمل {service} لحل المشكلة",
+
+
+
+
+
+
+
+    "mapSearchHint": "ابحث عن مشكلة أو مركز صيانة....",
+    "fetchingLocation": "جاري تحديد موقعك، انتظر لحظة...",
+    "noServiceCentersFound": "لا توجد مراكز صيانة قريبة",
+    "loadingNamePlaceholder": "جاري التحميل...",
+    "km": "كم",
+    "directions": "الاتجاهات",
+
+
+
+
+
+
+
+
+    "smartDiagnosis2": "التشخيص الذكي",
+    "chooseDiagnosisMethod": "اختر الطريقة الأنسب لتحليل مشكلة السيارة",
+    "noDiagnosticsFound": "لم يتم العثور على تشخيصات لهذا الكود.",
+    "explainProblem": "اشرح المشكلة",
+    "obdDiagnosis": "فحص الأعطال (OBD)",
+    "diagnosisSummary": "ملخص التشخيص:",
+    "severityLevelLabel": "مستوى الخطورة: ",
+    "canDriveLabel": "هل بإمكانك القيادة: ",
+    "possibleCausesLabel": "الاسباب المحتملة: ",
+    "whatToCheckLabel": "ما يجب فحصه: ",
+    "canCheckAtHomeLabel": "هل يمكنك فحص المشكلة في المنزل؟ ",
+    "technicalRecommendationLabel": "التوصية الفنية: ",
+
+    "outputLanguage": "لغة الناتج: ",
+    "arabic": "العربية",
+    "english": "الانجليزية",
+    "carTypeAndModel": "نوع وموديل السيارة",
+    "carExampleHint": "مثال: Mercedes C200 2021 أو Toyota Corolla",
+    "carValidationEmpty": "يرجى إدخال نوع السيارة وموديلها",
+    "obdCodeLabel": "كود العطل (OBD Code)",
+    "obdCodeHint": "P0420",
+    "obdCodeValidationEmpty": "يرجى إدخال كود العطل أولاً",
+    "liveSensorData": "بيانات الحساسات الحية: ",
+    "engineCoolant": "حرارة المحرك",
+    "engineRpm": "دورات المحرك",
+    "engineLoad": "الحمل على المحرك",
+    "carSpeed": "سرعة السيارة",
+    "throttlePosition": "موضع دواسة الوقود (Throttle)",
+    "numbersOnly": "أرقام فقط",
+    "analyzeCodeAndData": "تحليل الكود والبيانات",
+    "fixErrorsSnackbar": "يرجى تصحيح الأخطاء في الحقول الحمراء أولاً.",
+    "obdAnalysisTitle": "تحليل أكواد الأعطال (OBD)",
+    "obdAnalysisSubTitle": "فهم أكواد السيارة واكتشاف المشكلات التقنية بدقة ووضوح.",
+
+    "aiSmartDiagnosis": "التشخيص الذكي بالذكاء الاصطناعي",
+    "aiDiagnosisSubTitle": "تحليل مشكلات السيارة من خلال وصف الأعراض وتقديم اقتراحات وتشخيصات ذكية.",
+    "problemDescriptionHint": "مثال: يوجد صوت غريب عند الفرامل في العجلات الأمامية...",
+    "disclaimerText": "التشخيص استرشادي وليس بديلاً عن الفحص الفني.",
+    "analyzeProblemButton": "تحليل المشكلة",
+    "emptyProblemSnackbar": "يرجى كتابة وصف للمشكلة أولاً قبل التحليل.",
+
+
+
+
+
+
+
+
+
+    "loadRequestsError": "حدث خطأ أثناء تحميل الطلبات",
+    "retry": "إعادة المحاولة",
+    "noRequestsAvailable": "لا توجد طلبات متاحة",
+    "welcomeTo": "مرحباً بك في",
+    "motoverseCommunitySub": "كيف تود المشاركة اليوم\nمساعدة الآخرين أو الحصول على الدعم",
+    "requestHelpDesc": "تريد طلب المساعدة على الطريق أو استشارة الآخرين حول مشكلة سيارتك",
+    "requestHelpBtn": "طلب مساعدة",
+    "viewRequestsDesc": "تصفح طلبات المساعدة القريبة منك وشارك خبرتك مع الأشخاص المحتاجين للمساعدة",
+    "viewRequestsBtn": "عرض الطلبات الحالية",
+    "problemType": "نوع المشكلة",
+    "problemDescription": "وصف المشكلة",
+    "describeYourProblemHint": "اوصف المشكلة التي تواجهك",
+    "addImages": "اضافة صور",
+    "dataStoredSecurely": "يتم تخزين صورك وبياناتك بأمان",
+    "requestSentSuccessfully": "تم ارسال الطلب بنجاح",
+    "requestReceivedDesc": "تم استلام طلبك بنجاح\nوسيتم عرض في سجل الطلبات",
+    "selectProblemTypeValidation": "الرجاء اختيار نوع المشكلة",
+    "offerRejected": "تم الغاء هذا العرض",
+    "offerCompleted": "تم اكمال هذا العرض",
+    "cancelHelpOffer": "الغاء عرض المساعدة",
+    "offlineHelp": "مساعدة اوفلاين",
+    "onlineHelp": "مساعدة اونلاين",
+    "dataProtectionNotice": "جميع تفاصيل العميل والبيانات الشخصية محمية ومؤمنة .",
+
+
+
+
+    "maxTagsWarning": "يمكنك اختيار ثلاثة صفات فقط كحد أقصى",
+    "reviewSubmittedSuccessfully": "تم إرسال تقييمك بنجاح!",
+    "orderCompletedSuccessfully": "تم إنهاء الطلب بنجاح",
+    "experienceQuestion": "كيف كانت تجربتك مع مقدم المساعدة؟",
+    "addComment": "أضف تعليقًا",
+    "commentHint": "شارك تجربتك لمساعدة المستخدمين الآخرين",
+    "submitting": "جاري الإرسال...",
+    "submitReview": "ارسال التقييم",
+    "skip": "تخطي",
+    "safetyNotice": "طلبك مؤمن ومدعوم بضمان Motoverse Safety.",
+    "fastResponse": "سريع الاستجابة",
+    "excellentManner": "تعامل ممتاز",
+    "professional": "محترف",
+    "helpful": "مفيد",
+    "needsImprovement": "يحتاج تحسين",
+
+
+
+
+    "myRequests": "طلباتي",
+    "noActiveRequests": "لا توجد طلبات نشطة حالياً",
+    "noPreviousRequests": "لا توجد طلبات سابقة",
+    "emptyRequestsSubtitle": "يمكنك إنشاء طلب جديد أو مراجعة الطلبات السابقة.",
+
+
+
+    "add": "إضافة",
+
+    "car": "السيارة",
+    "reportedProblem": "المشكلة المبلغ عنها",
+    "malfunctionIn": "عطل في {problem}",
+
+    "all": "الكل",
+    "chatHelp": "مساعدة نصية",
+    "roadsideHelp": "مساعدة مباشرة",
+
+    "defaultHelperName": "مقدم المساعدة",
+    "currentRating": "التقييم الحالي: {rating}",
+    "ratingNotAvailable": "غير متوفر",
+
+    "locatingUserMessage": "جاري تحديد موقعك، انتظر لحظة...",
+    "findNearbyCentersTitle": "اعثر على مراكز صيانة قريبة",
+    "findNearbyCentersSubtitle": "استكشف أكثر من 24 مركزاً",
+
+
+
+
+
+
+
+
+    "confirmCompleteRequestTitle": "تأكيد إنهاء الطلب",
+    "confirmCompleteRequestDesc": "بمجرد انهاء الطلب، لن تتمكن من التواصل مع الطرف الآخر عبر هذه المحادثة. هل أنت متأكد أنك تريد إنهاء الطلب؟",
+    "yes": "نعم",
+    "no": "لا",
+    "online": "متصل",
+    "offline": "غير متصل",
+    "noMessagesYet": "لا توجد رسائل بعد",
+    "verifiedHelper": "منقذ معتمد",
+    "endChat": "إنهاء المحادثة",
+    "microphonePermissionRequired": "يرجى تمكين إذن الميكروفون للتسجيل",
+    "attachImageTooltip": "إرفاق صورة",
+    "typeMessageHint": "اكتب رسالتك هنا...",
+    "cancelRecordingTooltip": "إلغاء التسجيل",
+    "recordingVoice": "تسجيل صوتي...",
+    "sendRecordingTooltip": "إرسال التسجيل",
+
+
+
+
+
+
+
+    "memberSince": "انضم منذ {date}",
+    "centerOfActivities": "مركز الأنشطة",
+    "securityAndVerification": "الأمان والتحقق",
+    "identityVerification": "التحقق من الهوية",
+    "incomplete": "غير مكتمل",
+    "privacyAndSecurity": "الخصوصية والأمان",
+    "settings": "الإعدادات",
+    "appLanguage": "لغة التطبيق",
+    "notifications": "التنبيهات",
+    "locationSettings": "إعدادات الموقع",
+    "supportAndAssistance": "الدعم والمساندة",
+    "faq": "الأسئلة الشائعة",
+    "contactUs": "تواصل معنا",
+    "logout": "تسجيل خروج",
+
+    "currentCar": "السيارة الحالية",
+    "noCarRegistered": "لا توجد سيارة مسجلة",
+    "plateNumberLabel": "رقم اللوحة: {plate}",
+    "carInformation": "معلومات سيارتك",
+    "carBrand": "ماركة السيارة",
+    "toyotaHint": "تويوتا",
+    "carModel": "موديل السيارة",
+    "camryHint": "كامري",
+    "manufactureYear": "سنة التصنيع",
+    "plateNumber": "رقم اللوحة",
+    "plateHint": "أ ب ج ١٢٣٤",
+    "carColor": "لون السيارة",
+    "privacyNote": "تتم معالجة جميع بياناتك الشخصية وتخزينها بشكل آمن وفقاً لسياسة الخصوصية الخاصة بنا",
+    "saveChanges": "حفظ التغييرات",
+    "addCar": "إضافة سيارة",
+    "deleteCar": "حذف السيارة",
+    "cancel": "إلغاء",
+    "deleteConfirmationTitle": "تأكيد الحذف",
+    "deleteConfirmationDesc": "هل أنت متأكد من حذف هذه السيارة؟",
+    "deleteBtn": "حذف",
+    "carUpdatedSuccess": "تم تحديث بيانات السيارة بنجاح",
+    "carAddedSuccess": "تم إضافة السيارة بنجاح",
+
+
+    "editProfileTitle": "تعديل معلوماتك",
+    "profileImage": "صورة البروفايل",
+    "galleryOption": "اختيار من المعرض",
+    "cameraOption": "التقاط صورة بالكاميرا",
+    "removeImageOption": "إزالة الصورة الحالية",
+    "emailAddress": "البريد الإلكتروني",
+    "privacyNotice": "تتم معالجة جميع بياناتك الشخصية وتخزينها بشكل آمن وفقاً لسياسة الخصوصية الخاصة بنا",
+    "successMessage": "تم حفظ التغييرات بنجاح",
+
+    "smartVisionIndicators": " رؤية ذكية لأهم مؤشرات سيارتك",
+
+
+    "appLanguageTitle": "لغة التطبيق",
+    "arabicLanguage": "العربية",
+    "englishLanguage": "الإنجليزية",
+    "languageNoticeText": "سيتم تطبيق تغييرات اللغة فوراً على جميع الأقسام والخدمات.",
+
+
+    "frontIdTitle": "تصوير البطاقة الشخصية من الأمام",
+    "backIdTitle": "تصوير البطاقة الشخصية من الخلف",
+    "faceImageTitle": "تصوير صورة واضحة للوجه",
+    "weNeedToVerifyYourIdentity": "نحتاج تأكيد هويتك",
+    "verificationSubtitle": "لتوفير تجربة آمنة وموثقة\n لمستخدمين motoverse",
+    "verifyIdentityButton": "تأكيد الهوية",
+    "pleaseUploadAllImages": "يرجى تحميل جميع الصور المطلوبة",
+    "uploadSuccess": "تم التحميل بنجاح",
+    "reupload": "إعادة التحميل",
+
+
+    "addDataFile": "إضافة ملف بيانات",
+    "uploadVehicleDiagnosticFiles": "قم برفع ملفات تشخيص السيارة (CSV, JSON, XLSX)",
+    "fileUploadedSuccessfully": "تم تحميل الملف بنجاح",
+    "reuploadFile": "إعادة التحميل",
+    "analyzeData": "تحليل البيانات",
+
+    "dashboard": "لوحة التحكم",
+    "engineTemperature": "درجة حرارة المحرك",
+    "fuelLevel": "مستوى الوقود",
+    "barometricPressure": "الضغط الجوي",
+    "intakeAirTemperature": "درجة حرارة الهواء المدخل",
+    "engineRuntime": "وقت تشغيل المحرك",
+    "carDataAnalysis": "تحليل بيانات السيارة",
+
+    "faultDetected": "تم اكتشاف عطل",
+    "aiAnalysis": "تحليل الذكاء الاصطناعي",
+    "statusNeedsFollowUp": "يحتاج متابعة",
+    "anomalyRatio": "نسبة الشذوذ: {ratio}%",
+    "@anomalyRatio": { "placeholders": { "ratio": {} } },
+    "modelConfidence": "درجة ثقة النموذج",
+
+
+
+    "onboarding1": "تشخيص ذكي وآمن\n حلل المشكلة بالذكاء الاصطناعي\n مع تجربة موثوقة ومحمية.",
+    "onboarding2": "الوصول إلى مراكز صيانة معتمدة\n وأشخاص قادرين على المساعدة في محيطك.",
+    "onboarding3": "تابع حالة سيارتك بشكل أوضح،\n وافهم الأعطال المحتملة قبل اتخاذ أي قرار."
+    
+
+
+
+
+
 }

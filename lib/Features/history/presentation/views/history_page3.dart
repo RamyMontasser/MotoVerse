@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:motoverse/Features/history/domain/repo/history_repo.dart';
 import 'package:motoverse/Features/history/presentation/cubit/history_cubit.dart';
 import 'package:motoverse/Features/history/presentation/widgets/date_selector.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class HistoryPage3 extends StatefulWidget {
   const HistoryPage3({super.key});
@@ -27,7 +28,6 @@ class _HistoryPage3State extends State<HistoryPage3> {
   TextEditingController type = TextEditingController();
   TextEditingController desc = TextEditingController();
   TextEditingController price = TextEditingController();
-  // TextEditingController reading = TextEditingController();
   TextEditingController centerName = TextEditingController();
 
   DateTime _focusDate = DateTime.now();
@@ -59,10 +59,7 @@ class _HistoryPage3State extends State<HistoryPage3> {
           },
           child: CustomScrollViewWithAppBar(
             child: Padding(
-              padding: EdgeInsetsGeometry.symmetric(
-                horizontal: 18.w,
-                vertical: 15.h,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 15.h),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 decoration: BoxDecoration(
@@ -83,15 +80,14 @@ class _HistoryPage3State extends State<HistoryPage3> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'سجل صيانة جديد',
+                        S.of(context).newMaintenanceRecord,
                         style: TextStyles.cairoSemiBold20.copyWith(
                           color: AppColors.blueDark,
                         ),
                       ),
                       SizedBox(height: 10.h),
-
                       Text(
-                        "التاريخ",
+                        S.of(context).dateLabel,
                         style: TextStyles.cairoRegular14.copyWith(
                           color: AppColors.blueDarkHover,
                         ),
@@ -110,34 +106,24 @@ class _HistoryPage3State extends State<HistoryPage3> {
                         },
                       ),
                       SizedBox(height: 16.h),
-                      // _buildField(
-                      //   label: "الوقت",
-                      //   controller: time,
-                      //   readOnly: true,
-                      //   onTap: () => _selectTime(context),
-                      //   suffixIcon: const Icon(Icons.access_time),
-                      // ),
                       _buildField(
-                        label: "مركز الصيانة",
+                        label: S.of(context).maintenanceCenter,
                         controller: centerName,
                       ),
-                      _buildField(label: "نوع الصيانة", controller: type),
                       _buildField(
-                        label: "الوصف",
+                        label: S.of(context).maintenanceType,
+                        controller: type,
+                      ),
+                      _buildField(
+                        label: S.of(context).descriptionLabel,
                         controller: desc,
                         maxLines: 3,
                       ),
                       _buildField(
-                        label: "التكلفة (جنية)",
+                        label: S.of(context).costEgp,
                         controller: price,
                         isNumber: true,
                       ),
-
-                      // _buildField(
-                      //   label: "قراءة العداد (كم)",
-                      //   controller: reading,
-                      //   isNumber: true,
-                      // ),
                       Row(
                         children: [
                           Expanded(
@@ -145,8 +131,8 @@ class _HistoryPage3State extends State<HistoryPage3> {
                               builder: (context, state) {
                                 return CustomElevatedButton(
                                   text: state is AddHistoryLoading
-                                      ? 'جاري الحفظ...'
-                                      : 'حفظ',
+                                      ? S.of(context).saving
+                                      : S.of(context).save,
                                   radius: CustomRadius.r1,
                                   fun: state is AddHistoryLoading
                                       ? () {}
@@ -158,12 +144,10 @@ class _HistoryPage3State extends State<HistoryPage3> {
                                                 .addHistory(
                                                   CarHistoryModel(
                                                     date: date.text,
-                                                    // time: time.text,
                                                     centerName: centerName.text,
                                                     service: type.text,
                                                     description: desc.text,
                                                     cost: price.text,
-                                                    // reading: reading.text,
                                                   ),
                                                 );
                                           }
@@ -178,7 +162,7 @@ class _HistoryPage3State extends State<HistoryPage3> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: CustomElevatedButton(
-                              text: 'إلغاء',
+                              text: S.of(context).cancel,
                               radius: CustomRadius.r1,
                               fun: () {
                                 Navigator.of(context).pop();

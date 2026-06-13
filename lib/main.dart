@@ -12,7 +12,6 @@ import 'package:motoverse/Core/services/navigator_service.dart';
 import 'package:motoverse/Core/services/push_notification_service.dart';
 import 'package:motoverse/Core/services/secure_storage.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
-import 'package:motoverse/Features/bot/presentation/views/ai_assistant.dart';
 import 'package:motoverse/Features/auth/presentation/views/log_in.dart';
 import 'package:motoverse/Features/auth/presentation/views/onboarding.dart';
 import 'package:motoverse/Features/auth/presentation/views/otp_forget.dart';
@@ -21,7 +20,9 @@ import 'package:motoverse/Features/auth/presentation/views/phone_num.dart';
 import 'package:motoverse/Features/auth/presentation/views/reset_pass.dart';
 import 'package:motoverse/Features/auth/presentation/views/restore_pass.dart';
 import 'package:motoverse/Features/auth/presentation/views/sign_up.dart';
+import 'package:motoverse/Features/bot/presentation/views/ai_assistant.dart';
 import 'package:motoverse/Features/bot/presentation/views/ai_options_screen.dart';
+import 'package:motoverse/Features/bot/presentation/views/obd_dashboard_screen.dart';
 import 'package:motoverse/Features/community/domain/repo/community_repo.dart';
 import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.dart';
 import 'package:motoverse/Features/community/presentation/views/available_requists.dart';
@@ -32,27 +33,24 @@ import 'package:motoverse/Features/community/presentation/views/request_help1.da
 import 'package:motoverse/Features/community/presentation/views/review_screen.dart';
 import 'package:motoverse/Features/community/presentation/views/user_requests_screen.dart';
 import 'package:motoverse/Features/history/presentation/views/history_page1.dart';
-import 'package:motoverse/Features/history/presentation/views/history_page2.dart';
 import 'package:motoverse/Features/history/presentation/views/history_page3.dart';
 import 'package:motoverse/Features/home/data/models/user_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/domain/repo/map_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
+import 'package:motoverse/Features/home/presentation/cubit/device_notification_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart';
 import 'package:motoverse/Features/home/presentation/views/main_screen.dart';
 import 'package:motoverse/Features/home/presentation/views/my_offers_page.dart';
 import 'package:motoverse/Features/home/presentation/views/notifications_screen.dart';
-import 'package:motoverse/Features/home/presentation/views/profile.dart';
 import 'package:motoverse/Features/home/presentation/views/request_offers_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/add_or_update_car_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/edit_profile_screen.dart';
+import 'package:motoverse/Features/profile/presentation/views/identity_varification1.dart';
 import 'package:motoverse/Features/profile/presentation/views/language_screen.dart';
 import 'package:motoverse/Features/profile/presentation/views/profile_screen.dart';
-import 'package:motoverse/Features/profile/presentation/views/identity_varification1.dart';
-import 'package:motoverse/Features/settings/presentation/views/settings_screen.dart';
-import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat.dart';
-import 'package:motoverse/Features/home/presentation/cubit/device_notification_cubit.dart';
+import 'package:motoverse/Features/chat/presentation/views/socket_chat.dart';
 import 'package:motoverse/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -146,17 +144,17 @@ class MyApp extends StatelessWidget {
                   'otp page': (context) => OtpPage(),
                   'otp forget': (context) => OtpForget(),
                   'reset pass': (context) => ResetPass(),
-                  'profile': (context) => const Profile(),
+                  // 'profile': (context) => const Profile(),
                   'profile screen': (context) => const ProfileScreen(),
                   'EditProfile': (context) => const EditProfileScreen(),
                   'main screen': (context) => MainScreen(),
                   'RequestOffersScreen': (context) => RequestOffersScreen(),
-                  'settings': (context) => Settings(),
+                  // 'settings': (context) => Settings(),
                   'history1': (context) => HistoryPage1(),
-                  'history2': (context) => HistoryPage2(),
+                  // 'history2': (context) => HistoryPage2(),
                   'history3': (context) => HistoryPage3(),
+
                   // 'ai1': (context) => AiChat1(),
-                  
                   'RequestHelp1': (context) => RequestHelp1(),
                   'CreateRequest': (context) => CreateRequest(),
                   'AvailableRequests': (context) => AvailableRequests(),
@@ -167,27 +165,31 @@ class MyApp extends StatelessWidget {
                   'UserRequests': (context) => const UserRequestsScreen(),
                   'MyOffersPage': (context) => const MyOffersPage(),
                   'ReviewScreen': (context) => const ReviewScreen(),
-                  'AddOrUpdateCarScreen': (context) => const AddOrUpdateCarScreen(),
+                  'AddOrUpdateCarScreen': (context) =>
+                      const AddOrUpdateCarScreen(),
                   'LanguageScreen': (context) => const LanguageScreen(),
-                  'NotificationsScreen': (context) => const NotificationsScreen(),
+                  'NotificationsScreen': (context) =>
+                      const NotificationsScreen(),
                   'AiOptionsScreen': (context) => const AiOptionsScreen(),
                   'AiAssistant': (context) => AiAssistant(),
+                  'ObdDashboardScreen': (context) => ObdDashboardScreen(),
                 },
 
                 debugShowCheckedModeBanner: false,
                 title: 'MotoVerse',
 
                 theme: ThemeData(
-                  elevatedButtonTheme: ElevatedButtonThemeData(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 1, 10, 17),
-                      foregroundColor: AppColors.whiteLight,
-                    ),
-                  ),
+                  // elevatedButtonTheme: ElevatedButtonThemeData(
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: const Color.fromARGB(255, 1, 10, 17),
+                  //     foregroundColor: AppColors.whiteLight,
+                  //   ),
+                  // ),
                   scaffoldBackgroundColor: AppColors.whiteLight,
                 ),
 
                 home:
+                    // ObdDashboardScreen(),
                     // LanguageScreen(),
                     // ReviewScreen()
                     // ChatPage(),

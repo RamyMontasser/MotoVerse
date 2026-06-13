@@ -12,6 +12,7 @@ import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/widgets/user_listtile.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class RequestLocationCard extends StatelessWidget {
   const RequestLocationCard({
@@ -41,14 +42,6 @@ class RequestLocationCard extends StatelessWidget {
           request.location?.latitude ?? 31.415,
           request.location?.longitude ?? 31.814,
         );
-
-        // LatLng centerLatLng = requestLatLng;
-        // if (currentLatLng != null) {
-        //   centerLatLng = LatLng(
-        //     (requestLatLng.latitude + currentLatLng.latitude) / 2,
-        //     (requestLatLng.longitude + currentLatLng.longitude) / 2,
-        //   );
-        // }
 
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
@@ -85,7 +78,7 @@ class RequestLocationCard extends StatelessWidget {
                           'accessToken': AppConstants.mapBoxToken,
                           'id': AppConstants.mapBoxMapId,
                         },
-                        subdomains: ['a', 'b', 'c', 'd'],
+                        subdomains: const ['a', 'b', 'c', 'd'],
                         userAgentPackageName: 'com.example.motoverse',
                       ),
                       MarkerLayer(
@@ -109,38 +102,40 @@ class RequestLocationCard extends StatelessWidget {
                   ),
                 ),
               ),
-
               SizedBox(height: isAccepted == true ? 5.h : 15.h),
-
-              isAccepted == true
-                  ? Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'المسافة والوقت',
-                                style: TextStyles.cairoBold12.copyWith(
-                                  color: AppColors.whiteDarker,
-                                ),
-                              ),
-                              Text(
-                                '${request.distance?? 0 } كم - ${offer?.estimatedMinutes?? 0} د',
-                                style: TextStyles.cairoBold16.copyWith(
-                                  color: AppColors.blueNormal,
-                                ),
-                                softWrap: true,
-                                overflow: TextOverflow.visible,
-                                // maxLines: 2,
-                                // overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+              if (isAccepted == true)
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            S.of(context).distanceAndTime,
+                            style: TextStyles.cairoBold12.copyWith(
+                              color: AppColors.whiteDarker,
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  : UserListtile(request: request),
+                          Text(
+                            S
+                                .of(context)
+                                .distanceAndMinutes(
+                                  request.distance ?? 0,
+                                  offer?.estimatedMinutes ?? 0,
+                                ),
+                            style: TextStyles.cairoBold16.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              else
+                UserListtile(request: request),
             ],
           ),
         );

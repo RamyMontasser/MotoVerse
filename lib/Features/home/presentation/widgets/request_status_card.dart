@@ -6,6 +6,7 @@ import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/community/presentation/views/user_requests_screen.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class RequestStatusCard extends StatelessWidget {
   const RequestStatusCard({super.key, required this.requests});
@@ -18,7 +19,7 @@ class RequestStatusCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: CustomRadius.card12,
         color: AppColors.whiteLight,
-        border: BoxBorder.all(color: AppColors.whiteNormalActive, width: 0.5),
+        border: Border.all(color: AppColors.whiteNormalActive, width: 0.5),
         boxShadow: [
           BoxShadow(
             color: AppColors.black.withValues(alpha: 0.15),
@@ -43,7 +44,7 @@ class RequestStatusCard extends StatelessWidget {
               child: Container(
                 width: 48.w,
                 height: 48.h,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.orangeLight,
                   shape: BoxShape.circle,
                 ),
@@ -54,15 +55,9 @@ class RequestStatusCard extends StatelessWidget {
                 ),
               ),
             ),
-
             SizedBox(width: 12.w),
-
-            // Middle: Text Info
             Expanded(
               flex: 4,
-              // child: Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -76,28 +71,18 @@ class RequestStatusCard extends StatelessWidget {
                   ),
                   SizedBox(width: 4.w),
                   Text(
-                    'طلبات جارية',
+                    S.of(context).ongoingRequests,
                     style: TextStyles.cairoBold14.copyWith(
                       color: AppColors.blueNormal,
                     ),
                   ),
                 ],
               ),
-              // Text(
-              //   'طلب رقم #AC-8892',
-              //   style: TextStyles.cairoMedium12.copyWith(
-              //     color: AppColors.whiteDarkActive,
-              //   ),
-              // ),
-              // ],
-              // ),
             ),
-
-            // const Spacer(),
             Expanded(
               flex: 2,
               child: CustomElevatedButton(
-                text: 'تتبع الطلب',
+                text: S.of(context).trackRequest,
                 radius: CustomRadius.card12,
                 fun: () {
                   Navigator.pushNamed(
@@ -112,26 +97,6 @@ class RequestStatusCard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 14.w),
               ),
             ),
-
-            // SizedBox(
-            //   height: 40.h,
-            //   child: ElevatedButton(
-            //     onPressed: () {},
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: AppColors.orangeNormal,
-            //       foregroundColor: AppColors.whiteLight,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(12.r),
-            //       ),
-            //       padding: EdgeInsets.symmetric(horizontal: 16.w),
-            //       elevation: 0,
-            //     ),
-            //     child: Text(
-            //       'تتبع الطلب',
-            //       style: TextStyles.cairoBold12.copyWith(color: Colors.white),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -4,8 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 
-/// A reusable audio player widget that displays audio with play controls and waveform visualization.
-/// Can be used standalone or within message bubbles.
+
 class AudioPlayerWidget extends StatefulWidget {
   final String? audioUrl;
   final bool isMe;
@@ -67,7 +66,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
       if (mounted) setState(() => _position = p);
     });
 
-    // عشان تصفر العداد لما الفويس يخلص
     _audioPlayer.onPlayerComplete.listen((event) {
       if (mounted) {
         setState(() {
@@ -105,11 +103,9 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
       if (_isPlaying) {
         await _audioPlayer.pause();
       } else {
-        // 1. لو الفويس خلص ووصل للآخر أو العداد تم تصفيره، بنشغله من جديد تماماً عبر play
         if (_position == Duration.zero || _position >= _duration) {
           await _audioPlayer.play(UrlSource(url));
         }
-        // 2. لو الفويس واخد Pause في النص، خليه يكمل عادي من مكانه بـ resume
         else {
           await _audioPlayer.resume();
         }
@@ -234,7 +230,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: List.generate(24, (index) {
-                          // Generate simulated bar heights for waveform effect
                           final heights = [
                             4,
                             8,

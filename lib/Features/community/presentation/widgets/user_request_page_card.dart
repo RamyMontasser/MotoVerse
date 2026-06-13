@@ -6,13 +6,14 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class UserRequestPageCard extends StatelessWidget {
   const UserRequestPageCard({super.key, required this.request});
 
   final RequestModel request;
 
-  String _formatArabicDateTime(String createdAt) {
+  String _formatLocalizedDateTime(BuildContext context, String createdAt) {
     try {
       final dateTime = DateTime.parse(createdAt).toLocal();
       final now = DateTime.now();
@@ -21,20 +22,23 @@ class UserRequestPageCard extends StatelessWidget {
 
       String dayStr;
       if (dateToCheck == today) {
-        dayStr = 'اليوم';
+        dayStr = S.of(context).today;
       } else if (dateToCheck == today.subtract(const Duration(days: 1))) {
-        dayStr = 'أمس';
+        dayStr = S.of(context).yesterday;
       } else {
         dayStr = '${dateTime.year}/${dateTime.month}/${dateTime.day}';
       }
 
       int hour = dateTime.hour;
       final minute = dateTime.minute.toString().padLeft(2, '0');
-      final period = hour >= 12 ? 'مساءً' : 'صباحاً';
+      final period = hour >= 12 ? S.of(context).pm : S.of(context).am;
+
       if (hour > 12) hour -= 12;
       if (hour == 0) hour = 12;
 
-      return '$dayStr، $hour:$minute $period';
+      return isEN()
+          ? '$dayStr, $hour:$minute $period'
+          : '$dayStr، $hour:$minute $period';
     } catch (_) {
       if (createdAt.length >= 10) {
         return createdAt.substring(0, 10);
@@ -49,7 +53,9 @@ class UserRequestPageCard extends StatelessWidget {
     final Color statusColor = isOffline
         ? AppColors.blueNormal
         : AppColors.yellowNormal;
-    final String statusText = isOffline ? 'أوفلاين' : 'أونلاين';
+    final String statusText = isOffline
+        ? S.of(context).fieldHelp
+        : S.of(context).onlineHelp;
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7.h),
@@ -101,10 +107,12 @@ class UserRequestPageCard extends StatelessWidget {
               SizedBox(width: 10.w),
               Expanded(
                 child: Text(
-                  'مساعدة $statusText',
+                  statusText,
                   style: TextStyles.cairoBold16.copyWith(
                     color: AppColors.blueNormal,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               if (request.status == 'pending' || request.status == 'accepted')
@@ -118,7 +126,7 @@ class UserRequestPageCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
-                    'نشط',
+                    S.of(context).active,
                     style: TextStyles.cairoBold12.copyWith(
                       color: AppColors.greenNormal,
                     ),
@@ -139,15 +147,13 @@ class UserRequestPageCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'نوع المساعدة',
+                      S.of(context).helpType,
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.whiteDarkActive,
                       ),
                     ),
                     Text(
-                      request.requestType == 'offline'
-                          ? 'مساعدة ميدانية'
-                          : 'مساعدة أونلاين',
+                      statusText,
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.blueNormal,
                       ),
@@ -159,15 +165,18 @@ class UserRequestPageCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'التاريخ والوقت',
+                      S.of(context).dateTime,
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.whiteDarkActive,
                       ),
                     ),
-                    Text(
-                      _formatArabicDateTime(request.createdAt),
-                      style: TextStyles.cairoRegular14.copyWith(
-                        color: AppColors.blueDarker,
+                    Flexible(
+                      child: Text(
+                        _formatLocalizedDateTime(context, request.createdAt),
+                        style: TextStyles.cairoRegular14.copyWith(
+                          color: AppColors.blueDarker,
+                        ),
+                        textAlign: TextAlign.end,
                       ),
                     ),
                   ],
@@ -177,7 +186,7 @@ class UserRequestPageCard extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           CustomElevatedButton(
-            text: 'عرض التفاصيل',
+            text: S.of(context).viewDetails,
             radius: CustomRadius.r2,
             fun: () {
               Navigator.of(

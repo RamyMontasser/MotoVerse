@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
-import 'package:motoverse/Features/socket_chat/data/models/conversation_model.dart';
+import 'package:motoverse/Features/chat/data/models/conversation_model.dart';
 
 part 'notification_state.dart';
 

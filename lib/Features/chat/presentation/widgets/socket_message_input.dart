@@ -9,7 +9,8 @@ import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/image_picker_bottom_sheet.dart';
-import 'package:motoverse/Features/socket_chat/presentation/cubit/socket_chat_cubit.dart';
+import 'package:motoverse/Features/chat/presentation/cubit/socket_chat_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class SocketMessageInput extends StatefulWidget {
   final String chatId;
@@ -24,11 +25,11 @@ class _SocketMessageInputState extends State<SocketMessageInput>
     with SingleTickerProviderStateMixin {
   final TextEditingController _controller = TextEditingController();
   final AudioRecorder _audioRecorder = AudioRecorder();
-  
+
   bool _isRecording = false;
   String? _recordingPath;
   Timer? _timer;
-  int _recordDuration = 0; // in seconds
+  int _recordDuration = 0;
   late AnimationController _pulseController;
 
   @override
@@ -38,7 +39,7 @@ class _SocketMessageInputState extends State<SocketMessageInput>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     )..repeat(reverse: true);
-    
+
     _controller.addListener(_onTextChanged);
   }
 
@@ -56,23 +57,21 @@ class _SocketMessageInputState extends State<SocketMessageInput>
     super.dispose();
   }
 
-  // --- Image Picking Logic ---
   void _pickImage() {
     ImagePickerBottomSheet.show(
       context: context,
       onImagePicked: (xFile) {
         if (xFile != null) {
           context.read<SocketChatCubit>().sendMediaMessage(
-                chatId: widget.chatId,
-                filePath: xFile.path,
-                fileType: 'image',
-              );
+            chatId: widget.chatId,
+            filePath: xFile.path,
+            fileType: 'image',
+          );
         }
       },
     );
   }
 
-  // --- Voice Note Recording Logic ---
   Future<void> _startRecording() async {
     try {
       if (await _audioRecorder.hasPermission()) {
@@ -99,8 +98,8 @@ class _SocketMessageInputState extends State<SocketMessageInput>
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('يرجى تمكين إذن الميكروفون للتسجيل'),
+            SnackBar(
+              content: Text(S.of(context).microphonePermissionRequired),
               backgroundColor: AppColors.redNormal,
             ),
           );
@@ -122,10 +121,10 @@ class _SocketMessageInputState extends State<SocketMessageInput>
       if (path != null) {
         if (mounted) {
           context.read<SocketChatCubit>().sendMediaMessage(
-                chatId: widget.chatId,
-                filePath: path,
-                fileType: 'audio',
-              );
+            chatId: widget.chatId,
+            filePath: path,
+            fileType: 'audio',
+          );
         }
       }
     } catch (e) {
@@ -157,9 +156,9 @@ class _SocketMessageInputState extends State<SocketMessageInput>
     if (messageText.isEmpty) return;
 
     context.read<SocketChatCubit>().sendMessage(
-          chatId: widget.chatId,
-          message: messageText,
-        );
+      chatId: widget.chatId,
+      message: messageText,
+    );
     _controller.clear();
   }
 
@@ -192,7 +191,6 @@ class _SocketMessageInputState extends State<SocketMessageInput>
     return Row(
       key: const ValueKey('normal_bar'),
       children: [
-        // Attachment Plus Button
         IconButton(
           onPressed: _pickImage,
           icon: Icon(
@@ -200,10 +198,8 @@ class _SocketMessageInputState extends State<SocketMessageInput>
             color: AppColors.yellowNormal,
             size: 28.sp,
           ),
-          tooltip: 'إرفاق صورة',
+          tooltip: S.of(context).attachImageTooltip,
         ),
-        
-        // Message Input Field
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -214,11 +210,9 @@ class _SocketMessageInputState extends State<SocketMessageInput>
             child: TextFormField(
               controller: _controller,
               cursorColor: AppColors.yellowNormal,
-              style: TextStyles.cairoRegular16.copyWith(
-                color: AppColors.black,
-              ),
+              style: TextStyles.cairoRegular16.copyWith(color: AppColors.black),
               decoration: InputDecoration(
-                hintText: 'اكتب رسالتك هنا...',
+                hintText: S.of(context).typeMessageHint,
                 hintStyle: TextStyles.cairoRegular14.copyWith(
                   color: AppColors.whiteDark,
                 ),
@@ -232,16 +226,12 @@ class _SocketMessageInputState extends State<SocketMessageInput>
           ),
         ),
         SizedBox(width: 8.w),
-
-        // Action Button: Send or Microphone
         IconButton(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           style: IconButton.styleFrom(
             elevation: 4,
             shadowColor: Colors.black26,
-            shape: RoundedRectangleBorder(
-              borderRadius: CustomRadius.circle,
-            ),
+            shape: RoundedRectangleBorder(borderRadius: CustomRadius.circle),
             backgroundColor: AppColors.yellowNormal,
           ),
           onPressed: isTextEmpty ? _startRecording : _sendMessage,
@@ -259,7 +249,6 @@ class _SocketMessageInputState extends State<SocketMessageInput>
     return Row(
       key: const ValueKey('recording_bar'),
       children: [
-        // Cancel/Delete Button (Red trash can)
         IconButton(
           onPressed: _cancelRecording,
           icon: Icon(
@@ -267,21 +256,20 @@ class _SocketMessageInputState extends State<SocketMessageInput>
             color: AppColors.redNormal,
             size: 28.sp,
           ),
-          tooltip: 'إلغاء التسجيل',
+          tooltip: S.of(context).cancelRecordingTooltip,
         ),
-
-        // Record Status & Elapsed Timer
         Expanded(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: AppColors.redNormal.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(30.r),
-              border: Border.all(color: AppColors.redNormal.withValues(alpha: 0.2)),
+              border: Border.all(
+                color: AppColors.redNormal.withValues(alpha: 0.2),
+              ),
             ),
             child: Row(
               children: [
-                // Flashing Red Dot Animation
                 AnimatedBuilder(
                   animation: _pulseController,
                   builder: (context, child) {
@@ -299,17 +287,13 @@ class _SocketMessageInputState extends State<SocketMessageInput>
                   },
                 ),
                 SizedBox(width: 8.w),
-
-                // Arab State text
                 Text(
-                  'تسجيل صوتي...',
+                  S.of(context).recordingVoice,
                   style: TextStyles.cairoBold13.copyWith(
                     color: AppColors.redNormal,
                   ),
                 ),
                 const Spacer(),
-
-                // Duration timer text
                 Text(
                   _formatDuration(_recordDuration),
                   style: TextStyle(
@@ -323,16 +307,12 @@ class _SocketMessageInputState extends State<SocketMessageInput>
           ),
         ),
         SizedBox(width: 8.w),
-
-        // Send Audio Button
         IconButton(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           style: IconButton.styleFrom(
             elevation: 4,
             shadowColor: Colors.black26,
-            shape: RoundedRectangleBorder(
-              borderRadius: CustomRadius.circle,
-            ),
+            shape: RoundedRectangleBorder(borderRadius: CustomRadius.circle),
             backgroundColor: AppColors.blueNormal,
           ),
           onPressed: _stopAndSendRecording,
@@ -341,7 +321,7 @@ class _SocketMessageInputState extends State<SocketMessageInput>
             color: AppColors.whiteLight,
             size: 22.sp,
           ),
-          tooltip: 'إرسال التسجيل',
+          tooltip: S.of(context).sendRecordingTooltip,
         ),
       ],
     );

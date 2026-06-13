@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:flutter_svg/svg.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
@@ -24,13 +23,12 @@ class HistoryListtile extends StatelessWidget {
     return GestureDetector(
       onTap: fun,
       child: Container(
-        // height: 98.h,
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 18.h),
         margin: EdgeInsets.symmetric(vertical: 5.h),
         decoration: BoxDecoration(
           borderRadius: CustomRadius.card,
           color: AppColors.whiteLight,
-          border: BoxBorder.all(color: AppColors.whiteNormalActive, width: 0.5),
+          border: Border.all(color: AppColors.whiteNormalActive, width: 0.5),
           boxShadow: [
             BoxShadow(
               color: AppColors.black.withAlpha(20),
@@ -46,23 +44,36 @@ class HistoryListtile extends StatelessWidget {
               height: 40.h,
               decoration: BoxDecoration(
                 borderRadius: CustomRadius.r1,
-                color: AppColors.blueLightHover
+                color: AppColors.blueLightHover,
               ),
-              child: Center(child: Icon(iconPath, color: AppColors.blueNormal,)),
+              child: Center(child: Icon(iconPath, color: AppColors.blueNormal)),
             ),
 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w,),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: TextStyles.cairoBold16),
-                  Text(desc, style: TextStyles.cairoRegular14),
-                ],
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize
+                      .min, 
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyles.cairoBold16,
+                      maxLines: 1, 
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4.h), 
+                    Text(
+                      desc,
+                      style: TextStyles.cairoRegular14,
+                      overflow: TextOverflow
+                          .ellipsis, 
+                    ),
+                  ],
+                ),
               ),
             ),
-
-            Spacer(),
 
             Icon(Icons.arrow_forward_ios, size: 19.w),
           ],

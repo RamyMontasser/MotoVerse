@@ -6,6 +6,7 @@ import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/ai_toggle_buttons.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/diagnosis_view.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/explain_problem_view.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class AiOptionsScreen extends StatefulWidget {
   const AiOptionsScreen({super.key});
@@ -35,14 +36,14 @@ class _AiOptionsScreenState extends State<AiOptionsScreen> {
             children: [
               SizedBox(height: 10.h),
               Text(
-                'التشخيص الذكي',
+                S.of(context).smartDiagnosis2,
                 style: TextStyles.cairoBold24.copyWith(
                   color: AppColors.blueNormal,
                 ),
               ),
               SizedBox(height: 8.h),
               Text(
-                'اختر الطريقة الأنسب لتحليل مشكلة السيارة',
+                S.of(context).chooseDiagnosisMethod,
                 style: TextStyles.cairoRegular14.copyWith(
                   color: AppColors.whiteDarkHover,
                 ),
@@ -59,8 +60,10 @@ class _AiOptionsScreenState extends State<AiOptionsScreen> {
               SizedBox(height: 24.h),
               isExplainProblemSelected
                   ? ExplainProblemView(controller: _problemController)
-                  : const DiagnosisView(), 
+                  : const DiagnosisView(),
+              SizedBox(height: 90),
             ],
+            
           ),
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Features/home/presentation/cubit/device_notification_cubit.dart';
 import 'package:motoverse/Features/home/presentation/widgets/notification_card.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -40,14 +41,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               SizedBox(height: 10.h),
               Center(
                 child: Text(
-                  'الإشعارات',
+                  S.of(context).notifications1,
                   style: TextStyles.cairoBold18.copyWith(
                     color: AppColors.blueNormal,
                   ),
                 ),
               ),
               SizedBox(height: 15.h),
-
               BlocBuilder<DeviceNotificationCubit, DeviceNotificationState>(
                 builder: (context, state) {
                   if (state is DeviceNotificationLoading) {
@@ -83,7 +83,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         height: 400.h,
                         child: Center(
                           child: Text(
-                            'لا توجد إشعارات حالياً',
+                            S.of(context).noNotifications,
                             style: TextStyles.cairoMedium16.copyWith(
                               color: AppColors.whiteDarkActive,
                             ),
@@ -91,7 +91,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         ),
                       );
                     }
-                    debugPrint('latest notification: ${apiNotifications.first.createdAt}');
+                    debugPrint(
+                      'latest notification: ${apiNotifications.first.createdAt}',
+                    );
 
                     final todayNotifications = apiNotifications.where((n) {
                       return n.createdAt.year == now.year &&
@@ -112,7 +114,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             child: Text(
-                              'اليوم',
+                              S.of(context).today,
                               style: TextStyles.cairoBold16.copyWith(
                                 color: AppColors.blueNormal,
                               ),
@@ -131,12 +133,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             ),
                           ),
                         ],
-
                         if (pastNotifications.isNotEmpty) ...[
                           Padding(
                             padding: EdgeInsets.only(top: 20.h, bottom: 10.h),
                             child: Text(
-                              'سابقاً',
+                              S.of(context).past,
                               style: TextStyles.cairoBold16.copyWith(
                                 color: AppColors.blueNormal,
                               ),

@@ -11,6 +11,7 @@ import 'package:motoverse/Features/community/presentation/cubit/requests_cubit.d
 import 'package:motoverse/Features/community/presentation/widgets/category_tabs.dart';
 import 'package:motoverse/Features/community/presentation/widgets/request_card.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AvailableRequests extends StatefulWidget {
@@ -182,9 +183,9 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                     } else if (state is RequestsFail) {
                       debugPrint(state.errorMessage);
                       return ErrorStateWidget(
-                        title: 'حدث خطأ أثناء تحميل الطلبات',
+                        title: S.of(context).loadRequestsError,
                         message: state.errorMessage,
-                        buttonLabel: 'إعادة المحاولة',
+                        buttonLabel: S.of(context).retry,
                         onButtonPressed: _refreshRequests,
                       );
                     } else if (state is RequestsSuccess) {
@@ -192,7 +193,9 @@ class _AvailableRequestsState extends State<AvailableRequests> {
                           .where((request) => request.status == 'pending')
                           .toList();
                       if (requests.isEmpty) {
-                        return const Center(child: Text("لا توجد طلبات متاحة"));
+                        return Center(
+                          child: Text(S.of(context).noRequestsAvailable),
+                        );
                       }
                       final filteredRequests = requests.where((request) {
                         if (currentCategory == 1) {

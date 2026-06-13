@@ -24,7 +24,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
 import 'package:motoverse/Core/functions/custom_snackbar.dart';
-
+import 'package:motoverse/generated/l10n.dart';
 
 class RequestDetails extends StatelessWidget {
   const RequestDetails({super.key});
@@ -38,26 +38,25 @@ class RequestDetails extends StatelessWidget {
     final currentUser = userBox.get('user');
     final bool isMyRequest = currentUser?.id == request.userId;
 
-    // debugPrint("request image ${request.images.first.image}");
     int imageNum = request.images.length;
     final List<ProblemTypeModel> problemTypes = [
       ProblemTypeModel(
-        title: "بطارية",
+        title: S.of(context).battery,
         titleEnglish: "battery",
         iconPath: 'assets/icons/community/battery.svg',
       ),
       ProblemTypeModel(
-        title: "محرك",
+        title: S.of(context).engine,
         titleEnglish: "engine",
         iconPath: 'assets/icons/community/motor.svg',
       ),
       ProblemTypeModel(
-        title: "الإطارات",
+        title: S.of(context).tires,
         titleEnglish: "tires",
         iconPath: 'assets/icons/community/wheels.svg',
       ),
       ProblemTypeModel(
-        title: "غير ذلك",
+        title: S.of(context).other,
         titleEnglish: "other",
         iconPath: 'assets/icons/community/other.svg',
       ),
@@ -97,7 +96,7 @@ class RequestDetails extends StatelessWidget {
 
                     ListTile(
                       title: Text(
-                        'الصور المرفقة',
+                        S.of(context).attachedImages,
                         style: TextStyles.cairoBold18.copyWith(
                           color: AppColors.blueDarkActive,
                         ),
@@ -105,7 +104,7 @@ class RequestDetails extends StatelessWidget {
                       trailing: GestureDetector(
                         onTap: () {},
                         child: Text(
-                          '$imageNum صور',
+                          S.of(context).imagesCount(imageNum),
                           style: TextStyles.cairoMedium12.copyWith(
                             color: AppColors.whiteDarker,
                           ),
@@ -136,54 +135,37 @@ class RequestDetails extends StatelessWidget {
                                             builder: (_) {
                                               return Scaffold(
                                                 body: PhotoView(
-                                                  imageProvider:
-                                                      // AssetImage('assets/images/center.jpg',)
-                                                      //   Image.asset(
-                                                      //   fit: BoxFit.cover,
-                                                      // ),
-                                                      NetworkImage(
-                                                        request
-                                                                .images[index]
-                                                                .image
-                                                                .startsWith(
-                                                                  'http',
-                                                                )
-                                                            ? request
+                                                  imageProvider: NetworkImage(
+                                                    request.images[index].image
+                                                            .startsWith('http')
+                                                        ? request
+                                                              .images[index]
+                                                              .image
+                                                        : AppConstants.baseUrl +
+                                                              request
                                                                   .images[index]
-                                                                  .image
-                                                            : AppConstants
-                                                                      .baseUrl +
-                                                                  request
-                                                                      .images[index]
-                                                                      .image,
-                                                      ),
+                                                                  .image,
+                                                  ),
                                                 ),
                                               );
                                             },
                                           ),
                                         );
                                       },
-                                      child:
-                                          //   Image.asset(
-                                          //   'assets/images/center.jpg',
-                                          //   fit: BoxFit.cover,
-                                          // ),
-                                          //  Image.network(request.images[index].image),
-                                          Image.network(
-                                            request.images[index].image
-                                                    .startsWith('http')
-                                                ? request.images[index].image
-                                                : AppConstants.baseUrl +
-                                                      request
-                                                          .images[index]
-                                                          .image,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                                  return Icon(
-                                                    Icons.broken_image,
-                                                  );
-                                                },
-                                          ),
+                                      child: Image.network(
+                                        request.images[index].image.startsWith(
+                                              'http',
+                                            )
+                                            ? request.images[index].image
+                                            : AppConstants.baseUrl +
+                                                  request.images[index].image,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                              return const Icon(
+                                                Icons.broken_image,
+                                              );
+                                            },
+                                      ),
                                     ),
                                   ),
                                 );
@@ -195,10 +177,8 @@ class RequestDetails extends StatelessWidget {
                     SizedBox(height: 25.h),
 
                     isMyRequest
-                        ? SizedBox.shrink()
-                        : MemberInfoCard(
-                            request: request,
-                          ),
+                        ? const SizedBox.shrink()
+                        : MemberInfoCard(request: request),
 
                     SizedBox(height: 20.h),
                   ],
@@ -207,78 +187,84 @@ class RequestDetails extends StatelessWidget {
             ),
           ),
           if (request.status == 'pending')
-          isMyRequest 
-              ? BlocProvider(
-                  create: (context) => NotificationCubit(getIt<HomeRepo>()),
-                  child: BlocConsumer<NotificationCubit, NotificationState>(
-                    listener: (context, state) {
-                      if (state is DeleteRequestSuccess) {
-                        context.read<RequestsCubit>().removeRequest(request.id);
-                        Navigator.of(context).pop();
-                        customSnackBar(
-                          context: context,
-                          msg: 'تم الغاء الطلب بنجاح',
-                          isDone: true,
+            isMyRequest
+                ? BlocProvider(
+                    create: (context) => NotificationCubit(getIt<HomeRepo>()),
+                    child: BlocConsumer<NotificationCubit, NotificationState>(
+                      listener: (context, state) {
+                        if (state is DeleteRequestSuccess) {
+                          context.read<RequestsCubit>().removeRequest(
+                            request.id,
+                          );
+                          Navigator.of(context).pop();
+                          customSnackBar(
+                            context: context,
+                            msg: S.of(context).requestCancelledSuccessfully,
+                            isDone: true,
+                          );
+                        } else if (state is DeleteRequestFailure) {
+                          customSnackBar(
+                            context: context,
+                            msg: state.errMessage,
+                            isDone: false,
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        return BottomSheetButton(
+                          text: S.of(context).cancelRequest,
+                          bgColor: AppColors.redLightActive,
+                          foreColor: AppColors.redDark,
+                          fun: () {
+                            context.read<NotificationCubit>().deleteRequest(
+                              requestId: request.id,
+                            );
+                          },
                         );
-                      } else if (state is DeleteRequestFailure) {
-                        customSnackBar(
-                          context: context,
-                          msg: state.errMessage,
-                          isDone: false,
+                      },
+                    ),
+                  )
+                : BlocProvider(
+                    create: (context) =>
+                        OffersCubit(communityRepo: getIt<CommunityRepo>()),
+                    child: BlocConsumer<OffersCubit, OffersState>(
+                      listener: (context, state) {
+                        if (state is MakeOfferSuccess) {
+                          customSnackBar(
+                            context: context,
+                            msg: S.of(context).helpOfferSubmittedSuccessfully,
+                            isDone: true,
+                          );
+                          context.read<NavigationProvider>().changeIndex(0);
+                          Navigator.of(context).pushNamed('main screen');
+                        } else if (state is MakeOfferFailure) {
+                          customSnackBar(
+                            context: context,
+                            msg: state.errorMsg,
+                            isDone: false,
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        return BottomSheetButton(
+                          text: state is MakeOfferLoading
+                              ? S.of(context).sendingOffer
+                              : S.of(context).provideHelp,
+                          bgColor: state is MakeOfferLoading
+                              ? AppColors.whiteDarker
+                              : AppColors.blueNormal,
+                          fun: state is MakeOfferLoading
+                              ? () {}
+                              : () {
+                                  debugPrint(request.id.toString());
+                                  context.read<OffersCubit>().makeOffer(
+                                    requestId: request.id,
+                                  );
+                                },
                         );
-                      }
-                    },
-                    builder: (context, state) {
-                      return BottomSheetButton(
-                        text: 'الغاء الطلب',
-                        bgColor: AppColors.redLightActive,
-                        foreColor: AppColors.redDark,
-                        fun: () {
-                          context.read<NotificationCubit>().deleteRequest(requestId: request.id);
-                        },
-                      );
-                    },
+                      },
+                    ),
                   ),
-                )
-              :  BlocProvider(
-    create: (context) => OffersCubit(communityRepo: getIt<CommunityRepo>()),
-    child: BlocConsumer<OffersCubit, OffersState>(
-      listener: (context, state) {
-        if (state is MakeOfferSuccess) {
-          customSnackBar(
-            context: context,
-            msg: 'تم تقديم عرض المساعدة بنجاح',
-            isDone: true,
-          );
-          context.read<NavigationProvider>().changeIndex(0);
-          Navigator.of(context).pushNamed('main screen');
-        } 
-        else if (state is MakeOfferFailure) {
-          customSnackBar(
-            context: context,
-            msg: state.errorMsg, 
-            isDone: false,
-          );
-        }
-      },
-      builder: (context, state) {
-        return BottomSheetButton(
-          text: state is MakeOfferLoading ? 'جاري إرسال العرض...' : 'تقديم المساعدة',
-          bgColor: state is MakeOfferLoading ? AppColors.whiteDarker : AppColors.blueNormal,
-          fun: state is MakeOfferLoading 
-              ? () {} 
-              : () {
-                  // if (request.requestType == 'online') {
-                    debugPrint(request.id.toString());
-                    context.read<OffersCubit>().makeOffer(requestId: request.id);
-                  // } else {
-                    // Navigator.of(context).pushNamed('IdentityVarification');
-                  // }
-                },
-        );
-      },
-    ),
-  ),
         ],
       ),
     );

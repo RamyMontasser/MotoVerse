@@ -15,7 +15,7 @@ abstract class NetworkService {
     String? local,
     Options? options, 
   });
-  Future<dynamic> patchDataForSignUp({
+  Future<dynamic> addDataForSignUp({
     required String endPoint,
     required Map<String, dynamic> data,
     required String token,

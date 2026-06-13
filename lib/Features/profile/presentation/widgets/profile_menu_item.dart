@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 
-/// A single menu row in a profile section.
-///
-/// Renders: `[icon] [title] ... [trailingText?] [>]`
+
 class ProfileMenuItem extends StatelessWidget {
   const ProfileMenuItem({
     super.key,

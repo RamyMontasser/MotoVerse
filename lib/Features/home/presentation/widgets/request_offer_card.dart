@@ -9,6 +9,7 @@ import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class RequestOfferCard extends StatelessWidget {
   const RequestOfferCard({
@@ -26,7 +27,6 @@ class RequestOfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(offerModel.toString());
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
@@ -49,14 +49,17 @@ class RequestOfferCard extends StatelessWidget {
                 radius: 35.r,
                 backgroundColor: AppColors.blueLight,
                 backgroundImage:
-                    offerModel.helperImage != null && offerModel.helperImage!.isNotEmpty
+                    offerModel.helperImage != null &&
+                        offerModel.helperImage!.isNotEmpty
                     ? NetworkImage(
                         offerModel.helperImage!.startsWith('http')
                             ? offerModel.helperImage!
                             : "${AppConstants.baseUrl}${offerModel.helperImage!}",
                       )
                     : null,
-                child: offerModel.helperImage == null || offerModel.helperImage!.isEmpty
+                child:
+                    offerModel.helperImage == null ||
+                        offerModel.helperImage!.isEmpty
                     ? const Icon(Icons.person)
                     : null,
               ),
@@ -96,14 +99,16 @@ class RequestOfferCard extends StatelessWidget {
             Row(
               children: [
                 _buildInfoBox(
-                  'وقت الوصول',
-                  '${offerModel.estimatedMinutes ?? '0'} د',
+                  S.of(context).arrivalTime,
+                  S
+                      .of(context)
+                      .minutesDuration(offerModel.estimatedMinutes ?? '0'),
                   Icons.access_time,
                 ),
                 SizedBox(width: 10.w),
                 _buildInfoBox(
-                  'المسافة',
-                  '${offerModel.distance ?? '0'} km',
+                  S.of(context).distanceLabel,
+                  S.of(context).distanceKm(offerModel.distance ?? '0'),
                   Icons.location_on_outlined,
                 ),
               ],
@@ -113,7 +118,7 @@ class RequestOfferCard extends StatelessWidget {
 
           if (isAccepted)
             CustomElevatedButton(
-              text: 'تم قبول العرض',
+              text: S.of(context).offerAccepted,
               radius: CustomRadius.card12,
               fun: () {
                 Navigator.pushNamed(
@@ -132,7 +137,7 @@ class RequestOfferCard extends StatelessWidget {
             Row(
               children: [
                 _buildActionCardButton(
-                  'قبول',
+                  S.of(context).accept,
                   isOffline ? AppColors.yellowNormal : AppColors.blueNormal,
                   AppColors.whiteLight,
                   () {
@@ -144,7 +149,7 @@ class RequestOfferCard extends StatelessWidget {
                 ),
                 SizedBox(width: 10.w),
                 _buildActionCardButton(
-                  'رفض',
+                  S.of(context).reject,
                   AppColors.blueGrey,
                   AppColors.blueNormal,
                   () {

@@ -3,12 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/message.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class ChatResponse extends StatelessWidget {
   const ChatResponse({
     super.key,
     required this.userMessage,
-    this.code, 
+    this.code,
     this.description,
     required this.problemSummary,
     required this.severityLevel,
@@ -66,14 +67,10 @@ class ChatResponse extends StatelessWidget {
                     ),
                   ),
                 ],
-                Divider(
-                  color: AppColors.blueLightHover,
-                  height: 24.h,
-                ),
+                Divider(color: AppColors.blueLightHover, height: 24.h),
               ],
-
               Text(
-                'ملخص التشخيص:',
+                S.of(context).diagnosisSummary,
                 style: TextStyles.cairoBold16.copyWith(
                   color: AppColors.yellowNormal,
                 ),
@@ -86,9 +83,8 @@ class ChatResponse extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16.h),
-
               Text(
-                'مستوى الخطورة: ',
+                S.of(context).severityLevelLabel,
                 style: TextStyles.cairoBold14.copyWith(
                   color: AppColors.redNormal,
                 ),
@@ -101,9 +97,8 @@ class ChatResponse extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16.h),
-
               Text(
-                'هل بإمكانك القيادة: ',
+                S.of(context).canDriveLabel,
                 style: TextStyles.cairoBold14.copyWith(
                   color: AppColors.redNormal,
                 ),
@@ -116,58 +111,117 @@ class ChatResponse extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16.h),
-
+              // if (possibleCauses.isNotEmpty) ...[
+              //   Text(
+              //     S.of(context).possibleCausesLabel,
+              //     style: TextStyles.cairoBold16.copyWith(
+              //       color: AppColors.yellowNormal,
+              //     ),
+              //   ),
+              //   SizedBox(height: 6.h),
+              //   Text(
+              //     possibleCauses.join('\n\n'),
+              //     style: TextStyles.cairoMedium14.copyWith(
+              //       color: AppColors.blueNormal,
+              //     ),
+              //   ),
+              //   SizedBox(height: 16.h),
+              // ],
               if (possibleCauses.isNotEmpty) ...[
                 Text(
-                  'الاسباب المحتملة: ',
+                  S.of(context).possibleCausesLabel,
                   style: TextStyles.cairoBold16.copyWith(
                     color: AppColors.yellowNormal,
                   ),
                 ),
                 SizedBox(height: 6.h),
-                Text(
-                  possibleCauses.join('\n\n'),
-                  style: TextStyles.cairoMedium14.copyWith(
-                    color: AppColors.blueNormal,
-                  ),
-                ),
+
+                ...possibleCauses.asMap().entries.map((entry) {
+                  int index = entry.key + 1; 
+                  String value = entry.value;
+
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 4.h),
+                    child: Text(
+                      '$index.  $value', 
+                      style: TextStyles.cairoMedium14.copyWith(
+                        color: AppColors.blueNormal,
+                      ),
+                    ),
+                  );
+                }),
                 SizedBox(height: 16.h),
               ],
-
               if (whatToCheck.isNotEmpty) ...[
                 Text(
-                  'ما يجب فحصه: ',
+                  S.of(context).whatToCheckLabel,
                   style: TextStyles.cairoBold16.copyWith(
                     color: AppColors.yellowNormal,
                   ),
                 ),
                 SizedBox(height: 6.h),
-                Text(
-                  whatToCheck.join('\n\n'),
-                  style: TextStyles.cairoMedium14.copyWith(
-                    color: AppColors.blueNormal,
-                  ),
-                ),
+
+                ...whatToCheck.map((item) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 6.h),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment
+                          .start, 
+                      children: [
+                        Text(
+                          '•  ',
+                          style: TextStyles.cairoBold14.copyWith(
+                            color: AppColors
+                                .yellowNormal, 
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            item,
+                            style: TextStyles.cairoMedium14.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+
                 SizedBox(height: 12.h),
               ],
-
+              // if (whatToCheck.isNotEmpty) ...[
+              //   Text(
+              //     S.of(context).whatToCheckLabel,
+              //     style: TextStyles.cairoBold16.copyWith(
+              //       color: AppColors.yellowNormal,
+              //     ),
+              //   ),
+              //   SizedBox(height: 6.h),
+              //   Text(
+              //     whatToCheck.join('\n\n'),
+              //     style: TextStyles.cairoMedium14.copyWith(
+              //       color: AppColors.blueNormal,
+              //     ),
+              //   ),
+              //   SizedBox(height: 12.h),
+              // ],
               Text(
-                'هل يمكنك فحص المشكلة في المنزل؟ ',
+                S.of(context).canCheckAtHomeLabel,
                 style: TextStyles.cairoBold14.copyWith(
                   color: AppColors.greenNormal,
                 ),
               ),
               SizedBox(height: 6.h),
               Text(
-                canCheckAtHome ? 'نعم' : 'لا',
+                canCheckAtHome ? S.of(context).yes : S.of(context).no,
                 style: TextStyles.cairoMedium14.copyWith(
                   color: AppColors.blueNormal,
                 ),
               ),
               SizedBox(height: 16.h),
-
               Text(
-                'التوصية الفنية: ',
+                S.of(context).technicalRecommendationLabel,
                 style: TextStyles.cairoBold16.copyWith(
                   color: AppColors.yellowNormal,
                 ),

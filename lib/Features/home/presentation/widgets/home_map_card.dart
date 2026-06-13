@@ -8,6 +8,7 @@ import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class HomeMapCard extends StatelessWidget {
   const HomeMapCard({super.key});
@@ -55,8 +56,7 @@ class HomeMapCard extends StatelessWidget {
                       initialCenter: centerLatLng,
                       initialZoom: 14.0,
                       interactionOptions: const InteractionOptions(
-                        flags: InteractiveFlag
-                            .none, 
+                        flags: InteractiveFlag.none,
                       ),
                     ),
                     children: [
@@ -85,7 +85,6 @@ class HomeMapCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 Positioned(
                   left: 0,
                   right: 0,
@@ -104,7 +103,6 @@ class HomeMapCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Positioned(
                   bottom: 15.h,
                   right: 20.w,
@@ -112,7 +110,7 @@ class HomeMapCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "اعثر على مراكز صيانة قريبة",
+                        S.of(context).findNearbyCenters,
                         style: TextStyles.cairoBold12.copyWith(
                           color: Colors.white,
                         ),
@@ -120,9 +118,11 @@ class HomeMapCard extends StatelessWidget {
                       Text(
                         isLocationLoaded
                             ? (centersCount != 0
-                                  ? "استكشف أكثر من $centersCount مركزاً قريبك"
-                                  : "لا توجد مراكز صيانة قريبة منك حالياً")
-                            : "جاري تحديد المراكز القريبة...",
+                                  ? S
+                                        .of(context)
+                                        .exploreNearbyCentersCount(centersCount)
+                                  : S.of(context).noNearbyCenters)
+                            : S.of(context).locatingNearbyCenters,
                         style: TextStyles.reg10Tajawal.copyWith(
                           color: Colors.white.withAlpha(200),
                         ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class AddImageCard extends StatelessWidget {
   const AddImageCard({super.key, required this.onTap, this.hight});
@@ -45,7 +46,7 @@ class AddImageCard extends StatelessWidget {
               ),
               // SizedBox(height: 4.h),
               Text(
-                "Add",
+                S.of(context).add,
                 style: TextStyle(
                   fontSize: 10.sp,
                   fontWeight: FontWeight.bold,

@@ -10,6 +10,7 @@ import 'package:motoverse/Features/community/presentation/widgets/user_request_p
 import 'package:motoverse/Features/community/presentation/widgets/user_requests_category_tabs.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class UserRequestsScreen extends StatefulWidget {
   const UserRequestsScreen({super.key, this.initialCategory = 0});
@@ -35,10 +36,10 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
       longitude = currentLocationState.currentLocation.longitude;
     }
     context.read<RequestsCubit>().fetchRequests(
-          mine: true,
-          latitude: latitude,
-          longitude: longitude,
-        );
+      mine: true,
+      latitude: latitude,
+      longitude: longitude,
+    );
   }
 
   @override
@@ -51,7 +52,7 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'طلباتي',
+                S.of(context).myRequests,
                 style: TextStyles.cairoBold24.copyWith(
                   color: AppColors.blueNormal,
                 ),
@@ -75,10 +76,10 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: 5,
-                        itemBuilder: (context, index) => const Card(
+                        itemBuilder: (context, index) => Card(
                           child: ListTile(
-                            title: Text('Loading...'),
-                            subtitle: Text('Loading...'),
+                            title: Text(S.of(context).loading),
+                            subtitle: Text(S.of(context).loading),
                           ),
                         ),
                       ),
@@ -121,8 +122,8 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
                             SizedBox(height: 16.h),
                             Text(
                               isActiveTab
-                                  ? 'لا توجد طلبات نشطة حالياً'
-                                  : 'لا توجد طلبات سابقة',
+                                  ? S.of(context).noActiveRequests
+                                  : S.of(context).noPreviousRequests,
                               textAlign: TextAlign.center,
                               style: TextStyles.cairoBold16.copyWith(
                                 color: AppColors.blueDarkActive,
@@ -130,7 +131,7 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
                             ),
                             SizedBox(height: 8.h),
                             Text(
-                              'يمكنك إنشاء طلب جديد أو مراجعة الطلبات السابقة.',
+                              S.of(context).emptyRequestsSubtitle,
                               textAlign: TextAlign.center,
                               style: TextStyles.cairoRegular14.copyWith(
                                 color: AppColors.whiteDarkActive,
@@ -138,7 +139,6 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
                             ),
                           ],
                         ),
-                        // ),
                       );
                     }
                     return ListView.builder(

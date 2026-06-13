@@ -14,6 +14,7 @@ import 'package:motoverse/Features/map/data/models/service_center_model.dart';
 import 'package:motoverse/Features/map/presentation/cubit/service_center_cubit.dart';
 import 'package:motoverse/Features/map/presentation/widgets/service_center_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class MapBody extends StatefulWidget {
   const MapBody({super.key, this.currentPosition});
@@ -25,19 +26,12 @@ class MapBody extends StatefulWidget {
 
 class _MapBodyState extends State<MapBody> {
   TextEditingController search = TextEditingController();
-
   late final MapController _mapController;
 
   @override
   void initState() {
     super.initState();
     _mapController = MapController();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (!mounted) return;
-    //   final lat = widget.currentPosition?.latitude ?? 31.4128;
-    //   final lng = widget.currentPosition?.longitude ?? 31.8148;
-    //   _mapController.move(LatLng(lat, lng), 15.0);
-    // });
   }
 
   @override
@@ -96,12 +90,6 @@ class _MapBodyState extends State<MapBody> {
                 interactionOptions: const InteractionOptions(
                   flags: InteractiveFlag.all,
                 ),
-                // onMapReady: () {
-                //     final pos = cubit.lastKnownPosition;
-                //     if (pos != null) {
-                //       cubit.moveToCurrentPosition(pos.latitude, pos.longitude);
-                //     }
-                //   },
               ),
               children: [
                 TileLayer(
@@ -110,7 +98,7 @@ class _MapBodyState extends State<MapBody> {
                     'accessToken': AppConstants.mapBoxToken,
                     'id': AppConstants.mapBoxMapId,
                   },
-                  subdomains: ['a', 'b', 'c', 'd'],
+                  subdomains: const ['a', 'b', 'c', 'd'],
                   userAgentPackageName: 'com.example.motoverse',
                   tileProvider: NetworkTileProvider(),
                 ),
@@ -172,16 +160,15 @@ class _MapBodyState extends State<MapBody> {
               left: 16.w,
               right: 16.w,
               child: CustomSearch(
-                hint: 'ابحث عن مشكلة أو مركز صيانة....',
+                hint: S.of(context).mapSearchHint,
                 search: search,
                 onChanged: (query) {
                   context.read<ServiceCenterCubit>().searchServiceCenters(
-                    query,
-                  );
+                        query,
+                      );
                 },
               ),
             ),
-
             Positioned(
               right: MediaQuery.of(context).size.width * 0.04,
               top: MediaQuery.of(context).size.height * 0.3,
@@ -195,10 +182,8 @@ class _MapBodyState extends State<MapBody> {
                     },
                     backgroundColor: AppColors.whiteLight,
                     foregroundColor: AppColors.blueNormal,
-                    child: Text('+', style: TextStyle(fontSize: 30, height: 0)),
+                    child: const Text('+', style: TextStyle(fontSize: 30, height: 0)),
                   ),
-
-                  // SizedBox(height: 5.h),
                   FloatingActionButton(
                     heroTag: null,
                     mini: true,
@@ -207,11 +192,9 @@ class _MapBodyState extends State<MapBody> {
                     },
                     backgroundColor: AppColors.whiteLight,
                     foregroundColor: AppColors.blueNormal,
-                    child: Text('-', style: TextStyle(fontSize: 35, height: 0)),
+                    child: const Text('-', style: TextStyle(fontSize: 35, height: 0)),
                   ),
-
-                  SizedBox(height: 5),
-
+                  const SizedBox(height: 5),
                   FloatingActionButton(
                     heroTag: null,
                     mini: true,
@@ -225,8 +208,8 @@ class _MapBodyState extends State<MapBody> {
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('جاري تحديد موقعك، انتظر لحظة...'),
+                          SnackBar(
+                            content: Text(S.of(context).fetchingLocation),
                           ),
                         );
                       }
@@ -240,7 +223,6 @@ class _MapBodyState extends State<MapBody> {
                 ],
               ),
             ),
-
             DraggableScrollableSheet(
               initialChildSize: 0.35,
               minChildSize: 0.25,
@@ -277,70 +259,70 @@ class _MapBodyState extends State<MapBody> {
                       Expanded(
                         child:
                             BlocBuilder<ServiceCenterCubit, ServiceCenterState>(
-                              builder: (context, state) {
-                                if (state is ServiceCenterLoading) {
-                                  return Skeletonizer(
-                                    enabled: true,
-                                    child: ListView.builder(
-                                      itemCount: 5,
-                                      itemBuilder: (context, index) {
-                                        return ServiceCenterCard(
-                                          name: "Loading Name...",
-                                          lat: 0.0,
-                                          lng: 0.0,
-                                          image: "",
-                                          services: [],
-                                          openingTime: "00:00",
-                                          closingTime: "00:00",
-                                          averageRating: 0.0,
-                                          distanceKm: 0.0,
-                                          phone: '',
-                                          mapController: _mapController,
-                                        );
-                                      },
-                                    ),
-                                  );
-                                } else if (state is ServiceCenterFail) {
-                                  return Center(
-                                    child: Text(
-                                      state.errorMessage,
-                                      style: const TextStyle(color: Colors.red),
-                                    ),
-                                  );
-                                } else if (state is ServiceCenterSuccess) {
-                                  final serviceCenters = state.serviceCenters;
-                                  if (serviceCenters.isEmpty) {
-                                    return const Center(
-                                      child: Text("لا توجد مراكز صيانة قريبة"),
+                          builder: (context, state) {
+                            if (state is ServiceCenterLoading) {
+                              return Skeletonizer(
+                                enabled: true,
+                                child: ListView.builder(
+                                  itemCount: 5,
+                                  itemBuilder: (context, index) {
+                                    return ServiceCenterCard(
+                                      name: S.of(context).loadingNamePlaceholder,
+                                      lat: 0.0,
+                                      lng: 0.0,
+                                      image: "",
+                                      services: const [],
+                                      openingTime: "00:00",
+                                      closingTime: "00:00",
+                                      averageRating: 0.0,
+                                      distanceKm: 0.0,
+                                      phone: '',
+                                      mapController: _mapController,
                                     );
-                                  }
-                                  return ListView.builder(
-                                    padding: const EdgeInsets.only(),
-                                    controller: scrollController,
-                                    itemCount: serviceCenters.length > 5
-                                        ? 5
-                                        : serviceCenters.length,
-                                    itemBuilder: (context, index) {
-                                      final center = serviceCenters[index];
-                                      return ServiceCenterCard(
-                                        name: center.name,
-                                        lat: center.latitude,
-                                        lng: center.longitude,
-                                        image: center.image,
-                                        services: center.services,
-                                        openingTime: center.openingTime,
-                                        closingTime: center.closingTime,
-                                        averageRating: center.averageRating,
-                                        distanceKm: center.distanceKm,
-                                        phone: center.phone,
-                                        mapController: _mapController,
-                                      );
-                                    },
+                                  },
+                                ),
+                              );
+                            } else if (state is ServiceCenterFail) {
+                              return Center(
+                                child: Text(
+                                  state.errorMessage,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              );
+                            } else if (state is ServiceCenterSuccess) {
+                              final serviceCenters = state.serviceCenters;
+                              if (serviceCenters.isEmpty) {
+                                return Center(
+                                  child: Text(S.of(context).noServiceCentersFound),
+                                );
+                              }
+                              return ListView.builder(
+                                padding: const EdgeInsets.only(),
+                                controller: scrollController,
+                                itemCount: serviceCenters.length > 5
+                                    ? 5
+                                    : serviceCenters.length,
+                                itemBuilder: (context, index) {
+                                  final center = serviceCenters[index];
+                                  return ServiceCenterCard(
+                                    name: center.name,
+                                    lat: center.latitude,
+                                    lng: center.longitude,
+                                    image: center.image,
+                                    services: center.services,
+                                    openingTime: center.openingTime,
+                                    closingTime: center.closingTime,
+                                    averageRating: center.averageRating,
+                                    distanceKm: center.distanceKm,
+                                    phone: center.phone,
+                                    mapController: _mapController,
                                   );
-                                }
-                                return const SizedBox.shrink();
-                              },
-                            ),
+                                },
+                              );
+                            }
+                            return const SizedBox.shrink();
+                          },
+                        ),
                       ),
                     ],
                   ),

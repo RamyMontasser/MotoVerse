@@ -7,6 +7,7 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class RequestCard extends StatelessWidget {
   const RequestCard({super.key, required this.isChat, required this.request});
@@ -66,7 +67,6 @@ class RequestCard extends StatelessWidget {
                     : null,
               ),
               SizedBox(width: 10.w),
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,8 +81,7 @@ class RequestCard extends StatelessWidget {
                     ),
                     Text(
                       request.requestType == 'offline'
-                          // request.distance != null
-                          ? "${request.city}, ${request.distance} km away "
+                          ? "${request.city}, ${S.of(context).away(request.distance ?? '')}"
                           : request.city,
                       style: TextStyles.cairoRegular11.copyWith(
                         color: AppColors.whiteDarkActive,
@@ -93,10 +92,7 @@ class RequestCard extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // Spacer(),
               SizedBox(width: 8.w),
-
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
@@ -104,7 +100,7 @@ class RequestCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
-                  isChat ? "مساعدة أونلاين" : "مساعدة اوفلاين",
+                  isChat ? S.of(context).onlineHelp : S.of(context).offlineHelp,
                   style: TextStyles.bold11Tajawal.copyWith(
                     color: isChat
                         ? AppColors.yellowNormal
@@ -116,7 +112,6 @@ class RequestCard extends StatelessWidget {
           ),
           SizedBox(height: 15.h),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
                 child: Text(
@@ -133,7 +128,7 @@ class RequestCard extends StatelessWidget {
           ),
           SizedBox(height: 15.h),
           CustomElevatedButton(
-            text: "تفاصيل المشكلة",
+            text: S.of(context).problemDetails,
             radius: CustomRadius.r1,
             fun: () {
               Navigator.of(
@@ -149,25 +144,6 @@ class RequestCard extends StatelessWidget {
               color: AppColors.whiteLight,
             ),
           ),
-
-          // SizedBox(
-          //   width: double.infinity,
-          //   height: 41.h,
-          //   child: ElevatedButton.icon(
-          //     onPressed: () {},
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: AppColors.yellowNormal,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: CustomRadius.card12,
-          //       ),
-          //     ),
-          //     icon: Icon(Icons.details, color: AppColors.whiteLight, size: 18.sp),
-          //     label: Text(
-          //       "تفاصيل المشكلة",
-          //       style: TextStyles.cairoBold12.copyWith(color: AppColors.whiteLight),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

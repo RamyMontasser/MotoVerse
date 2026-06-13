@@ -14,6 +14,10 @@
 <string>نحتاج لفتح الكاميرا لتصوير مشكلة المركبة</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>نحتاج إلى الوصول للميكروفون لتتمكن من تسجيل الرسائل الصوتية داخل الشات.</string>
+		<key>UISupportsDocumentBrowser</key>
+<true/>
+<key>LSSupportsOpeningDocumentsInPlace</key>
+<true/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

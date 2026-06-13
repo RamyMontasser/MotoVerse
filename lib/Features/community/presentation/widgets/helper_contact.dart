@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class HelperContact extends StatelessWidget {
   final String helperName;
@@ -55,24 +56,38 @@ class HelperContact extends StatelessWidget {
             ],
           ),
           SizedBox(width: 12.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                helperName.isNotEmpty ? helperName : 'مقدم المساعدة',
-                style: TextStyles.cairoBold14.copyWith(
-                  color: AppColors.blueNormal,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  helperName.isNotEmpty
+                      ? helperName
+                      : S.of(context).defaultHelperName,
+                  style: TextStyles.cairoBold14.copyWith(
+                    color: AppColors.blueNormal,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              Text(
-                'التقييم الحالي: ${averageRating.isNotEmpty ? averageRating : 'غير متوفر'}',
-                style: TextStyles.cairoRegular11.copyWith(
-                  color: AppColors.whiteDarkHover,
+                Text(
+                  S
+                      .of(context)
+                      .currentRating(
+                        averageRating.isNotEmpty
+                            ? averageRating
+                            : S.of(context).ratingNotAvailable,
+                      ),
+                  style: TextStyles.cairoRegular11.copyWith(
+                    color: AppColors.whiteDarkHover,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
+          SizedBox(width: 8.w),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
             decoration: BoxDecoration(
@@ -80,11 +95,12 @@ class HelperContact extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.r),
             ),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.star, color: AppColors.yellowNormal, size: 14.sp),
                 SizedBox(width: 4.w),
                 Text(
-                  "4.8",
+                  averageRating.isNotEmpty ? averageRating : "0.0",
                   style: TextStyles.cairoBold12.copyWith(
                     color: AppColors.blueDarkActive,
                   ),

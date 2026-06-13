@@ -16,7 +16,8 @@ import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
-import 'package:motoverse/Features/socket_chat/data/models/chat_arguments.dart';
+import 'package:motoverse/Features/chat/data/models/chat_arguments.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class HelpOffline extends StatelessWidget {
   const HelpOffline({super.key});
@@ -27,8 +28,6 @@ class HelpOffline extends StatelessWidget {
     final RequestModel request = args[0];
     final OfferModel offer = args[1];
     final bool isHelper = args[2];
-    // final String status = args[1];
-    // final int offerId = args[2];
 
     Color statusColor;
     Color statusLightColor;
@@ -38,44 +37,27 @@ class HelpOffline extends StatelessWidget {
       case 'accepted':
         statusColor = AppColors.greenNormal;
         statusLightColor = AppColors.greenLight;
-        statusText = 'تم قبول هذا العرض';
+        statusText = S.of(context).offerAccepted;
         break;
       case 'rejected':
         statusColor = AppColors.orangeNormal;
         statusLightColor = AppColors.orangeLight;
-        statusText = 'تم الغاء هذا العرض';
+        statusText = S.of(context).offerRejected;
         break;
       case 'completed':
         statusColor = AppColors.blueNormal;
         statusLightColor = AppColors.blueLight;
-        statusText = 'تم اكمال هذا العرض';
+        statusText = S.of(context).offerCompleted;
         break;
       case 'pending':
       default:
         statusColor = AppColors.redDark;
         statusLightColor = AppColors.redLight;
-        statusText = 'الغاء عرض المساعدة';
+        statusText = S.of(context).cancelHelpOffer;
         break;
     }
 
     final displayRequest = request;
-    // ??
-    //     RequestModel(
-    //       id: 0,
-    //       userId: 0,
-    //       userImage: '',
-    //       userName: '',
-    //       memberSince: 2024,
-    //       city: '',
-    //       description: '',
-    //       problemType: '',
-    //       requestType: '',
-    //       images: [],
-    //       imagesCount: 0,
-    //       status: '',
-    //       createdAt: '',
-    //       distance: 2.5,
-    //     );
 
     return BlocProvider(
       create: (context) => NotificationCubit(getIt<HomeRepo>()),
@@ -146,8 +128,8 @@ class HelpOffline extends StatelessWidget {
                       ),
                       child: Text(
                         request.requestType == 'offline'
-                            ? ' مساعدة اوفلاين'
-                            : ' مساعدة اونلاين',
+                            ? S.of(context).offlineHelp
+                            : S.of(context).onlineHelp,
                         style: TextStyles.cairoBold12.copyWith(
                           color: request.requestType == 'offline'
                               ? AppColors.blueNormal
@@ -161,23 +143,17 @@ class HelpOffline extends StatelessWidget {
                             isAccepted: true,
                             request: displayRequest,
                             offer: offer,
-                            // isOfferSent: true,
                           )
-                        : SizedBox.shrink(),
+                        : const SizedBox.shrink(),
                     SizedBox(height: 15.h),
-
                     UserContactInfo(
                       request: displayRequest,
                       offer: offer,
                       isHelper: isHelper,
                     ),
-
                     SizedBox(height: 20.h),
-
                     CarInfoCard(problemType: displayRequest.problemType),
-
                     SizedBox(height: 20.h),
-
                     Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16.w,
@@ -195,16 +171,17 @@ class HelpOffline extends StatelessWidget {
                             color: AppColors.blueNormal,
                           ),
                           SizedBox(width: 8.w),
-                          Text(
-                            'جميع تفاصيل العميل والبيانات الشخصية محمية ومؤمنة .',
-                            style: TextStyles.cairoRegular11.copyWith(
-                              color: AppColors.blueNormal,
+                          Expanded(
+                            child: Text(
+                              S.of(context).dataProtectionNotice,
+                              style: TextStyles.cairoRegular11.copyWith(
+                                color: AppColors.blueNormal,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-
                     SizedBox(height: 10.h),
                     if (offer.status != 'accepted')
                       CustomElevatedButton(

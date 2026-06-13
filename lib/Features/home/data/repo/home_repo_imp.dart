@@ -12,7 +12,7 @@ import 'package:motoverse/Features/home/data/models/notificaion_model.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/data/models/user_model.dart';
 import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
-import 'package:motoverse/Features/socket_chat/data/models/conversation_model.dart';
+import 'package:motoverse/Features/chat/data/models/conversation_model.dart';
 
 class HomeRepoImp implements HomeRepo {
   final NetworkService networkService;
@@ -135,7 +135,7 @@ class HomeRepoImp implements HomeRepo {
   Future<Either<Failure, UserDataModel>> getUserInfo() async {
     try {
       var response = await networkService.getData(
-        endPoint: '/accounts/auth/me/',
+        endPoint: '/accounts/profile/',
       );
       return Right(UserDataModel.fromJson(response));
     } on DioException catch (e) {

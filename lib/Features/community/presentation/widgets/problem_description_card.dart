@@ -4,13 +4,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class ProblemDescriptionCard extends StatelessWidget {
-  const ProblemDescriptionCard({super.key, required this.problemType, required this.description, required this.iconPath});
+  const ProblemDescriptionCard({
+    super.key,
+    required this.problemType,
+    required this.description,
+    required this.iconPath,
+  });
+
   final String problemType;
   final String description;
   final String iconPath;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +41,15 @@ class ProblemDescriptionCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                "تفاصيل المشكلة",
+                S.of(context).problemDetails,
                 style: TextStyles.cairoBold18.copyWith(
                   color: AppColors.blueNormal,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               SvgPicture.asset(
                 iconPath,
-                colorFilter: ColorFilter.mode(
+                colorFilter: const ColorFilter.mode(
                   AppColors.yellowNormal,
                   BlendMode.srcIn,
                 ),

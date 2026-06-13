@@ -4,6 +4,7 @@ import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class UserListtile extends StatelessWidget {
   const UserListtile({super.key, required this.request});
@@ -11,7 +12,8 @@ class UserListtile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isOnline = request.requestType == 'online';
+    final bool isOnline = request.requestType == 'online';
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -31,61 +33,58 @@ class UserListtile extends StatelessWidget {
               : null,
         ),
         SizedBox(width: 10.w),
-
         Expanded(
           child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              request.userName,
-              style: TextStyles.cairoBold16.copyWith(
-                color: AppColors.blueDarkActive,
-              ),
-              maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                padding: EdgeInsets.only(top: 2.h), 
-                    child:Icon(
-                  Icons.location_on_outlined,
-                  color: AppColors.whiteDarkActive,
-                  size: 13.sp,
-                ),),
-
-                SizedBox(width: 2.w),
-
-                Expanded(
-                  child: Text(
-                    "${request.city}, ${request.distance} km away ",
-                    style: TextStyles.cairoRegular11.copyWith(
-                      color: AppColors.whiteDarkActive,
-                    ),
-                    softWrap: true,
-                    maxLines: 3,
-                      overflow: TextOverflow.visible,
-                  ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                request.userName,
+                style: TextStyles.cairoBold16.copyWith(
+                  color: AppColors.blueDarkActive,
                 ),
-              ],
-            ),
-          ],
-        ),),
-
-        // Spacer(),
-
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 2.h),
+                    child: Icon(
+                      Icons.location_on_outlined,
+                      color: AppColors.whiteDarkActive,
+                      size: 13.sp,
+                    ),
+                  ),
+                  SizedBox(width: 2.w),
+                  Expanded(
+                    child: Text(
+                      isOnline
+                          ? request.city
+                          : "${request.city}, ${S.of(context).away(request.distance ?? '')}",
+                      style: TextStyles.cairoRegular11.copyWith(
+                        color: AppColors.whiteDarkActive,
+                      ),
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         SizedBox(width: 10.w),
-
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
           decoration: BoxDecoration(
             color: isOnline ? AppColors.yellowLight : AppColors.blueLight,
             borderRadius: BorderRadius.circular(20.r),
           ),
           child: Text(
-            isOnline ? "مساعدة أونلاين" : "مساعدة اوفلاين",
+            isOnline ? S.of(context).onlineHelp : S.of(context).offlineHelp,
             style: TextStyles.bold11Tajawal.copyWith(
               color: isOnline ? AppColors.yellowNormal : AppColors.blueNormal,
             ),

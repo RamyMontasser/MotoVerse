@@ -10,6 +10,7 @@ import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Core/widgets/custom_textfeild_with_border.dart';
 import 'package:motoverse/Features/community/data/models/tag_model.dart';
 import 'package:motoverse/Features/community/presentation/cubit/review_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class ReviewScreenBody extends StatefulWidget {
   final int offerId;
@@ -36,13 +37,25 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
   final List<TagModel> _selectedTags = [];
   final TextEditingController _commentController = TextEditingController();
 
-  final List<TagModel> _tags = [
-    TagModel(nameAr: "سريع الاستجابة", nameEn: "fast_response"),
-    TagModel(nameAr: "تعامل ممتاز", nameEn: "excellent_manner"),
-    TagModel(nameAr: "محترف", nameEn: "professional"),
-    TagModel(nameAr: "مفيد", nameEn: "helpful"),
-    TagModel(nameAr: "يحتاج تحسين", nameEn: "needs_improvement"),
-  ];
+  late final List<TagModel> _tags;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _tags = [
+      TagModel(nameAr: S.of(context).fastResponse, nameEn: "fast_response"),
+      TagModel(
+        nameAr: S.of(context).excellentManner,
+        nameEn: "excellent_manner",
+      ),
+      TagModel(nameAr: S.of(context).professional, nameEn: "professional"),
+      TagModel(nameAr: S.of(context).helpful, nameEn: "helpful"),
+      TagModel(
+        nameAr: S.of(context).needsImprovement,
+        nameEn: "needs_improvement",
+      ),
+    ];
+  }
 
   @override
   void dispose() {
@@ -79,7 +92,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
         if (_selectedTags.length < 3) {
           _selectedTags.add(tag);
         } else {
-          _showSnackBar('يمكنك اختيار ثلاثة صفات فقط كحد أقصى');
+          _showSnackBar(S.of(context).maxTagsWarning);
         }
       }
     });
@@ -101,7 +114,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
     return BlocListener<ReviewCubit, ReviewState>(
       listener: (context, state) {
         if (state is ReviewSuccess) {
-          _showSnackBar('تم إرسال تقييمك بنجاح!');
+          _showSnackBar(S.of(context).reviewSubmittedSuccessfully);
           Future.delayed(const Duration(milliseconds: 500), () {
             if (mounted) _navigateToMain();
           });
@@ -127,21 +140,20 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
               ),
               SizedBox(height: 16.h),
               Text(
-                'تم إنهاء الطلب بنجاح',
+                S.of(context).orderCompletedSuccessfully,
                 style: TextStyles.cairoBold24.copyWith(
                   color: AppColors.blueNormal,
                 ),
               ),
               SizedBox(height: 32.h),
               Text(
-                'كيف كانت تجربتك مع مقدم المساعدة؟',
+                S.of(context).experienceQuestion,
                 style: TextStyles.cairoBold16.copyWith(
                   color: AppColors.blueNormal,
                 ),
               ),
               SizedBox(height: 16.h),
 
-              // الـ Rating Stars
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(5, (index) {
@@ -167,7 +179,6 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
               ),
               SizedBox(height: 24.h),
 
-              // الـ Tags Wrap
               Wrap(
                 spacing: 8.w,
                 runSpacing: 10.h,
@@ -209,7 +220,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  'أضف تعليقًا',
+                  S.of(context).addComment,
                   style: TextStyles.cairoBold16.copyWith(
                     color: AppColors.blueNormal,
                   ),
@@ -218,18 +229,19 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
               SizedBox(height: 12.h),
               CustomTextfeildWithBorder(
                 controller: _commentController,
-                hint: 'شارك تجربتك لمساعدة المستخدمين الآخرين',
+                hint: S.of(context).commentHint,
                 maxLines: 4,
                 validator: (value) => null,
               ),
               SizedBox(height: 40.h),
 
-              // زر الإرسال مع إصلاح الـ buildWhen والمناولة الصحيحة للـ Loading
               BlocBuilder<ReviewCubit, ReviewState>(
                 builder: (context, state) {
                   final isLoading = state is ReviewLoading;
                   return CustomElevatedButton(
-                    text: isLoading ? 'جاري الإرسال...' : 'ارسال التقييم',
+                    text: isLoading
+                        ? S.of(context).submitting
+                        : S.of(context).submitReview,
                     radius: BorderRadius.circular(12.r),
                     backgColor: AppColors.yellowNormal,
                     foregColor: AppColors.whiteLight,
@@ -245,7 +257,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.h),
                   child: Text(
-                    'تخطي',
+                    S.of(context).skip,
                     style: TextStyles.cairoBold16.copyWith(
                       color: AppColors.blueNormal,
                     ),
@@ -269,7 +281,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody> {
                     SizedBox(width: 8.w),
                     Expanded(
                       child: Text(
-                        'طلبك مؤمن ومدعوم بضمان Motoverse Safety.',
+                        S.of(context).safetyNotice,
                         style: TextStyles.cairoRegular14.copyWith(
                           color: AppColors.blueNormal,
                         ),

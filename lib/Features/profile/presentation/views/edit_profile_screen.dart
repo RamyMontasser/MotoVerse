@@ -31,7 +31,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
-  // bool _agreeToPrivacy = false;
   UserDataModel? currentUser;
 
   File? _selectedImage;
@@ -63,28 +62,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: pickedFile.path,
-        aspectRatio: const CropAspectRatio(
-          ratioX: 1,
-          ratioY: 1,
-        ), // مربع للبروفايل
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
         compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 85, // تصغير الحجم للحفاظ على السيرفر
+        compressQuality: 85,
         uiSettings: [
           AndroidUiSettings(
-            toolbarTitle: 'تعديل صورة البروفايل',
+            toolbarTitle: S.of(context).profileImage,
             toolbarColor: AppColors.blueNormal,
             toolbarWidgetColor: AppColors.whiteLight,
             initAspectRatio: CropAspectRatioPreset.square,
             lockAspectRatio: true,
           ),
-          IOSUiSettings(title: 'تعديل الصورة', aspectRatioLockEnabled: true),
+          IOSUiSettings(
+            title: S.of(context).profileImage,
+            aspectRatioLockEnabled: true,
+          ),
         ],
       );
 
-      if (croppedFile != null) {
+      if (croppedFile != null && mounted) {
         setState(() {
           _selectedImage = File(croppedFile.path);
-          _isImageDeleted = false; // لو كان ماسحها واختار صورة جديدة
+          _isImageDeleted = false;
         });
       }
     } catch (e) {
@@ -92,7 +91,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  // 3. ميثود إظهار الـ Bottom Sheet الخيارات (كاميرا - استوديو - مسح)
   void _showImageSourceOptions() {
     showModalBottomSheet(
       context: context,
@@ -105,7 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
               child: Text(
-                'صورة البروفايل',
+                S.of(context).profileImage,
                 style: TextStyles.cairoBold16.copyWith(
                   color: AppColors.blueNormal,
                 ),
@@ -118,7 +116,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 color: AppColors.yellowNormal,
               ),
               title: Text(
-                'اختيار من المعرض',
+                S.of(context).galleryOption,
                 style: TextStyles.cairoBold14.copyWith(
                   color: AppColors.blueNormal,
                 ),
@@ -134,7 +132,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 color: AppColors.yellowNormal,
               ),
               title: Text(
-                'التقاط صورة بالكاميرا',
+                S.of(context).cameraOption,
                 style: TextStyles.cairoBold14.copyWith(
                   color: AppColors.blueNormal,
                 ),
@@ -145,11 +143,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               },
             ),
             if (_selectedImage != null ||
-                (currentUser?.image.isNotEmpty ?? false))
+                (currentUser?.image.trim().isNotEmpty ?? false))
               ListTile(
                 leading: const Icon(Icons.delete_outline, color: Colors.red),
                 title: Text(
-                  'إزالة الصورة الحالية',
+                  S.of(context).removeImageOption,
                   style: TextStyles.cairoBold14.copyWith(
                     color: AppColors.redNormal,
                   ),
@@ -172,11 +170,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (_isImageDeleted) return null;
     if (_selectedImage != null) return FileImage(_selectedImage!);
 
-    if (currentUser != null && currentUser!.image.isNotEmpty) {
+    if (currentUser != null && currentUser!.image.trim().isNotEmpty) {
+      final imgPath = currentUser!.image.trim();
       return NetworkImage(
-        currentUser!.image.startsWith('http')
-            ? currentUser!.image
-            : "${AppConstants.baseUrl}${currentUser!.image}",
+        imgPath.startsWith('http')
+            ? imgPath
+            : "${AppConstants.baseUrl}$imgPath",
       );
     }
     return null;
@@ -187,7 +186,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     context.read<UserCubitCubit>().updateUserInfo(
-      // id: currentUser!.id,
       name: _nameController.text.trim(),
       email: _emailController.text.trim(),
       image: _selectedImage,
@@ -204,7 +202,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'تم حفظ التغييرات بنجاح',
+                S.of(context).successMessage,
                 style: TextStyles.cairoRegular13,
               ),
               backgroundColor: AppColors.greenNormal,
@@ -234,20 +232,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                 child: Form(
                   key: _formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'تعديل معلوماتك',
+                        S.of(context).editProfileTitle,
                         style: TextStyles.cairoBold20.copyWith(
                           color: AppColors.blueNormal,
                         ),
                       ),
                       SizedBox(height: 30.h),
-                      // ProfileAvatarWidget(
-                      //   imageUrl: currentUser?.image ?? '',
-                      //   onEditTap: () {},
-                      // ),
                       Center(
                         child: Stack(
                           alignment: Alignment.bottomRight,
@@ -283,8 +278,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                             ),
                             GestureDetector(
-                              onTap:
-                                  _showImageSourceOptions, // ربط الزرار هنا بالـ Bottom Sheet
+                              onTap: _showImageSourceOptions,
                               child: CircleAvatar(
                                 radius: 19.r,
                                 backgroundColor: AppColors.whiteLight,
@@ -294,8 +288,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   child: Icon(
                                     _isImageDeleted || imageProvider == null
                                         ? Icons.add_a_photo_outlined
-                                        : Icons
-                                              .edit_outlined, // يتغير الأيقونة لو الصورة موجودة
+                                        : Icons.edit_outlined,
                                     size: 19.sp,
                                     color: AppColors.blueLight,
                                   ),
@@ -306,7 +299,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       SizedBox(height: 30.h),
-
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -330,12 +322,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ],
                       ),
                       SizedBox(height: 20.h),
-
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'رقم الهاتف',
+                            S.of(context).phoneNumber,
                             style: TextStyles.cairoBold16.copyWith(
                               color: AppColors.blueNormal,
                             ),
@@ -343,7 +334,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           SizedBox(height: 8.h),
                           CustomTextfeildWithBorder(
                             controller: _phoneController,
-                            // hint: 'رقم الهاتف',
                             isNumber: true,
                             readOnly: true,
                             prefixIcon: const Icon(
@@ -354,12 +344,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ],
                       ),
                       SizedBox(height: 20.h),
-
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'البريد الإلكتروني',
+                            S.of(context).emailAddress,
                             style: TextStyles.cairoBold16.copyWith(
                               color: AppColors.blueNormal,
                             ),
@@ -367,7 +356,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           SizedBox(height: 8.h),
                           CustomTextfeildWithBorder(
                             controller: _emailController,
-                            hint: 'البريد الإلكتروني',
+                            hint: S.of(context).emailAddress,
                             hintColor: AppColors.blueDarker,
                             validator: AppValidator.validateEmail,
                             prefixIcon: const Icon(
@@ -378,7 +367,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ],
                       ),
                       SizedBox(height: 20.h),
-
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 16.w,
@@ -398,7 +386,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             SizedBox(width: 12.w),
                             Expanded(
                               child: Text(
-                                'تتم معالجة جميع بياناتك الشخصية وتخزينها بشكل آمن وفقاً لسياسة الخصوصية الخاصة بنا',
+                                S.of(context).privacyNotice,
                                 style: TextStyles.cairoRegular11.copyWith(
                                   color: AppColors.blueNormal,
                                 ),
@@ -408,9 +396,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       SizedBox(height: 30.h),
-
                       CustomElevatedButton(
-                        text: 'حفظ التغييرات',
+                        text: S.of(context).saveChanges,
                         radius: CustomRadius.card,
                         fun: _saveChanges,
                         backgColor: AppColors.blueNormal,
@@ -419,11 +406,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         fontStyle: TextStyles.cairoBold16,
                       ),
                       SizedBox(height: 12.h),
-
                       TextButton(
                         onPressed: () => Navigator.pop(context),
                         child: Text(
-                          'إلغاء',
+                          S.of(context).cancel,
                           style: TextStyles.cairoBold16.copyWith(
                             color: AppColors.blueNormal,
                           ),

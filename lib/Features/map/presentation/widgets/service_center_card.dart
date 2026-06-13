@@ -10,6 +10,7 @@ import 'package:motoverse/Features/home/presentation/cubit/current_location_cubi
 import 'package:motoverse/Features/map/data/models/service_center_model.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class ServiceCenterCard extends StatelessWidget {
   const ServiceCenterCard({
@@ -53,10 +54,7 @@ class ServiceCenterCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: CustomRadius.card,
         color: AppColors.whiteLight,
-        border: Border.all(
-          color: AppColors.whiteDark,
-          width: 0.5,
-        ), 
+        border: Border.all(color: AppColors.whiteDark, width: 0.5),
         boxShadow: [
           BoxShadow(
             color: AppColors.blueDarker.withAlpha(30),
@@ -118,32 +116,6 @@ class ServiceCenterCard extends StatelessWidget {
                         color: AppColors.blueDarkHover,
                       ),
                     ),
-                    // SizedBox(height: 2.h),
-                    // Text.rich(
-                    //   TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text: "(120+ reviews)",
-                    //         style: TextStyles.cairoRegular11.copyWith(
-                    //           color: AppColors.whiteDarkHover,
-                    //         ),
-                    //       ),
-                    //       const TextSpan(text: "  "),
-                    //       TextSpan(
-                    //         text: "$averageRating ",
-                    //         style: TextStyles.med13Tajawal,
-                    //       ),
-                    //       WidgetSpan(
-                    //         alignment: PlaceholderAlignment.middle,
-                    //         child: Icon(
-                    //           Icons.star,
-                    //           color: Colors.amber,
-                    //           size: 16.sp,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                     SizedBox(height: 10.h),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -154,7 +126,6 @@ class ServiceCenterCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 6.h),
-
                     Row(
                       children: [
                         Expanded(
@@ -169,7 +140,7 @@ class ServiceCenterCard extends StatelessWidget {
                         Expanded(
                           flex: 4,
                           child: buildIconText(
-                            text: "$distanceKm كم",
+                            text: "$distanceKm ${S.of(context).km}",
                             icon: Icons.location_on_outlined,
                             color: AppColors.whiteDarkHover,
                           ),
@@ -186,7 +157,7 @@ class ServiceCenterCard extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomElevatedButton(
-                  text: "الاتجاهات",
+                  text: S.of(context).directions,
                   radius: CustomRadius.r1,
                   fun: () {
                     context.read<CurrentLocationCubit>().moveToCurrentPosition(
@@ -199,7 +170,7 @@ class ServiceCenterCard extends StatelessWidget {
                   fontStyle: TextStyles.cairoSemiBold16,
                   backgColor: AppColors.blueNormal,
                   foregColor: AppColors.whiteLight,
-                  suffixIcon: const Icon(Icons.directions_outlined),
+                  suffixIcon: Icon(Icons.directions_outlined,color: AppColors.whiteLight,),
                   height: 46,
                 ),
               ),
@@ -260,19 +231,14 @@ class ServiceCenterCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 4.w),
       child: Text.rich(
-        maxLines: 1, 
-        overflow: TextOverflow
-            .ellipsis, 
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         TextSpan(
           children: [
             if (iconLeading) ...[
               WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 12.w,
-                ), 
+                child: Icon(icon, color: color, size: 12.w),
               ),
               const TextSpan(text: " "),
             ],

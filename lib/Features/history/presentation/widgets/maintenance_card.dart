@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
-// import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/history/data/models/car_history_model.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class MaintenanceCard extends StatelessWidget {
   const MaintenanceCard({super.key, required this.historyModel});
@@ -46,8 +46,6 @@ class MaintenanceCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 5.h),
-
-
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
             decoration: BoxDecoration(
@@ -63,9 +61,7 @@ class MaintenanceCard extends StatelessWidget {
                     color: AppColors.blueNormal,
                   ),
                 ),
-
                 SizedBox(height: 6.h),
-
                 Row(
                   children: [
                     Icon(
@@ -82,28 +78,12 @@ class MaintenanceCard extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                // SizedBox(height: 6.h),
-
-                
-
-                // CustomElevatedButton(
-                //   text: 'تفاصيل الحجز',
-                //   radius: CustomRadius.circle,
-                //   fun: () {
-                //     Navigator.of(context).pushNamed('history2');
-                //   },
-                //   withBorder: false,
-                //   fontStyle: TextStyles.cairoBold12,
-                //   backgColor: AppColors.yellowNormal,
-                //   height: 23.h,
-                // ),
               ],
             ),
           ),
           SizedBox(height: 6.h),
           Text(
-            'تم عمل ${historyModel.service} لحل المشكلة',
+            S.of(context).maintenanceDoneReason(historyModel.service),
             style: TextStyles.cairoBold12.copyWith(
               color: AppColors.whiteDarker,
             ),

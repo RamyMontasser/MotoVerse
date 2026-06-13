@@ -31,7 +31,6 @@ class ProblemTypeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        // duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 5.w),
         decoration: BoxDecoration(
           color: AppColors.whiteLight,

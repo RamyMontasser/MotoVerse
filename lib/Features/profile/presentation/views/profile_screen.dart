@@ -20,13 +20,14 @@ import 'package:motoverse/Features/home/presentation/cubit/user_cubit_cubit.dart
 import 'package:motoverse/Features/profile/data/models/car_model.dart';
 import 'package:motoverse/Features/profile/domain/repo/profile_car_repo.dart';
 import 'package:motoverse/Features/profile/presentation/cubit/profile_car_cubit.dart';
+import 'package:motoverse/Features/profile/presentation/widgets/car_analysis.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/current_car_card.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_avatar_widget.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_menu_item.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_section.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_switch_item.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/profile_user_info_widget.dart';
-import 'package:motoverse/generated/l10n.dart';
+import 'package:motoverse/generated/l10n.dart'; 
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -53,7 +54,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       AppPref.setBool(key: 'notifications_enabled', val: true);
     }
 
-    // apply saved value (ensure backend/client token state matches)
     _applyNotificationSetting(isNotificationsEnabled);
   }
 
@@ -75,7 +75,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         }
       } else {
-        // remove local token and inform backend to stop sending pushes for this device
         await FirebaseMessaging.instance.deleteToken();
         await homeRepo.sendDeviceToken(token: '');
       }
@@ -209,13 +208,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             return const CurrentCarCard(car: null);
                           },
                         ),
+
+                        SizedBox(height: 12.h),
+
+                        CarAnalysis(),
+
                         SizedBox(height: 24.h),
 
                         ProfileSection(
-                          title: 'مركز الأنشطة',
+                          title: S.of(context).centerOfActivities,
                           children: [
                             ProfileMenuItem(
-                              title: 'طلباتي',
+                              title: S.of(context).myRequests,
                               icon: Icons.assignment_turned_in_outlined,
                               onTap: () => Navigator.of(
                                 context,
@@ -223,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             ProfileSection.divider(),
                             ProfileMenuItem(
-                              title: 'عروضي',
+                              title: S.of(context).myOffers,
                               icon: Icons.handshake_outlined,
                               onTap: () => Navigator.of(
                                 context,
@@ -235,14 +239,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         // --- الأمان والتحقق ---
                         ProfileSection(
-                          title: 'الأمان والتحقق',
+                          title: S.of(context).securityAndVerification,
                           children: [
                             ProfileMenuItem(
-                              title: 'التحقق من الهوية',
+                              title: S.of(context).identityVerification,
                               icon: Icons.verified_user_outlined,
                               trailingText: currentUser!.isVerified
-                                  ? 'مكتمل'
-                                  : 'غير مكتمل',
+                                  ? S.of(context).completed
+                                  : S.of(context).incomplete,
                               trailingTextColor: currentUser!.isVerified
                                   ? AppColors.greenNormal
                                   : AppColors.redNormal,
@@ -258,7 +262,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             ProfileSection.divider(),
                             ProfileMenuItem(
-                              title: 'الخصوصية والأمان',
+                              title: S.of(context).privacyAndSecurity,
                               icon: Icons.privacy_tip_outlined,
                               onTap: () {},
                             ),
@@ -267,14 +271,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(height: 18.h),
 
                         ProfileSection(
-                          title: 'الإعدادات',
+                          title: S.of(context).settings,
                           children: [
                             ProfileMenuItem(
-                              title: 'لغة التطبيق',
+                              title: S.of(context).appLanguage,
                               icon: Icons.language,
                               trailingText: (languageProvider.local == 'en')
-                                  ? 'English'
-                                  : 'العربية',
+                                  ? S.of(context).english
+                                  : S.of(context).arabic,
                               trailingTextColor: AppColors.blueNormal,
                               onTap: () => Navigator.of(
                                 context,
@@ -282,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             ProfileSection.divider(),
                             ProfileSwitchItem(
-                              title: 'التنبيهات',
+                              title: S.of(context).notifications,
                               icon: Icons.notifications_active_outlined,
                               value: isNotificationsEnabled,
                               onChanged: (val) async {
@@ -298,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             ProfileSection.divider(thickness: 0.7),
                             ProfileMenuItem(
-                              title: 'إعدادات الموقع',
+                              title: S.of(context).locationSettings,
                               icon: Icons.location_on_outlined,
                               onTap: () {},
                             ),
@@ -306,18 +310,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(height: 18.h),
 
-                        // --- الدعم والمساندة ---
                         ProfileSection(
-                          title: 'الدعم والمساندة',
+                          title: S.of(context).supportAndAssistance,
                           children: [
                             ProfileMenuItem(
-                              title: 'الأسئلة الشائعة',
+                              title: S.of(context).faq,
                               icon: Icons.help_outline,
                               onTap: () {},
                             ),
                             ProfileSection.divider(),
                             ProfileMenuItem(
-                              title: 'تواصل معنا',
+                              title: S.of(context).contactUs,
                               icon: Icons.headset_mic_outlined,
                               onTap: () {},
                             ),
@@ -325,7 +328,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(height: 30.h),
 
-                        // --- Logout Button ---
                         CustomElevatedButton(
                           text: S.of(context).logout,
                           radius: CustomRadius.card,

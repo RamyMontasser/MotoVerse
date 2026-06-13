@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class UserRequestsCategoryTabs extends StatelessWidget {
   const UserRequestsCategoryTabs({
@@ -17,8 +18,8 @@ class UserRequestsCategoryTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> categories = [
-      {'title': 'الكل', 'color': AppColors.blueNormal},
-      {'title': 'نشطة', 'color': AppColors.greenNormal},
+      {'title': S.of(context).all, 'color': AppColors.blueNormal},
+      {'title': S.of(context).active, 'color': AppColors.greenNormal},
     ];
 
     return Row(
@@ -32,11 +33,9 @@ class UserRequestsCategoryTabs extends StatelessWidget {
             onTap: () => onTap(index),
             child: Container(
               margin: EdgeInsetsDirectional.only(
-                start: index == 8.w ? 0 : 0,
                 end: index == categories.length - 1 ? 0 : 8.w,
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-              // height: 40.h,
               decoration: BoxDecoration(
                 color: isSelected ? color : AppColors.whiteLight,
                 borderRadius: BorderRadius.circular(12.r),
@@ -44,15 +43,6 @@ class UserRequestsCategoryTabs extends StatelessWidget {
                   color: isSelected ? color : AppColors.blueLightActive,
                   width: 1,
                 ),
-                // boxShadow: isSelected
-                //     ? [
-                //         BoxShadow(
-                //           color: color.withValues(alpha: 0.2),
-                //           blurRadius: 2,
-                //           offset: const Offset(0, 2),
-                //         ),
-                //       ]
-                //     : null,
               ),
               child: Center(
                 child: Text(

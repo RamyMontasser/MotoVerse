@@ -7,6 +7,7 @@ import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/profile/data/models/car_model.dart';
 import 'package:motoverse/Features/profile/presentation/cubit/profile_car_cubit.dart';
 import 'package:motoverse/Features/profile/presentation/views/add_or_update_car_screen.dart';
+import 'package:motoverse/generated/l10n.dart'; 
 
 class CurrentCarCard extends StatelessWidget {
   final CarModel? car;
@@ -43,7 +44,6 @@ class CurrentCarCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Car icon
             Container(
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
               decoration: BoxDecoration(
@@ -58,13 +58,12 @@ class CurrentCarCard extends StatelessWidget {
             ),
             SizedBox(width: 12.w),
 
-            // Car info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'السيارة الحالية',
+                    S.of(context).currentCar, 
                     style: TextStyles.cairoBold12.copyWith(
                       color: AppColors.yellowNormal,
                     ),
@@ -73,7 +72,9 @@ class CurrentCarCard extends StatelessWidget {
                   Text(
                     hasCar
                         ? '${car!.brand} ${car!.model} ${car!.year}'
-                        : 'لا توجد سيارة مسجلة',
+                        : S
+                              .of(context)
+                              .noCarRegistered, 
                     style: TextStyles.cairoBold16.copyWith(
                       color: hasCar
                           ? AppColors.blueNormal
@@ -83,7 +84,11 @@ class CurrentCarCard extends StatelessWidget {
                   if (hasCar) ...[
                     SizedBox(height: 1.h),
                     Text(
-                      'رقم اللوحة: ${car!.plateNumber}',
+                      S
+                          .of(context)
+                          .plateNumberLabel(
+                            car!.plateNumber,
+                          ), 
                       style: TextStyles.cairoRegular13.copyWith(
                         color: AppColors.whiteDarker,
                       ),
@@ -93,7 +98,6 @@ class CurrentCarCard extends StatelessWidget {
               ),
             ),
 
-            // Arrow (only show if there is a car)
             if (hasCar)
               Icon(
                 Icons.arrow_forward_ios,

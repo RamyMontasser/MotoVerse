@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:motoverse/Features/community/data/models/problem_type_model.dart';
 import 'package:motoverse/Features/community/presentation/widgets/problem_type_card.dart';
 
@@ -30,12 +31,20 @@ class ProblemTypesGrid extends StatelessWidget {
       itemCount: problemTypes.length,
       itemBuilder: (context, index) {
         return ProblemTypeCard(
-          title: problemTypes[index].title,
+          title: isEN()
+              ? problemTypes[index].titleEnglish!
+              : problemTypes[index].title,
           iconPath: problemTypes[index].iconPath,
           isSelected: selectedIndex == index,
-          onTap:(){ onChoose(index);},
+          onTap: () {
+            onChoose(index);
+          },
         );
       },
     );
   }
+}
+
+bool isEN() {
+  return Intl.getCurrentLocale() == 'en';
 }

@@ -4,6 +4,7 @@ import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class ExplainProblemView extends StatelessWidget {
   final TextEditingController controller;
@@ -33,7 +34,7 @@ class ExplainProblemView extends StatelessWidget {
               ),
               SizedBox(width: 8.w),
               Text(
-                'التشخيص الذكي بالذكاء الاصطناعي',
+                S.of(context).aiSmartDiagnosis,
                 style: TextStyles.cairoBold16.copyWith(
                   color: AppColors.blueNormal,
                 ),
@@ -42,7 +43,7 @@ class ExplainProblemView extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           Text(
-            'تحليل مشكلات السيارة من خلال وصف الأعراض وتقديم اقتراحات وتشخيصات ذكية.',
+            S.of(context).aiDiagnosisSubTitle,
             style: TextStyles.cairoRegular13.copyWith(
               color: AppColors.whiteDarkHover,
             ),
@@ -55,8 +56,7 @@ class ExplainProblemView extends StatelessWidget {
               color: AppColors.blueDark,
             ),
             decoration: InputDecoration(
-              hintText:
-                  'مثال: يوجد صوت غريب عند الفرامل في العجلات الأمامية...',
+              hintText: S.of(context).problemDescriptionHint,
               hintStyle: TextStyles.cairoRegular13.copyWith(
                 color: AppColors.whiteDark,
               ),
@@ -85,7 +85,7 @@ class ExplainProblemView extends StatelessWidget {
                 SizedBox(width: 8.w),
                 Expanded(
                   child: Text(
-                    'التشخيص استرشادي وليس بديلاً عن الفحص الفني.',
+                    S.of(context).disclaimerText,
                     style: TextStyles.cairoRegular11.copyWith(
                       color: AppColors.whiteDarker,
                     ),
@@ -96,7 +96,7 @@ class ExplainProblemView extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           CustomElevatedButton(
-            text: 'تحليل المشكلة',
+            text: S.of(context).analyzeProblemButton,
             radius: BorderRadius.circular(16.r),
             height: 48,
             fontStyle: TextStyles.cairoBold16,
@@ -105,7 +105,7 @@ class ExplainProblemView extends StatelessWidget {
               if (text.isEmpty) {
                 customSnackBar(
                   context: context,
-                  msg: 'يرجى كتابة وصف للمشكلة أولاً قبل التحليل.',
+                  msg: S.of(context).emptyProblemSnackbar,
                   isDone: false,
                 );
               } else {

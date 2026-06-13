@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class TextStyles {
-  // Line Height is 150% (1.5) and Letter Spacing is 0% (0.0) for all styles
   // static  double _lineHeight = 1.5;
   static const double _letterSpacing = 0.0; // 0%
 
@@ -91,6 +90,13 @@ abstract class TextStyles {
     fontFamily: 'Cairo',
     fontWeight: FontWeight.bold, // Bold
     fontSize: 12.sp,
+    // height: _lineHeight,
+    letterSpacing: _letterSpacing,
+  );
+  static TextStyle cairoBold11 = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.bold, // Bold
+    fontSize: 11.sp,
     // height: _lineHeight,
     letterSpacing: _letterSpacing,
   );

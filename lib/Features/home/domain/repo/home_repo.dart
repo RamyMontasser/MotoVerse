@@ -7,7 +7,7 @@ import 'package:motoverse/Features/home/data/models/notificaion_model.dart';
 // import 'package:motoverse/Features/home/data/models/chat_model.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/data/models/user_model.dart';
-import 'package:motoverse/Features/socket_chat/data/models/conversation_model.dart';
+import 'package:motoverse/Features/chat/data/models/conversation_model.dart';
 
 abstract class HomeRepo {
   Future<Either<Failure, void>> updateProfile({required String city});

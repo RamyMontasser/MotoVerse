@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/services/secure_storage.dart';
-import 'package:motoverse/Features/socket_chat/data/models/file_message_model.dart';
-import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
-import 'package:motoverse/Features/socket_chat/presentation/cubit/socket_chat_state.dart';
+import 'package:motoverse/Features/chat/data/models/file_message_model.dart';
+import 'package:motoverse/Features/chat/domain/repo/chat_socket_repo.dart';
+import 'package:motoverse/Features/chat/presentation/cubit/socket_chat_state.dart';
 
 class SocketChatCubit extends Cubit<SocketChatState> {
   final ChatSocketRepository chatSocketRepo;

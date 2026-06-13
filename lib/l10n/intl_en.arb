@@ -3,8 +3,6 @@
 
     "appName": "MotoServe",
     "language": "Language",
-    "arabic": "Arabic",
-    "english": "English",
     "next": "Next",
     "update": "Update",
     "search": "Search",
@@ -12,19 +10,9 @@
     "details": "View Details",
     "compare": "Compare",
     "loading": "Loading...",
-    "currency": "{price} EGP",
-    "@currency": { "placeholders": { "price": {} } },
-    "priceInMillions": "{price}M EGP",
-    "@priceInMillions": { "placeholders": { "price": {} } },
-    "priceInThousands": "{price}K EGP",
-    "@priceInThousands": { "placeholders": { "price": {} } },
-    "priceRange": "Price Range: {min} - {max}",
-    "@priceRange": {
-        "placeholders": {
-            "min": {},
-            "max": {}
-        }
-    },
+    
+    
+    
 
     "welcomeTitle": "Welcome",
     "welcomeSubtitle": "Welcome back! Login to your account or ",
@@ -54,80 +42,420 @@
     "restorePassword": "Restore Password",
     "restorePasswordSubtitle": "Enter your phone number to restore password",
 
-    "onboarding1": "Your Smart Guide to Cars",
-    "onboarding2": "Be smarter in choosing your car",
-    "onboarding3": "All your car needs in one place",
     "startJourney": "Start Your Journey",
-    "onboarding4": "Start Your Smart Journey now",
-    "smartDiagnosisSubtitle": "Understand your car's problem through AI-based analysis.",
-    "startDiagnosis": "Start Diagnosis",
+    
+    
 
-    "homePage": "Home",
+
+    
+    
+
+    
+
+
+    "selectCountry": "Select Country",
+    "searchCountry": "Search Country",
+
+
+
     "homeSearchHint": "Search for a car, service, or center...",
     "marketSearchHint": "Search about",
     "newAdvantage": "New Advantage",
     "smartDiagnosis": "Smart diagnosis of faults",
-    "featuredCars": "Featured Cars",
-    "newCars": "New",
-    "usedCars": "Used",
-    "allCars": "All",
-    "newCar": "New",
-    "usedCar": "Used",
+    "smartDiagnosisSubtitle": "Understand your car's problem through AI-based analysis.",
+    "startDiagnosis": "Start Diagnosis",
+    "quickServices": "Quick Services",
+    "requestHelp": "Request Help",
+    "emergencySupport": "Emergency support",
+    "nearbyMaintenance": "Nearby Centers",
+    "nearestCentersCount": "{count} centers near you",
+    "noNearbyCenters": "No nearby centers currently",
+    "maintenanceHistory": "Maintenance History",
+    "loadingTechnicalData": "Last maintenance: Loading current technical data...",
+    "lastMaintenanceDetails": "Last maintenance: {service} – {date}",
+    "noMaintenanceHistory": "No maintenance history yet",
+    "myCurrentOffers": "My Current Offers",
+    "activeChatExists": "Active chat exists",
+    "viewOffers": "View Offers",
+    "ongoingRequests": "Ongoing Requests",
+    "trackRequest": "Track Request",
+    "findNearbyCenters": "Find nearby maintenance centers",
+    "exploreNearbyCentersCount": "Explore more than {count} centers near you",
+    "locatingNearbyCenters": "Locating nearby centers...",
 
-    "featureCompare": "Car Comparison",
-    "featureCompareDesc": "Compare models and specs easily to make the best decision.",
-    "featureCost": "Cost Estimation",
-    "featureCostDesc": "Calculate ownership and maintenance costs before buying.",
-    "featureMap": "Centers Map",
-    "featureMapDesc": "Find the nearest trusted service center with location services.",
-    "featureMaintenance": "Maintenance Tracking",
-    "featureMaintenanceDesc": "Track your car status and remember maintenance dates easily.",
-    "featurePricePredict": "Price Prediction",
-    "featurePricePredictDesc": "Know the future value of your car before buying or selling.",
-    "featureRecommend": "Smart Recommendation",
-    "featureRecommendDesc": "We help you choose the perfect car for your budget and needs.",
-    "tipsTitle": "💡 Tool Usage Tips",
-    "tipsBody": "• Use Smart Recommendation if you are unsure about choosing \n• Compare multiple cars before the final decision \n• Calculate total cost to avoid financial surprises \n• Track maintenance regularly to keep your car's value",
 
-    "selectCountry": "Select Country",
-    "searchCountry": "Search Country",
-    "brand": "Brand",
-    "selectBrand": "Select Brand",
-    "carType": "Car Type",
-    "selectCarType": "Select Type",
-    "year": "Year",
-    "selectYear": "Select Year",
-    "automatic": "Automatic",
-    "manual": "Manual",
 
-    "profile": "Profile",
-    "profileDesc": "View and edit your personal info",
-    "dashboard": "Dashboard",
-    "myCars": "My Cars & History",
-    "aboutUs": "About Us",
-    "aboutUsDesc": "Learn about MotoServe platform",
+   
+
+
+    "notifications1": "Notifications",
+    "noNotifications": "No notifications currently",
+    "today": "Today",
+    "past": "Earlier",
+
+
+
+
+    "myOffers": "My Offers",
+    "deleteOfferSuccess": "Offer deleted successfully",
+    "noAcceptedOffers": "No accepted offers currently",
+    "noPendingOffers": "No pending offers currently",
+    "noCompletedOffers": "No completed offers currently",
+    "noRejectedOffers": "No rejected offers currently",
+    "noSubmittedOffers": "No submitted offers currently",
+
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "completed": "Completed",
+    "pending": "Pending",
+    "yesterday": "Yesterday",
+    "pm": "PM",
+    "am": "AM",
+    "helpType": "Help Type",
+    "fieldHelp": "Offline Help",
+    "dateTime": "Date & Time",
+    "viewDetails": "View Details",
+
+    "attachedImages": "Attached Images",
+    "imagesCount": "{count} images",
+    "requestCancelledSuccessfully": "Request cancelled successfully",
+    "helpOfferSubmittedSuccessfully": "Help offer submitted successfully",
+    "sendingOffer": "Sending offer...",
+    "provideHelp": "Provide Help",
+    "battery": "Battery",
+    "engine": "Engine",
+    "tires": "Tires",
+    "other": "Other",
+
+    "roadsideHelpDesc": "You want to request help directly on the road",
+    "requestHelpButton": "Request Help",
+    "onlineChatHelpDesc": "You want online help via chat",
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "errorLoadingData": "An error occurred while loading data",
+    "offerStatusUpdated": "Offer status updated successfully",
+    "requestCancelled": "Request cancelled successfully",
+    "chatCreated": "Chat created successfully",
+    "viewRequestDetails": "View Request Details",
+    "cancelRequest": "Cancel Request",
+    "availableOffers": "Available Offers",
+    "noOffers": "No offers available",
+    "receivingOffers": "Receiving available offers...",
+    "arrivalTime": "Arrival Time",
+    "minutesDuration": "{minutes} min",
+    "distanceLabel": "Distance",
+    "distanceKm": "{distance} km",
+    "offerAccepted": "Offer Accepted",
+    "accept": "Accept",
+    "reject": "Reject",
+
+
+
+
+
+
+    "startDocumentingJourney": "Start documenting your car's maintenance journey to alert you of upcoming appointments.",
+    "addMaintenanceHistory": "Add Maintenance History",
+    "lastMaintenance": "Last Maintenance",
+    "noHistory": "No history",
+    "totalPayment": "Total Payment",
+    "egpCurrency": "{cost} EGP",
+    "newMaintenanceRecord": "New Maintenance Record",
+    "dateLabel": "Date",
+    "maintenanceCenter": "Maintenance Center",
+    "maintenanceType": "Maintenance Type",
+    "descriptionLabel": "Description",
+    "costEgp": "Cost (EGP)",
+    "saving": "Saving...",
+    "save": "Save",
+    "maintenanceDoneReason": "{service} was performed to resolve the issue",
+
+
+
+
+
+
+
+    "mapSearchHint": "Search for a problem or service center...",
+    "fetchingLocation": "Fetching your location, please wait...",
+    "noServiceCentersFound": "No service centers found nearby",
+    "loadingNamePlaceholder": "Loading...",
+    "km": "km",
+    "directions": "Directions",
+
+
+
+
+
+
+
+
+
+
+
+    "smartDiagnosis2": "Smart Diagnosis",
+    "chooseDiagnosisMethod": "Choose the most appropriate method to analyze the car problem",
+    "noDiagnosticsFound": "No diagnostics found for this code.",
+    "explainProblem": "Explain the Problem",
+    "obdDiagnosis": "OBD Diagnosis",
+    "diagnosisSummary": "Diagnosis Summary:",
+    "severityLevelLabel": "Severity Level: ",
+    "canDriveLabel": "Can you drive: ",
+    "possibleCausesLabel": "Possible Causes: ",
+    "whatToCheckLabel": "What to check: ",
+    "canCheckAtHomeLabel": "Can you check the problem at home? ",
+    "technicalRecommendationLabel": "Technical Recommendation: ",
+
+    "outputLanguage": "Output Language: ",
+    "arabic": "Arabic",
+    "english": "English",
+    "carTypeAndModel": "Car Type and Model",
+    "carExampleHint": "Example: Mercedes C200 2021 or Toyota Corolla",
+    "carValidationEmpty": "Please enter car type and model",
+    "obdCodeLabel": "OBD Code",
+    "obdCodeHint": "P0420",
+    "obdCodeValidationEmpty": "Please enter OBD code first",
+    "liveSensorData": "Live Sensor Data: ",
+    "engineCoolant": "Engine Coolant Temp",
+    "engineRpm": "Engine RPM",
+    "engineLoad": "Engine Load",
+    "carSpeed": "Vehicle Speed",
+    "throttlePosition": "Throttle Position",
+    "numbersOnly": "Numbers only",
+    "analyzeCodeAndData": "Analyze Code & Data",
+    "fixErrorsSnackbar": "Please correct the errors in red fields first.",
+    "obdAnalysisTitle": "OBD Trouble Code Analysis",
+    "obdAnalysisSubTitle": "Understand car codes and discover technical problems accurately.",
+
+    "aiSmartDiagnosis": "AI Smart Diagnosis",
+    "aiDiagnosisSubTitle": "Analyze car problems by describing symptoms to provide smart suggestions and diagnostics.",
+    "problemDescriptionHint": "Example: There is a strange sound when braking in the front wheels...",
+    "disclaimerText": "The diagnosis is advisory and not a substitute for a technical inspection.",
+    "analyzeProblemButton": "Analyze Problem",
+    "emptyProblemSnackbar": "Please enter a description of the problem first before analyzing.",
+
+
+
+
+
+
+
+    "loadRequestsError": "An error occurred while loading requests",
+    "retry": "Retry",
+    "noRequestsAvailable": "No requests available",
+    "welcomeTo": "Welcome to",
+    "motoverseCommunitySub": "How would you like to participate today?\nHelping others or getting support",
+    "requestHelpDesc": "Want to request roadside assistance or consult others about your car problem",
+    "requestHelpBtn": "Request Help",
+    "viewRequestsDesc": "Browse assistance requests near you and share your experience with people in need",
+    "viewRequestsBtn": "View Current Requests",
+    "problemType": "Problem Type",
+    "problemDescription": "Problem Description",
+    "describeYourProblemHint": "Describe the problem you are facing",
+    "addImages": "Add Images",
+    "dataStoredSecurely": "Your images and data are stored securely",
+    "requestSentSuccessfully": "Request Sent Successfully",
+    "requestReceivedDesc": "Your request has been received successfully\nand will be displayed in the request log",
+    "selectProblemTypeValidation": "Please select a problem type",
+    "offerRejected": "This offer has been canceled",
+    "offerCompleted": "This offer has been completed",
+    "cancelHelpOffer": "Cancel help offer",
+    "offlineHelp": "Offline Help",
+    "onlineHelp": "Online Help",
+    "dataProtectionNotice": "All customer details and personal data are protected and secured.",
+
+
+
+    "maxTagsWarning": "You can select up to 3 traits only",
+    "reviewSubmittedSuccessfully": "Your review has been submitted successfully!",
+    "orderCompletedSuccessfully": "The order has been completed successfully",
+    "experienceQuestion": "How was your experience with the helper?",
+    "addComment": "Add a comment",
+    "commentHint": "Share your experience to help other users",
+    "submitting": "Submitting...",
+    "submitReview": "Submit Review",
+    "skip": "Skip",
+    "safetyNotice": "Your request is secured and backed by Motoverse Safety guarantee.",
+    "fastResponse": "Fast Response",
+    "excellentManner": "Excellent Manner",
+    "professional": "Professional",
+    "helpful": "Helpful",
+    "needsImprovement": "Needs Improvement",
+
+
+
+    "myRequests": "My Requests",
+    "noActiveRequests": "No active requests currently",
+    "noPreviousRequests": "No previous requests",
+    "emptyRequestsSubtitle": "You can create a new request or review previous requests.",
+
+
+    "add": "Add",
+
+    "car": "Car",
+    "reportedProblem": "Reported Problem",
+    "malfunctionIn": "Malfunction in {problem}",
+
+    "all": "All",
+    "chatHelp": "Chat Help",
+    "roadsideHelp": "Offline Help",
+
+    "defaultHelperName": "Helper",
+    "currentRating": "Current Rating: {rating}",
+    "ratingNotAvailable": "N/A",
+
+    "locatingUserMessage": "Locating your position, please wait...",
+    "findNearbyCentersTitle": "Find nearby maintenance centers",
+    "findNearbyCentersSubtitle": "Explore more than 24 centers",
+
+    "problemDetails": "Problem Details",
+
+    "away": "{distance} km away",
+
+    "distanceAndTime": "Distance and Time",
+    "distanceAndMinutes": "{distance} km - {minutes} min",
+
+    "call": "Call",
+    "chat": "Chat",
+
+    "active": "Active",
+
+
+
+
+
+
+
+    "confirmCompleteRequestTitle": "Confirm Complete Request",
+    "confirmCompleteRequestDesc": "Once the request is completed, you will not be able to communicate with the other party through this chat. Are you sure you want to complete the request?",
+    "yes": "Yes",
+    "no": "No",
+    "online": "Online",
+    "offline": "Offline",
+    "noMessagesYet": "No messages yet",
+    "verifiedHelper": "Verified Helper",
+    "endChat": "End Chat",
+    "microphonePermissionRequired": "Please enable microphone permission to record",
+    "attachImageTooltip": "Attach an image",
+    "typeMessageHint": "Type your message here...",
+    "cancelRecordingTooltip": "Cancel recording",
+    "recordingVoice": "Recording audio...",
+    "sendRecordingTooltip": "Send recording",
+
+
+
+
+
+
+
+
+
+
+    "memberSince": "Member since {date}",
+    "centerOfActivities": "Activity Center",
+    "securityAndVerification": "Security & Verification",
+    "identityVerification": "Identity Verification",
+    "incomplete": "Incomplete",
+    "privacyAndSecurity": "Privacy & Security",
     "settings": "Settings",
-    "settingsDesc": "App settings and notifications",
-    "logout": "Logout",
-    "personalSettings": "Personal Settings",
-    "editProfile": "Edit Profile",
-    "updateInfo": "Update your personal information",
     "appLanguage": "App Language",
     "notifications": "Notifications",
-    "privacySecurity": "Privacy & Security",
-    "privacyPolicy": "Privacy Policy",
-    "privacyPolicyDesc": "View Privacy Policy",
-    "termsOfUse": "Terms of Use",
-    "termsOfUseDesc": "Terms and conditions of use",
-    "deleteAccount": "Delete Account",
-    "copyrights": "© 2025 All rights reserved",
+    "locationSettings": "Location Settings",
+    "supportAndAssistance": "Support & Assistance",
+    "faq": "FAQ",
+    "contactUs": "Contact Us",
+    "logout": "Logout",
 
-    "notifNewCars": "New Car Notifications",
-    "notifNewCarsDesc": "Alerts when new cars are added",
-    "notifPriceChange": "Price Changes",
-    "notifPriceChangeDesc": "Alerts when favorite car prices change",
-    "notifMaintenance": "Maintenance Reminders",
-    "notifMaintenanceDesc": "Reminders for periodic maintenance dates",
-    "notifMessages": "Messages",
-    "notifMessagesDesc": "Message notifications from sellers and centers"
+
+    "currentCar": "Current Car",
+    "noCarRegistered": "No car registered",
+    "plateNumberLabel": "Plate Number: {plate}",
+    "carInformation": "Car Information",
+    "carBrand": "Car Brand",
+    "toyotaHint": "Toyota",
+    "carModel": "Car Model",
+    "camryHint": "Camry",
+    "manufactureYear": "Manufacture Year",
+    "plateNumber": "Plate Number",
+    "plateHint": "A B C 1234",
+    "carColor": "Car Color",
+    "privacyNote": "All your personal data is processed and stored securely in accordance with our privacy policy.",
+    "saveChanges": "Save Changes",
+    "addCar": "Add Car",
+    "deleteCar": "Delete Car",
+    "cancel": "Cancel",
+    "deleteConfirmationTitle": "Confirm Delete",
+    "deleteConfirmationDesc": "Are you sure you want to delete this car?",
+    "deleteBtn": "Delete",
+    "carUpdatedSuccess": "Car details updated successfully",
+    "carAddedSuccess": "Car added successfully",
+
+
+    "editProfileTitle": "Edit Your Information",
+    "profileImage": "Profile Picture",
+    "galleryOption": "Choose from Gallery",
+    "cameraOption": "Take a Photo",
+    "removeImageOption": "Remove Current Image",
+    "emailAddress": "Email Address",
+    "privacyNotice": "All your personal data is processed and stored securely in accordance with our privacy policy",
+    "successMessage": "Changes saved successfully",
+
+    "smartVisionIndicators": "Smart vision for your car's key indicators",
+
+    "appLanguageTitle": "App Language",
+    "arabicLanguage": "Arabic",
+    "englishLanguage": "English",
+    "languageNoticeText": "Language changes will be applied immediately across all sections and services.",
+
+
+
+    "frontIdTitle": "Capture ID Card - Front Side",
+    "backIdTitle": "Capture ID Card - Back Side",
+    "faceImageTitle": "Capture a Clear Selfie",
+    "weNeedToVerifyYourIdentity": "We need to verify your identity",
+    "verificationSubtitle": "To provide a secure and trusted experience\n for motoverse users",
+    "verifyIdentityButton": "Verify Identity",
+    "pleaseUploadAllImages": "Please upload all required images",
+    "uploadSuccess": "Uploaded successfully",
+    "reupload": "Reupload",
+
+
+    "addDataFile": "Add Data File",
+    "uploadVehicleDiagnosticFiles": "Upload vehicle diagnostic files (CSV, JSON, XLSX)",
+    "fileUploadedSuccessfully": "File uploaded successfully",
+    "reuploadFile": "Re-upload",
+    "analyzeData": "Analyze Data",
+
+    "dashboard": "Dashboard",
+    "engineTemperature": "Engine Temperature",
+    "fuelLevel": "Fuel Level",
+    "barometricPressure": "Barometric Pressure",
+    "intakeAirTemperature": "Intake Air Temp",
+    "engineRuntime": "Engine Runtime",
+    "carDataAnalysis": "Car Data Analysis",
+
+
+    "faultDetected": "Fault Detected",
+    "aiAnalysis": "AI Analysis",
+    "statusNeedsFollowUp": "Needs Follow-up",
+    "anomalyRatio": "Anomaly Ratio: {ratio}%",
+    "@anomalyRatio": { "placeholders": { "ratio": {} } },
+    "modelConfidence": "Model Confidence",
+    
+
+
+    "onboarding1": "Smart and Secure Diagnosis\n Analyze the problem with AI\n with a trusted and protected experience.",
+    "onboarding2": "Access Certified Maintenance Centers\n and helpers around your location.",
+    "onboarding3": "Track your car condition clearly\n and understand potential faults before making decisions."
 }

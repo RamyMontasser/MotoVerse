@@ -9,6 +9,7 @@ import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/settings/data/models/identity_feild_model.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class IdentityPickerCard extends StatelessWidget {
   const IdentityPickerCard({
@@ -16,13 +17,11 @@ class IdentityPickerCard extends StatelessWidget {
     required this.field,
     this.pickedImage,
     required this.onCardTap,
-    // required this.isPicked,
   });
 
   final IdentityFieldModel field;
   final XFile? pickedImage;
   final Function(XFile) onCardTap;
-  // final bool isPicked;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,6 @@ class IdentityPickerCard extends StatelessWidget {
               vertical: pickedImage != null ? 26.h : 60.h,
             ),
             width: double.infinity,
-            // height: 120.h,
             decoration: BoxDecoration(
               color: AppColors.whiteLight,
               borderRadius: CustomRadius.card12,
@@ -66,7 +64,9 @@ class IdentityPickerCard extends StatelessWidget {
               ],
             ),
             child: (pickedImage != null)
-                ? _buildSuccessState()
+                ? _buildSuccessState(
+                    context,
+                  ) 
                 : _buildInitialState(),
           ),
         ),
@@ -90,7 +90,7 @@ class IdentityPickerCard extends StatelessWidget {
     );
   }
 
-  Widget _buildSuccessState() {
+  Widget _buildSuccessState(BuildContext context) {
     final ImagePickerService imageService = getIt<ImagePickerService>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +102,7 @@ class IdentityPickerCard extends StatelessWidget {
         ),
         SizedBox(height: 5.h),
         Text(
-          "تم التحميل بنجاح",
+          S.of(context).uploadSuccess, 
           style: TextStyles.cairoBold12.copyWith(
             color: AppColors.blueLightActive,
           ),
@@ -110,7 +110,7 @@ class IdentityPickerCard extends StatelessWidget {
         SizedBox(height: 20.h),
 
         CustomElevatedButton(
-          text: "إعادة التحميل",
+          text: S.of(context).reupload, 
           fun: () async {
             final response = await imageService.pickImage(
               source: ImageSource.camera,
@@ -126,7 +126,7 @@ class IdentityPickerCard extends StatelessWidget {
           backgColor: AppColors.whiteLight,
           foregColor: AppColors.blueNormal,
           fontStyle: TextStyles.cairoBold12,
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.file_upload_outlined,
             color: AppColors.blueNormal,
           ),

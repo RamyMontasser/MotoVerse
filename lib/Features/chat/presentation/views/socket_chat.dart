@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motoverse/Core/services/getit.dart';
-import 'package:motoverse/Features/socket_chat/data/models/chat_arguments.dart';
-import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
-import 'package:motoverse/Features/socket_chat/presentation/cubit/socket_chat_cubit.dart';
-import 'package:motoverse/Features/socket_chat/presentation/views/socket_chat_body.dart';
+import 'package:motoverse/Features/chat/data/models/chat_arguments.dart';
+import 'package:motoverse/Features/chat/domain/repo/chat_socket_repo.dart';
+import 'package:motoverse/Features/chat/presentation/cubit/socket_chat_cubit.dart';
+import 'package:motoverse/Features/chat/presentation/views/socket_chat_body.dart';
 
 class SocketChat extends StatefulWidget {
   const SocketChat({super.key});

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class AiToggleButtons extends StatelessWidget {
   final bool isExplainProblemSelected;
@@ -29,8 +30,9 @@ class AiToggleButtons extends StatelessWidget {
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeOutBack,
             alignment: isExplainProblemSelected
-                ? Alignment.centerRight
-                : Alignment.centerLeft,
+                ? AlignmentDirectional
+                      .centerStart 
+                : AlignmentDirectional.centerEnd, 
             child: FractionallySizedBox(
               widthFactor: 0.48,
               child: Container(
@@ -41,39 +43,42 @@ class AiToggleButtons extends StatelessWidget {
               ),
             ),
           ),
+
           Row(
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () => onToggleChanged(true),
-                  behavior: HitTestBehavior.opaque,
-                  child: Center(
-                    child: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 200),
-                      style: TextStyles.cairoBold13.copyWith(
-                        color: !isExplainProblemSelected
-                            ? AppColors.whiteDarker
-                            : AppColors.whiteLight,
-                      ),
-                      child: const Text('اشرح المشكلة'),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => onToggleChanged(false),
+                  onTap: () => onToggleChanged(true), 
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: TextStyles.cairoBold13.copyWith(
                         color: isExplainProblemSelected
-                            ? AppColors.whiteDarker
-                            : AppColors.whiteLight,
+                            ? AppColors.whiteLight
+                            : AppColors.whiteDarker,
                       ),
-                      child: const Text('فحص الأعطال (OBD)'),
+                      child: Text(S.of(context).explainProblem),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(width: 10.w),
+
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => onToggleChanged(false), 
+                  behavior: HitTestBehavior.opaque,
+                  child: Center(
+                    child: AnimatedDefaultTextStyle(
+                      duration: const Duration(milliseconds: 200),
+                      style: TextStyles.cairoBold13.copyWith(
+                        color: !isExplainProblemSelected
+                            ? AppColors.whiteLight
+                            : AppColors.whiteDarker,
+                      ),
+                      child: Text(S.of(context).obdDiagnosis),
                     ),
                   ),
                 ),

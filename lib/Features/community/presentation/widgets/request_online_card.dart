@@ -5,6 +5,7 @@ import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/community/data/models/request_model.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class RequestOnlineCard extends StatelessWidget {
   const RequestOnlineCard({super.key, required this.request});
@@ -29,7 +30,6 @@ class RequestOnlineCard extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CircleAvatar(
             radius: 25.r,
@@ -47,24 +47,31 @@ class RequestOnlineCard extends StatelessWidget {
                 : null,
           ),
           SizedBox(width: 10.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                request.userName,
-                style: TextStyles.cairoBold16.copyWith(
-                  color: AppColors.blueDarkActive,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  request.userName,
+                  style: TextStyles.cairoBold16.copyWith(
+                    color: AppColors.blueDarkActive,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              Text(
-                request.city,
-                style: TextStyles.cairoRegular11.copyWith(
-                  color: AppColors.whiteDarkActive,
+                Text(
+                  request.city,
+                  style: TextStyles.cairoRegular11.copyWith(
+                    color: AppColors.whiteDarkActive,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
+          SizedBox(width: 10.w),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
             decoration: BoxDecoration(
@@ -72,7 +79,7 @@ class RequestOnlineCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.r),
             ),
             child: Text(
-              "مساعدة أونلاين",
+              S.of(context).onlineHelp,
               style: TextStyles.bold11Tajawal.copyWith(
                 color: AppColors.yellowNormal,
               ),

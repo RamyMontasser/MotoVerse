@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class ProfileUserInfoWidget extends StatelessWidget {
   const ProfileUserInfoWidget({
@@ -26,7 +27,7 @@ class ProfileUserInfoWidget extends StatelessWidget {
           ),
         ),
         Text(
-          'انضم منذ $memberSince',
+          S.of(context).memberSince(memberSince),
           style: TextStyles.cairoRegular14.copyWith(
             color: AppColors.whiteDarker,
           ),

@@ -10,6 +10,7 @@ import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart'
 import 'package:motoverse/Features/home/presentation/widgets/my_offer_page_card.dart';
 import 'package:motoverse/Features/home/presentation/widgets/my_offers_category_tabs.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class MyOffersPage extends StatefulWidget {
   const MyOffersPage({super.key, this.initialCategory = 0});
@@ -34,17 +35,15 @@ class _MyOffersPageState extends State<MyOffersPage> {
   String getEmptyMessage() {
     switch (currentCategory) {
       case 1:
-        return 'لا توجد عروض مقبولة حالياً';
+        return S.of(context).noAcceptedOffers;
       case 2:
-        return 'لا توجد عروض قيد الانتظار حالياً';
-
+        return S.of(context).noPendingOffers;
       case 3:
-        return 'لا توجد عروض مكتملة حالياً';
+        return S.of(context).noCompletedOffers;
       case 4:
-        return 'لا توجد عروض مرفوضة حالياً';
-
+        return S.of(context).noRejectedOffers;
       default:
-        return 'لا توجد عروض مقدمة حالياً';
+        return S.of(context).noSubmittedOffers;
     }
   }
 
@@ -58,7 +57,7 @@ class _MyOffersPageState extends State<MyOffersPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'عروضي',
+                S.of(context).myOffers,
                 style: TextStyles.cairoBold24.copyWith(
                   color: AppColors.blueNormal,
                 ),
@@ -78,7 +77,7 @@ class _MyOffersPageState extends State<MyOffersPage> {
                   if (state is DeleteOfferSuccess) {
                     customSnackBar(
                       context: context,
-                      msg: 'تم حذف العرض بنجاح',
+                      msg: S.of(context).deleteOfferSuccess,
                       isDone: true,
                     );
                     context.read<MyOffersCubit>().getMyOffers();
@@ -116,16 +115,6 @@ class _MyOffersPageState extends State<MyOffersPage> {
                       'HelpOffline',
                       arguments: args,
                     );
-                    // Navigator.pushNamed(
-                    //   context,
-                    //   'chat',
-                    //   arguments: {
-                    //     'otherUserId': state.request.userId,
-                    //     'otherUserName': state.request.userName,
-                    //     'otherUserAvatar': null,
-                    //     'isHelper': true,
-                    //   },
-                    // );
                   } else if (state is RequestDetailsFailure) {
                     Navigator.pop(context);
                     customSnackBar(
@@ -150,10 +139,10 @@ class _MyOffersPageState extends State<MyOffersPage> {
                           itemCount: 5,
                           separatorBuilder: (context, index) =>
                               SizedBox(height: 16.h),
-                          itemBuilder: (context, index) => const Card(
+                          itemBuilder: (context, index) => Card(
                             child: ListTile(
-                              title: Text('Loading...'),
-                              subtitle: Text('Loading...'),
+                              title: Text(S.of(context).loading),
+                              subtitle: Text(S.of(context).loading),
                             ),
                           ),
                         ),

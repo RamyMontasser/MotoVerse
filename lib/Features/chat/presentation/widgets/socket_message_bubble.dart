@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
-import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
-import 'package:motoverse/Features/socket_chat/presentation/widgets/audio_player_widget.dart';
+import 'package:motoverse/Features/chat/data/models/text_message_model.dart';
+import 'package:motoverse/Features/chat/presentation/widgets/audio_player_widget.dart';
 import 'package:photo_view/photo_view.dart';
 
 class SocketMessageBubble extends StatelessWidget {

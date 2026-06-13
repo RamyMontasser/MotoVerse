@@ -15,6 +15,7 @@ import 'package:motoverse/Features/home/domain/repo/home_repo.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
 import 'package:motoverse/Features/home/presentation/widgets/request_offer_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class RequestOffersScreen extends StatelessWidget {
   const RequestOffersScreen({super.key});
@@ -27,8 +28,8 @@ class RequestOffersScreen extends StatelessWidget {
         : null;
 
     if (requests == null || requests.isEmpty) {
-      return const Scaffold(
-        body: Center(child: Text('حدث خطأ في تحميل البيانات')),
+      return Scaffold(
+        body: Center(child: Text(S.of(context).errorLoadingData)),
       );
     }
 
@@ -40,11 +41,10 @@ class RequestOffersScreen extends StatelessWidget {
       child: BlocConsumer<NotificationCubit, NotificationState>(
         listener: (context, state) {
           if (state is UpdateOfferStatusLoading) {
-            // Optional: show a global loading indicator
           } else if (state is UpdateOfferStatusSuccess) {
             customSnackBar(
               context: context,
-              msg: 'تم تحديث حالة العرض بنجاح',
+              msg: S.of(context).offerStatusUpdated,
               isDone: true,
             );
             context.read<NotificationCubit>().getOffers(
@@ -57,12 +57,11 @@ class RequestOffersScreen extends StatelessWidget {
               isDone: false,
             );
           } else if (state is DeleteRequestLoading) {
-            // Optional: show a global loading indicator
           } else if (state is DeleteRequestSuccess) {
             context.read<RequestsCubit>().removeRequest(requests.first.id);
             customSnackBar(
               context: context,
-              msg: 'تم الغاء الطلب بنجاح',
+              msg: S.of(context).requestCancelled,
               isDone: true,
             );
             Navigator.pop(context);
@@ -75,7 +74,7 @@ class RequestOffersScreen extends StatelessWidget {
           } else if (state is CreateChatSuccess) {
             customSnackBar(
               context: context,
-              msg: 'تم إنشاء المحادثة بنجاح',
+              msg: S.of(context).chatCreated,
               isDone: true,
             );
 
@@ -90,14 +89,10 @@ class RequestOffersScreen extends StatelessWidget {
                 'SocketChatBody',
                 arguments: {
                   'otherUserId': state.chat.offerUser.id,
-                  // acceptedOffer.helperId,
                   'otherUserName': state.chat.offerUser.name,
-                  // acceptedOffer.helperName,
                   'otherUserAvatar': state.chat.offerUser.image,
-                  // acceptedOffer.helperImage,
                   'isHelper': false,
                   'requestId': state.chat.helpRequest,
-                  //  acceptedOffer.request,
                   'offerId': acceptedOffer.id,
                   'averageRating': acceptedOffer.averageRating,
                   'chatId': state.chat.id,
@@ -123,7 +118,7 @@ class RequestOffersScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomElevatedButton(
-                    text: 'عرض تفاصيل الطلب',
+                    text: S.of(newContext).viewRequestDetails,
                     radius: CustomRadius.card12,
                     fun: () {
                       Navigator.pushNamed(
@@ -140,7 +135,7 @@ class RequestOffersScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   if (!hasAcceptedOffer && requests.first.status != 'accepted')
                     CustomElevatedButton(
-                      text: 'الغاء الطلب',
+                      text: S.of(newContext).cancelRequest,
                       radius: CustomRadius.card12,
                       fun: () {
                         newContext.read<NotificationCubit>().deleteRequest(
@@ -160,19 +155,18 @@ class RequestOffersScreen extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 20.h),
                     Text(
-                      'العروض المتاحة',
+                      S.of(newContext).availableOffers,
                       style: TextStyles.cairoBold20.copyWith(
-                        color: AppColors.blueNormal,),),
-                        // SizedBox(height: 20.h),
-                     if (!hasAcceptedOffer &&
+                        color: AppColors.blueNormal,
+                      ),
+                    ),
+                    if (!hasAcceptedOffer &&
                         requests.first.status != 'accepted')
                       _buildLoadingHeader(newContext, requests),
-                    // SizedBox(height: 20.h),
                     BlocBuilder<NotificationCubit, NotificationState>(
                       buildWhen: (previous, current) =>
                           current is NotificationLoading ||
@@ -198,40 +192,6 @@ class RequestOffersScreen extends StatelessWidget {
                                 isAccepted: true,
                               ),
                             );
-
-                            // Column(
-                            //   children: [
-                            //     SizedBox(height: 50.h),
-                            //     Center(
-                            //       child: Text(
-                            //         'تم قبول عرض ${acceptedOffer.helperName}',
-                            //         style: TextStyles.cairoBold16.copyWith(
-                            //           color: AppColors.blueNormal,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     SizedBox(height: 20.h),
-                            //     CustomElevatedButton(
-                            //       text: 'الذهاب للدردشة',
-                            //       radius: CustomRadius.card12,
-                            //       fun: () {
-                            //         Navigator.pushNamed(
-                            //           context,
-                            //           'HelpOffline',
-                            //           arguments: [
-                            //             requests.first,
-                            //             acceptedOffer,
-                            //             false,
-                            //           ],
-                            //         );
-                            //       },
-                            //       backgColor: AppColors.greenNormal,
-                            //       foregColor: AppColors.whiteLight,
-                            //       height: 48,
-                            //       fontStyle: TextStyles.cairoBold16,
-                            //     ),
-                            //   ],
-                            // );
                           }
 
                           return _buildContent(
@@ -278,7 +238,7 @@ class RequestOffersScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Center(
                   child: Text(
-                    'لا توجد عروض',
+                    S.of(context).noOffers,
                     style: TextStyles.cairoBold16.copyWith(
                       color: AppColors.blueNormal,
                     ),
@@ -330,7 +290,7 @@ class RequestOffersScreen extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            margin: EdgeInsets.only(top:10.h),
+            margin: EdgeInsets.only(top: 10.h),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: AppColors.blueGrey,
@@ -343,9 +303,8 @@ class RequestOffersScreen extends StatelessWidget {
                   backgroundColor: AppColors.yellowNormal,
                 ),
                 SizedBox(width: 8.w),
-                // const Spacer(),
                 Text(
-                  'جاري استقبال العروض المتاحة...',
+                  S.of(context).receivingOffers,
                   style: TextStyles.cairoBold13.copyWith(
                     color: AppColors.blueDark,
                   ),
@@ -356,7 +315,6 @@ class RequestOffersScreen extends StatelessWidget {
           ),
         ),
         SizedBox(width: 10.w),
-
         InkWell(
           borderRadius: CustomRadius.circle,
           onTap: () {

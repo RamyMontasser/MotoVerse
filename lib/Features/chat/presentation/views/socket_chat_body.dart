@@ -4,11 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_app_dialog.dart';
-import 'package:motoverse/Features/socket_chat/presentation/cubit/socket_chat_cubit.dart';
-import 'package:motoverse/Features/socket_chat/presentation/cubit/socket_chat_state.dart';
-import 'package:motoverse/Features/socket_chat/presentation/widgets/chat_app_bar.dart';
-import 'package:motoverse/Features/socket_chat/presentation/widgets/socket_message_bubble.dart';
-import 'package:motoverse/Features/socket_chat/presentation/widgets/socket_message_input.dart';
+import 'package:motoverse/Features/chat/presentation/cubit/socket_chat_cubit.dart';
+import 'package:motoverse/Features/chat/presentation/cubit/socket_chat_state.dart';
+import 'package:motoverse/Features/chat/presentation/widgets/chat_app_bar.dart';
+import 'package:motoverse/Features/chat/presentation/widgets/socket_message_bubble.dart';
+import 'package:motoverse/Features/chat/presentation/widgets/socket_message_input.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class SocketChatBody extends StatefulWidget {
   final String chatId;
@@ -42,53 +43,15 @@ class SocketChatBody extends StatefulWidget {
 class _SocketChatBodyState extends State<SocketChatBody> {
   final ScrollController _scrollController = ScrollController();
 
-  // String chatId = '';
-  // String helperName = '';
-  // String? helperAvatar;
-  // bool isHelper = false;
-  // String otherUserId = '';
-  // String requestId = '';
-  // String offerId = '';
-  // String averageRating = '';
-  // bool helperVerified = false;
-  // bool _isInit = true;
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   if (_isInit) {
-  //     final args =
-  //         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-  //     if (args != null) {
-  //       chatId = args['chatId']?.toString() ?? '';
-  //       chatUserId = args['chatUserId']?.toString() ?? '';
-  //       chatUserName = args['chatUserName'] ?? '';
-  //       helperAvatar = args['helperAvatar'];
-  //       isHelper = args['isHelper'] ?? false;
-  //       requestId = args['requestId']?.toString() ?? '';
-  //       offerId = args['offerId']?.toString() ?? '';
-  //       averageRating = args['averageRating']?.toString() ?? '';
-  //       helperVerified = args['helperVerified'] ?? false;
-
-  //       if (chatId.isNotEmpty) {
-  //         context.read<SocketChatCubit>().connectToChatRoom(chatId: chatId);
-  //         context.read<SocketChatCubit>().markChatAsSeen(chatId);
-  //       }
-  //     }
-  //     _isInit = false;
-  //   }
-  // }
-
   Future<void> _confirmCompleteRequest() async {
     final shouldComplete = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => CustomAppDialog(
-        title: 'تأكيد إنهاء الطلب',
-        desc:
-            'بمجرد انهاء الطلب، لن تتمكن من التواصل مع الطرف الآخر عبر هذه المحادثة. هل أنت متأكد أنك تريد إنهاء الطلب؟',
-        btnText: 'نعم',
+        title: S.of(dialogContext).confirmCompleteRequestTitle,
+        desc: S.of(dialogContext).confirmCompleteRequestDesc,
+        btnText: S.of(dialogContext).yes,
         onTap: () => Navigator.of(dialogContext).pop(true),
-        btnText2: 'لا',
+        btnText2: S.of(dialogContext).no,
         onTap2: () => Navigator.of(dialogContext).pop(false),
       ),
     );
@@ -115,7 +78,6 @@ class _SocketChatBodyState extends State<SocketChatBody> {
 
   @override
   void dispose() {
-    // context.read<SocketChatCubit>().disconnectFromChat();
     _scrollController.dispose();
     super.dispose();
   }
@@ -134,7 +96,9 @@ class _SocketChatBodyState extends State<SocketChatBody> {
         resizeToAvoidBottomInset: true,
         appBar: ChatAppBar(
           name: widget.chatUserName,
-          status: widget.isOnline ? 'متصل' : 'غير متصل',
+          status: widget.isOnline
+              ? S.of(context).online
+              : S.of(context).offline,
           avatarUrl: widget.helperAvatar,
           onDeleteChat: widget.isHelper ? () {} : _confirmCompleteRequest,
           isHelper: widget.isHelper,
@@ -190,7 +154,7 @@ class _SocketChatBodyState extends State<SocketChatBody> {
                       final messages = state.messages;
 
                       if (messages.isEmpty) {
-                        return const Center(child: Text('لا توجد رسائل بعد'));
+                        return Center(child: Text(S.of(context).noMessagesYet));
                       }
 
                       return ListView.builder(
@@ -230,7 +194,6 @@ class _SocketChatBodyState extends State<SocketChatBody> {
                   },
                 ),
               ),
-              // SizedBox(height: 90.h),
             ],
           ),
         ),

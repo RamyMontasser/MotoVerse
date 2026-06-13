@@ -8,6 +8,7 @@ import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class MapCard extends StatefulWidget {
   const MapCard({super.key, required this.isDone});
@@ -29,16 +30,6 @@ class _MapCardState extends State<MapCard> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CurrentLocationCubit, CurrentLocationState>(
-      // listener: (context, state) {
-      //   if (state is CurrentLocationSuccess) {
-      //     WidgetsBinding.instance.addPostFrameCallback((_) {
-      //       context.read<CurrentLocationCubit>().moveToCurrentPosition(
-      //         state.currentLocation.latitude,
-      //         state.currentLocation.longitude,
-      //       );
-      //     });
-      //   }
-      // },
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         final cubit = context.read<CurrentLocationCubit>();
@@ -84,17 +75,6 @@ class _MapCardState extends State<MapCard> {
                           interactionOptions: const InteractionOptions(
                             flags: InteractiveFlag.all,
                           ),
-                          // onMapReady: () {
-                          //       final pos = cubit.lastKnownPosition;
-                          //       if (pos != null) {
-                          //         WidgetsBinding.instance.addPostFrameCallback((_) {
-                          //           cubit.moveToCurrentPosition(
-                          //             pos.latitude,
-                          //             pos.longitude,
-                          //           );
-                          //         });
-                          //       }
-                          //     },
                         ),
                         children: [
                           TileLayer(
@@ -103,7 +83,7 @@ class _MapCardState extends State<MapCard> {
                               'accessToken': AppConstants.mapBoxToken,
                               'id': AppConstants.mapBoxMapId,
                             },
-                            subdomains: ['a', 'b', 'c', 'd'],
+                            subdomains: const ['a', 'b', 'c', 'd'],
                             userAgentPackageName: 'com.example.motoverse',
                           ),
                           MarkerLayer(
@@ -114,7 +94,7 @@ class _MapCardState extends State<MapCard> {
                                         userPos.latitude,
                                         userPos.longitude,
                                       )
-                                    : LatLng(
+                                    : const LatLng(
                                         31.41285350124312,
                                         31.80483832922779,
                                       ),
@@ -145,16 +125,15 @@ class _MapCardState extends State<MapCard> {
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   content: Text(
-                                    'جاري تحديد موقعك، انتظر لحظة...',
+                                    S.of(context).locatingUserMessage,
                                   ),
                                 ),
                               );
                             }
                           },
                           backgroundColor: AppColors.whiteLight,
-                          // foregroundColor: AppColors.blueNormal,
                           child: SvgPicture.asset(
                             'assets/icons/map/gps.svg',
                             width: 21.w,
@@ -164,51 +143,25 @@ class _MapCardState extends State<MapCard> {
                             ),
                           ),
                         ),
-
-                        //  Container(
-                        //   width: 44.w,
-                        //   height: 44.h,
-                        //   decoration: BoxDecoration(
-                        //     color: AppColors.whiteLight,
-                        //     shape: BoxShape.circle, // جعل الحاوية دائرية
-                        //     boxShadow: [
-                        //       BoxShadow(
-                        //         color: Colors.black.withOpacity(0.1),
-                        //         blurRadius: 8,
-                        //         offset: const Offset(0, 4),
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   child: Center(
-                        //     child: Icon(
-                        //       Icons.explore, // أيقونة البوصلة
-                        //       color: AppColors.blueNormal, // اللون الأزرق من ثيم التطبيق
-                        //       size: 24.sp,
-                        //     ),
-                        //   ),
-                        // ),
                       ),
                   ],
                 ),
               ),
               if (widget.isDone)
                 ListTile(
-                  // contentPadding: EdgeInsets.symmetric(
-                  //   vertical: 4.h,
-                  // ),
                   title: Text(
-                    'اعثر على مراكز صيانة قريبة',
+                    S.of(context).findNearbyCentersTitle,
                     style: TextStyles.cairoBold13.copyWith(
                       color: AppColors.blueNormal,
                     ),
                   ),
                   subtitle: Text(
-                    'استكشف أكثر من 24 مركزاً',
+                    S.of(context).findNearbyCentersSubtitle,
                     style: TextStyles.cairoRegular11.copyWith(
                       color: AppColors.blueDark,
                     ),
                   ),
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.arrow_forward_ios,
                     color: AppColors.blueNormal,
                     size: 20,

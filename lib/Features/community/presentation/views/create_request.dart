@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/providers/navigation_provider.dart';
 import 'package:motoverse/Core/services/getit.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
@@ -20,6 +19,7 @@ import 'package:motoverse/Features/community/presentation/widgets/map_card.dart'
 import 'package:motoverse/Features/community/presentation/widgets/problem_types_grid.dart';
 import 'package:motoverse/Features/history/presentation/widgets/bottom_sheet_button.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class CreateRequest extends StatefulWidget {
   const CreateRequest({super.key});
@@ -73,7 +73,6 @@ class _CreateRequestState extends State<CreateRequest> {
   }
 
   List<XFile> pickedImages = [];
-
   @override
   Widget build(BuildContext context) {
     final bool isOffLine = ModalRoute.of(context)!.settings.arguments as bool;
@@ -98,15 +97,13 @@ class _CreateRequestState extends State<CreateRequest> {
                                 ? const MapCard(isDone: false)
                                 : const SizedBox(),
                             SizedBox(height: 15.h),
-
                             Text(
-                              "نوع المشكلة",
+                              S.of(context).problemType,
                               style: TextStyles.cairoBold18.copyWith(
                                 color: AppColors.blueDarkActive,
                               ),
                             ),
                             SizedBox(height: 10.h),
-
                             ProblemTypesGrid(
                               selectedIndex: _selectedProblemIndex,
                               problemTypes: _problemTypes,
@@ -116,32 +113,27 @@ class _CreateRequestState extends State<CreateRequest> {
                                 });
                               },
                             ),
-
                             SizedBox(height: 30.h),
-
                             Text(
-                              "وصف المشكلة",
+                              S.of(context).problemDescription,
                               style: TextStyles.cairoBold18.copyWith(
                                 color: AppColors.blueDarkActive,
                               ),
                             ),
                             SizedBox(height: 10.h),
-
                             CustomTextfeildWithBorder(
                               controller: _descriptionController,
-                              hint: "اوصف المشكلة التي تواجهك",
+                              hint: S.of(context).describeYourProblemHint,
                               maxLines: 5,
                             ),
                             SizedBox(height: 30.h),
-
                             Text(
-                              'اضافة صور',
+                              S.of(context).addImages,
                               style: TextStyles.cairoBold18.copyWith(
                                 color: AppColors.blueDarkActive,
                               ),
                             ),
                             SizedBox(height: 15.h),
-
                             ImagesList(
                               onImagePicked: (image) {
                                 setState(() {
@@ -155,7 +147,6 @@ class _CreateRequestState extends State<CreateRequest> {
                               },
                               pickedImages: pickedImages,
                             ),
-
                             SizedBox(height: 10.h),
                             Container(
                               padding: EdgeInsets.symmetric(
@@ -175,7 +166,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                   ),
                                   SizedBox(width: 5.w),
                                   Text(
-                                    "يتم تخزين صورك وبياناتك بأمان",
+                                    S.of(context).dataStoredSecurely,
                                     style: TextStyles.cairoRegular11.copyWith(
                                       color: AppColors.blueNormal,
                                     ),
@@ -183,7 +174,6 @@ class _CreateRequestState extends State<CreateRequest> {
                                 ],
                               ),
                             ),
-                            // SizedBox(height: 150.h),
                           ],
                         ),
                       ),
@@ -193,34 +183,37 @@ class _CreateRequestState extends State<CreateRequest> {
                 BlocConsumer<CreateRequestCubit, CreateRequestState>(
                   listener: (context, state) {
                     if (state is CreateRequestSuccess) {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                      CustomAppDialog(
-                        title: 'تم ارسال الطلب بنجاح',
-                        desc: 'تم استلام طلبك بنجاح\nوسيتم عرض في سجل الطلبات',
-                        icon: Icon(
-                          Icons.check_circle_outline,
-                          color: AppColors.greenNormal,
+                      showDialog(
+                        context: context,
+                        builder: (context) => CustomAppDialog(
+                          title: S.of(context).requestSentSuccessfully,
+                          desc: S.of(context).requestReceivedDesc,
+                          icon: Icon(
+                            Icons.check_circle_outline,
+                            color: AppColors.greenNormal,
+                          ),
+                          iconBgColor: AppColors.greenLight,
                         ),
-                        iconBgColor: AppColors.greenLight,
-                      )
-                        );
-                        Duration(seconds: 2);
+                      );
+                      Duration(seconds: 2);
                       context.read<NavigationProvider>().changeIndex(0);
-                                        Navigator.of(context).pushNamedAndRemoveUntil('main screen', (route) => false);
-                      //   Navigator.of(context).pushNamed('RequestDone');
-                      // } else if (state is CreateRequestFail) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     SnackBar(content: Text(state.errorMessage)),
-                      //   );
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        'main screen',
+                        (route) => false,
+                      );
                     }
                     if (state is CreateRequestFail) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: AppColors.redNormal,
-                          content: Text(state.errorMessage, style: TextStyles.cairoRegular14.copyWith(color: AppColors.whiteLight),),
-                      ));
+                          content: Text(
+                            state.errorMessage,
+                            style: TextStyles.cairoRegular14.copyWith(
+                              color: AppColors.whiteLight,
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   },
                   builder: (context, state) {
@@ -237,15 +230,17 @@ class _CreateRequestState extends State<CreateRequest> {
                       );
                     }
                     return BottomSheetButton(
-                      text: 'طلب المساعدة',
+                      text: S.of(context).requestHelp,
                       fun: () {
                         if (!_formKey.currentState!.validate()) {
                           return;
                         }
                         if (_selectedProblemIndex == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('الرجاء اختيار نوع المشكلة'),
+                            SnackBar(
+                              content: Text(
+                                S.of(context).selectProblemTypeValidation,
+                              ),
                             ),
                           );
                           return;
@@ -273,7 +268,6 @@ class _CreateRequestState extends State<CreateRequest> {
                             requestType: isOffLine ? "offline" : "online",
                             latitude: isOffLine ? lat : null,
                             longitude: isOffLine ? lng : null,
-                            // city: "asdf",
                             city: city,
                             images: pickedImages,
                           ),

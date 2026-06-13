@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
+import 'package:motoverse/Features/chat/data/models/text_message_model.dart';
 
 @immutable
 sealed class SocketChatState {}

@@ -9,6 +9,7 @@ import 'package:motoverse/Features/bot/domain/repo/ai_repo.dart';
 import 'package:motoverse/Features/bot/presentation/cubit/ai_cubit.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/chat_response.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/message.dart';
+import 'package:motoverse/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AiAssistant extends StatefulWidget {
@@ -35,7 +36,6 @@ class _AiAssistantState extends State<AiAssistant> {
       create: (context) => AiCubit(aiRepo: getIt<AiRepo>()),
       child: Builder(
         builder: (innerContext) {
-          // 📥 استقبال الـ Arguments وعمل الـ Request الأول بمجرد فتح الشاشة
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final arguments = ModalRoute.of(context)?.settings.arguments;
 
@@ -62,9 +62,6 @@ class _AiAssistantState extends State<AiAssistant> {
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: BlocBuilder<AiCubit, AiState>(
                         builder: (context, state) {
-                          // ==========================================
-                          // 💬 1. حالات الـ Chat العادي
-                          // ==========================================
                           if (state is AiChatLoading) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,13 +125,11 @@ class _AiAssistantState extends State<AiAssistant> {
                           }
 
                           if (state is AiObdSuccess) {
-                            // 💡 الموديل نفسه بقا شايل البيانات علطول بدون لستة وبدون لفة!
                             final obdData = state.obdResponse;
 
-                            // لو السيرفر رجع استجابة فاضية أو الكود مش موجود
                             if (obdData.code == null) {
                               return _buildFailureWidget(
-                                'لم يتم العثور على تشخيصات لهذا الكود.',
+                                S.of(context).noDiagnosticsFound,
                               );
                             }
 
@@ -177,7 +172,6 @@ class _AiAssistantState extends State<AiAssistant> {
     );
   }
 
-  // ويدجت موحدة لعرض رسائل الخطأ
   Widget _buildFailureWidget(String message) {
     return Center(
       child: Padding(

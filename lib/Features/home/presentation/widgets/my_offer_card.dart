@@ -6,6 +6,7 @@ import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/presentation/views/my_offers_page.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class MyOfferCard extends StatelessWidget {
   const MyOfferCard({super.key, required this.offers});
@@ -61,7 +62,6 @@ class MyOfferCard extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
-          // Middle: Text Info
           Expanded(
             flex: 4,
             child: Row(
@@ -79,14 +79,14 @@ class MyOfferCard extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      'عروضي الحالية',
+                      S.of(context).myCurrentOffers,
                       style: TextStyles.cairoBold14.copyWith(
                         color: AppColors.blueNormal,
                       ),
                     ),
                     if (acceptedOffer.isNotEmpty)
                       Text(
-                        'يوجد محادثة نشطة',
+                        S.of(context).activeChatExists,
                         style: TextStyles.cairoRegular14.copyWith(
                           color: AppColors.greenNormal,
                         ),
@@ -99,7 +99,7 @@ class MyOfferCard extends StatelessWidget {
           Expanded(
             flex: 2,
             child: CustomElevatedButton(
-              text: 'عرض العروض',
+              text: S.of(context).viewOffers,
               radius: CustomRadius.card12,
               fun: () {
                 Navigator.of(context).push(
@@ -112,7 +112,6 @@ class MyOfferCard extends StatelessWidget {
               height: 32,
               fontStyle: TextStyles.cairoBold12,
               backgColor: AppColors.greenNormal,
-              // padding: EdgeInsets.symmetric(horizontal: 14.w),
             ),
           ),
         ],

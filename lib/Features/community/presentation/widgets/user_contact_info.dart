@@ -10,7 +10,7 @@ import 'package:motoverse/Features/community/data/models/request_model.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/notification_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:motoverse/Features/community/domain/entities/request_entity.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class UserContactInfo extends StatelessWidget {
   final RequestModel request;
@@ -40,6 +40,7 @@ class UserContactInfo extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -79,7 +80,6 @@ class UserContactInfo extends StatelessWidget {
                   CircleAvatar(
                     radius: 9.r,
                     backgroundColor: AppColors.blueLight,
-                    // backgroundColor: AppColors.whiteLight,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 2.w,
@@ -95,30 +95,37 @@ class UserContactInfo extends StatelessWidget {
                 ],
               ),
               SizedBox(width: 10.w),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    isHelper ? request.userName : offer.helperName,
-                    style: TextStyles.cairoBold14.copyWith(
-                      color: AppColors.blueNormal,
-                      height: 2.h,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      isHelper ? request.userName : offer.helperName,
+                      style: TextStyles.cairoBold14.copyWith(
+                        color: AppColors.blueNormal,
+                        height: 2.h,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Text(
-                    "عضو منذ ${isHelper ? request.memberSince : offer.memberSince}",
-                    style: TextStyles.cairoRegular11.copyWith(
-                      color: AppColors.whiteDarkActive,
+                    Text(
+                      S
+                          .of(context)
+                          .memberSince(
+                            isHelper ? request.memberSince : offer.memberSince,
+                          ),
+                      style: TextStyles.cairoRegular11.copyWith(
+                        color: AppColors.whiteDarkActive,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-
-              const Spacer(),
-
+              SizedBox(width: 10.w),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.w),
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
                   color: AppColors.whiteLight,
@@ -128,11 +135,11 @@ class UserContactInfo extends StatelessWidget {
                       color: AppColors.blueDarker.withAlpha(30),
                       spreadRadius: 0,
                       blurRadius: 2,
-                      // offset: const Offset(0, 6),
                     ),
                   ],
                 ),
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       Icons.star_outline,
@@ -141,10 +148,7 @@ class UserContactInfo extends StatelessWidget {
                     ),
                     SizedBox(width: 2.w),
                     Text(
-                      isHelper
-                          // ?'3.5'
-                          ? request.averageRating
-                          : offer.averageRating,
+                      isHelper ? request.averageRating : offer.averageRating,
                       style: TextStyles.cairoBold12.copyWith(
                         color: AppColors.blueDarkActive,
                       ),
@@ -155,13 +159,12 @@ class UserContactInfo extends StatelessWidget {
             ],
           ),
           const Divider(height: 20, color: AppColors.blueLight),
-
           if (offer.status == 'accepted')
             Row(
               children: [
                 Expanded(
                   child: CustomElevatedButton(
-                    text: 'اتصال',
+                    text: S.of(context).call,
                     radius: CustomRadius.card12,
                     fun: () async {
                       final phoneNumber = isHelper
@@ -174,7 +177,7 @@ class UserContactInfo extends StatelessWidget {
                     },
                     height: 45,
                     fontStyle: TextStyles.cairoBold16,
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.call_outlined,
                       size: 20,
                       color: AppColors.blueNormal,
@@ -183,12 +186,10 @@ class UserContactInfo extends StatelessWidget {
                     foregColor: AppColors.blueDark,
                   ),
                 ),
-
                 SizedBox(width: 12.w),
-
                 Expanded(
                   child: CustomElevatedButton(
-                    text: 'دردشة',
+                    text: S.of(context).chat,
                     radius: CustomRadius.card12,
                     fun: () {
                       context.read<NotificationCubit>().enterChat(
@@ -197,7 +198,7 @@ class UserContactInfo extends StatelessWidget {
                     },
                     height: 45,
                     fontStyle: TextStyles.cairoBold16,
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.chat_bubble_outline_outlined,
                       size: 20,
                       color: AppColors.blueNormal,

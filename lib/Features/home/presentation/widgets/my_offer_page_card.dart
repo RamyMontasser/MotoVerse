@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:motoverse/Core/constants/constants.dart';
-// import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
@@ -11,13 +10,14 @@ import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
 import 'package:motoverse/Features/home/data/models/offer_model.dart';
 import 'package:motoverse/Features/home/presentation/cubit/current_location_cubit.dart';
 import 'package:motoverse/Features/home/presentation/cubit/my_offers_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class MyOfferPageCard extends StatelessWidget {
   const MyOfferPageCard({super.key, required this.offerModel});
 
   final OfferModel offerModel;
 
-  String _formatArabicDateTime(String createdAt) {
+  String _formatArabicDateTime(BuildContext context, String createdAt) {
     try {
       final dateTime = DateTime.parse(createdAt).toLocal();
       final now = DateTime.now();
@@ -26,16 +26,16 @@ class MyOfferPageCard extends StatelessWidget {
 
       String dayStr;
       if (dateToCheck == today) {
-        dayStr = 'اليوم';
+        dayStr = S.of(context).today;
       } else if (dateToCheck == today.subtract(const Duration(days: 1))) {
-        dayStr = 'أمس';
+        dayStr = S.of(context).yesterday;
       } else {
         dayStr = '${dateTime.year}/${dateTime.month}/${dateTime.day}';
       }
 
       int hour = dateTime.hour;
       final minute = dateTime.minute.toString().padLeft(2, '0');
-      final period = hour >= 12 ? 'مساءً' : 'صباحاً';
+      final period = hour >= 12 ? S.of(context).pm : S.of(context).am;
       if (hour > 12) hour -= 12;
       if (hour == 0) hour = 12;
 
@@ -56,24 +56,22 @@ class MyOfferPageCard extends StatelessWidget {
     switch (offerModel.status) {
       case 'accepted':
         statusColor = AppColors.greenNormal;
-        statusText = 'مقبول';
+        statusText = S.of(context).accepted;
         break;
       case 'rejected':
         statusColor = AppColors.redDark;
-        statusText = 'مرفوض';
+        statusText = S.of(context).rejected;
         break;
       case 'completed':
         statusColor = AppColors.blueNormal;
-        statusText = 'مكتمل';
+        statusText = S.of(context).completed;
         break;
       case 'pending':
       default:
         statusColor = AppColors.yellowNormal;
-        statusText = 'قيد الانتظار';
+        statusText = S.of(context).pending;
         break;
     }
-
-    // String buttonText = offerModel.status == 'accepted' ? 'الذهاب للدردشة' : 'عرض التفاصيل';
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7.h),
@@ -102,22 +100,6 @@ class MyOfferPageCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Status Badge
-
-              // SizedBox(width: 8.w),
-              // Delete Icon (visible for pending)
-              // if (offerModel.status == 'pending')
-              // InkWell(
-              //   onTap: () {
-              //     context.read<MyOffersCubit>().deleteOffer(offerId: offerModel.id);
-              //   },
-              //   borderRadius: CustomRadius.auth,
-              //   child: Padding(
-              //     padding: EdgeInsets.all(4.r),
-              //     child: Icon(Icons.delete_outline, color: AppColors.redDark, size: 20.sp),
-              //   ),
-              // ),
-              // const Spacer(),
               CircleAvatar(
                 radius: 26.r,
                 backgroundColor: statusColor,
@@ -147,9 +129,7 @@ class MyOfferPageCard extends StatelessWidget {
                   color: AppColors.blueDarkActive,
                 ),
               ),
-
-              Spacer(),
-
+              const Spacer(),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 6.h),
                 decoration: BoxDecoration(
@@ -164,12 +144,10 @@ class MyOfferPageCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
-          // Details Box
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: 0.05),
-              //  AppColors.blueGrey.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Column(
@@ -178,15 +156,15 @@ class MyOfferPageCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'نوع المساعدة',
+                      S.of(context).helpType,
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.whiteDarkActive,
                       ),
                     ),
                     Text(
                       offerModel.distance != null
-                          ? 'مساعدة ميدانية'
-                          : 'مساعدة أونلاين',
+                          ? S.of(context).fieldHelp
+                          : S.of(context).onlineHelp,
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.blueNormal,
                       ),
@@ -198,13 +176,13 @@ class MyOfferPageCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'التاريخ والوقت',
+                      S.of(context).dateTime,
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.whiteDarkActive,
                       ),
                     ),
                     Text(
-                      _formatArabicDateTime(offerModel.createdAt),
+                      _formatArabicDateTime(context, offerModel.createdAt),
                       style: TextStyles.cairoRegular14.copyWith(
                         color: AppColors.blueDarker,
                       ),
@@ -216,7 +194,7 @@ class MyOfferPageCard extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           CustomElevatedButton(
-            text: 'عرض التفاصيل',
+            text: S.of(context).viewDetails,
             radius: CustomRadius.card12,
             fun: () {
               final locationState = context.read<CurrentLocationCubit>().state;

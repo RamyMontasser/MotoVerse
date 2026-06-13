@@ -136,7 +136,7 @@ class ApiService extends NetworkService {
   }
 
   @override
-  Future<dynamic> patchDataForSignUp({
+  Future<dynamic> addDataForSignUp({
     required String endPoint,
     required Map<String, dynamic> data,
     required String token,
@@ -150,7 +150,7 @@ class ApiService extends NetworkService {
       header["Local"] = local;
     }
 
-    var response = await dio.patch(
+    var response = await dio.post(
       endPoint,
       data: data,
       options: Options(

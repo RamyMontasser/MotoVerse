@@ -66,8 +66,8 @@ class AuthRepoImp implements AuthRepo {
     required String verifyToken,
   }) async {
     try {
-      var response = await networkService.patchDataForSignUp(
-        endPoint: '/accounts/auth/complete-profile/',
+      var response = await networkService.addDataForSignUp(
+        endPoint: '/accounts/auth/register/',
         data: UserModel.fromEntity(userEntity).toMap(),
         token: verifyToken,
         requiresAuth: false,

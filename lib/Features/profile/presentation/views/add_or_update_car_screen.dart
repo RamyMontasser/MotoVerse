@@ -12,6 +12,7 @@ import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
 import 'package:motoverse/Core/widgets/custom_textfeild_with_border.dart';
 import 'package:motoverse/Features/profile/data/models/car_model.dart';
 import 'package:motoverse/Features/profile/presentation/cubit/profile_car_cubit.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class AddOrUpdateCarScreen extends StatefulWidget {
   const AddOrUpdateCarScreen({super.key});
@@ -97,8 +98,8 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
             SnackBar(
               content: Text(
                 _isEditMode
-                    ? 'تم تحديث بيانات السيارة بنجاح'
-                    : 'تم إضافة السيارة بنجاح',
+                    ? S.of(context).carUpdatedSuccess
+                    : S.of(context).carAddedSuccess,
                 style: TextStyles.cairoRegular13,
               ),
               backgroundColor: AppColors.greenNormal,
@@ -131,16 +132,14 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // --- Title ---
                       Text(
-                        'معلومات سيارتك',
+                        S.of(context).carInformation,
                         style: TextStyles.cairoBold20.copyWith(
                           color: AppColors.blueNormal,
                         ),
                       ),
                       SizedBox(height: 24.h),
 
-                      // --- Car Icon circular container ---
                       Container(
                         width: 100.w,
                         height: 100.w,
@@ -165,11 +164,10 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       ),
                       SizedBox(height: 32.h),
 
-                      // --- Car Brand ---
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          'ماركة السيارة',
+                          S.of(context).carBrand,
                           style: TextStyles.cairoBold16.copyWith(
                             color: AppColors.blueNormal,
                           ),
@@ -178,16 +176,15 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       SizedBox(height: 8.h),
                       CustomTextfeildWithBorder(
                         controller: _brandController,
-                        hint: 'تويوتا',
+                        hint: S.of(context).toyotaHint,
                         validator: AppValidator.validateEmpty,
                       ),
                       SizedBox(height: 20.h),
 
-                      // --- Car Model ---
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          'موديل السيارة',
+                          S.of(context).carModel,
                           style: TextStyles.cairoBold16.copyWith(
                             color: AppColors.blueNormal,
                           ),
@@ -196,12 +193,11 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       SizedBox(height: 8.h),
                       CustomTextfeildWithBorder(
                         controller: _modelController,
-                        hint: 'كامري',
+                        hint: S.of(context).camryHint,
                         validator: AppValidator.validateEmpty,
                       ),
                       SizedBox(height: 20.h),
 
-                      // --- Manufacture Year and Plate Number side-by-side ---
                       Row(
                         children: [
                           Expanded(
@@ -209,7 +205,7 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'سنة التصنيع',
+                                  S.of(context).manufactureYear,
                                   style: TextStyles.cairoBold16.copyWith(
                                     color: AppColors.blueNormal,
                                   ),
@@ -230,7 +226,7 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'رقم اللوحة',
+                                  S.of(context).plateNumber,
                                   style: TextStyles.cairoBold16.copyWith(
                                     color: AppColors.blueNormal,
                                   ),
@@ -238,7 +234,7 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                                 SizedBox(height: 8.h),
                                 CustomTextfeildWithBorder(
                                   controller: _plateController,
-                                  hint: 'أ ب ج ١٢٣٤',
+                                  hint: S.of(context).plateHint,
                                   validator: AppValidator.validateEmpty,
                                 ),
                               ],
@@ -248,11 +244,10 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       ),
                       SizedBox(height: 24.h),
 
-                      // --- Car Color ---
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          'لون السيارة',
+                          S.of(context).carColor,
                           style: TextStyles.cairoBold16.copyWith(
                             color: AppColors.blueNormal,
                           ),
@@ -260,7 +255,6 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       ),
                       SizedBox(height: 12.h),
 
-                      // Color selector row
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: _colorMap.entries.map((entry) {
@@ -277,11 +271,7 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                             },
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 8.w),
-                              padding: EdgeInsets.all(
-                                isSelected ? 2.w : 0,
-                              ), // Add padding for selected state
-                              // width: 40.w,
-                              // height: 38.w,
+                              padding: EdgeInsets.all(isSelected ? 2.w : 0),
                               decoration: BoxDecoration(
                                 color: AppColors.whiteLight,
                                 shape: BoxShape.circle,
@@ -296,16 +286,8 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                                             : Colors.transparent,
                                         width: 1.5,
                                       ),
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //     color: Colors.black.withValues(alpha:0.08),
-                                //     blurRadius: 4,
-                                //     offset: const Offset(0, 2),
-                                //   ),
-                                // ],
                               ),
                               child: Container(
-                                // margin: EdgeInsets.symmetric(horizontal: 8.w),
                                 width: 36.w,
                                 height: 36.w,
                                 decoration: BoxDecoration(
@@ -342,7 +324,7 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                             SizedBox(width: 12.w),
                             Expanded(
                               child: Text(
-                                'تتم معالجة جميع بياناتك الشخصية وتخزينها بشكل آمن وفقاً لسياسة الخصوصية الخاصة بنا',
+                                S.of(context).privacyNote,
                                 style: TextStyles.cairoRegular11.copyWith(
                                   color: AppColors.blueNormal,
                                 ),
@@ -354,7 +336,9 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       SizedBox(height: 32.h),
 
                       CustomElevatedButton(
-                        text: _isEditMode ? 'حفظ التغييرات' : 'إضافة سيارة',
+                        text: _isEditMode
+                            ? S.of(context).saveChanges
+                            : S.of(context).addCar,
                         radius: CustomRadius.card,
                         fun: _submitForm,
                         backgColor: AppColors.blueNormal,
@@ -366,7 +350,7 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
 
                       if (_isEditMode) ...[
                         CustomElevatedButton(
-                          text: 'حذف السيارة',
+                          text: S.of(context).deleteCar,
                           radius: CustomRadius.card,
                           fun: () async {
                             final profileCarCubit = context
@@ -375,10 +359,16 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                               context: context,
                               barrierDismissible: false,
                               builder: (dialogCtx) => CustomAppDialog(
-                                title: 'تأكيد الحذف',
-                                desc: 'هل أنت متأكد من حذف هذه السيارة؟',
-                                btnText: 'إلغاء',
-                                btnText2: 'حذف',
+                                title: S.of(
+                                  context,
+                                ).deleteConfirmationTitle,
+                                desc: S.of(
+                                  context,
+                                ).deleteConfirmationDesc,
+                                btnText: S.of(context).cancel,
+                                btnText2: S.of(
+                                  context,
+                                ).deleteBtn,
                                 onTap: () => Navigator.of(dialogCtx).pop(false),
                                 onTap2: () => Navigator.of(dialogCtx).pop(true),
                                 icon: const Icon(
@@ -403,11 +393,10 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                         SizedBox(height: 12.h),
                       ],
 
-                      // --- Cancel Text Button ---
                       TextButton(
                         onPressed: () => Navigator.pop(context),
                         child: Text(
-                          'إلغاء',
+                          S.of(context).cancel,
                           style: TextStyles.cairoBold16.copyWith(
                             color: AppColors.blueNormal,
                           ),

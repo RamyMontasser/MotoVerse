@@ -64,16 +64,6 @@ class S {
     return Intl.message('Language', name: 'language', desc: '', args: []);
   }
 
-  /// `Arabic`
-  String get arabic {
-    return Intl.message('Arabic', name: 'arabic', desc: '', args: []);
-  }
-
-  /// `English`
-  String get english {
-    return Intl.message('English', name: 'english', desc: '', args: []);
-  }
-
   /// `Next`
   String get next {
     return Intl.message('Next', name: 'next', desc: '', args: []);
@@ -107,46 +97,6 @@ class S {
   /// `Loading...`
   String get loading {
     return Intl.message('Loading...', name: 'loading', desc: '', args: []);
-  }
-
-  /// `{price} EGP`
-  String currency(Object price) {
-    return Intl.message(
-      '$price EGP',
-      name: 'currency',
-      desc: '',
-      args: [price],
-    );
-  }
-
-  /// `{price}M EGP`
-  String priceInMillions(Object price) {
-    return Intl.message(
-      '${price}M EGP',
-      name: 'priceInMillions',
-      desc: '',
-      args: [price],
-    );
-  }
-
-  /// `{price}K EGP`
-  String priceInThousands(Object price) {
-    return Intl.message(
-      '${price}K EGP',
-      name: 'priceInThousands',
-      desc: '',
-      args: [price],
-    );
-  }
-
-  /// `Price Range: {min} - {max}`
-  String priceRange(Object min, Object max) {
-    return Intl.message(
-      'Price Range: $min - $max',
-      name: 'priceRange',
-      desc: '',
-      args: [min, max],
-    );
   }
 
   /// `Welcome`
@@ -359,36 +309,6 @@ class S {
     );
   }
 
-  /// `Your Smart Guide to Cars`
-  String get onboarding1 {
-    return Intl.message(
-      'Your Smart Guide to Cars',
-      name: 'onboarding1',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Be smarter in choosing your car`
-  String get onboarding2 {
-    return Intl.message(
-      'Be smarter in choosing your car',
-      name: 'onboarding2',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `All your car needs in one place`
-  String get onboarding3 {
-    return Intl.message(
-      'All your car needs in one place',
-      name: 'onboarding3',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Start Your Journey`
   String get startJourney {
     return Intl.message(
@@ -399,39 +319,24 @@ class S {
     );
   }
 
-  /// `Start Your Smart Journey now`
-  String get onboarding4 {
+  /// `Select Country`
+  String get selectCountry {
     return Intl.message(
-      'Start Your Smart Journey now',
-      name: 'onboarding4',
+      'Select Country',
+      name: 'selectCountry',
       desc: '',
       args: [],
     );
   }
 
-  /// `Understand your car's problem through AI-based analysis.`
-  String get smartDiagnosisSubtitle {
+  /// `Search Country`
+  String get searchCountry {
     return Intl.message(
-      'Understand your car\'s problem through AI-based analysis.',
-      name: 'smartDiagnosisSubtitle',
+      'Search Country',
+      name: 'searchCountry',
       desc: '',
       args: [],
     );
-  }
-
-  /// `Start Diagnosis`
-  String get startDiagnosis {
-    return Intl.message(
-      'Start Diagnosis',
-      name: 'startDiagnosis',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Home`
-  String get homePage {
-    return Intl.message('Home', name: 'homePage', desc: '', args: []);
   }
 
   /// `Search for a car, service, or center...`
@@ -474,286 +379,1851 @@ class S {
     );
   }
 
-  /// `Featured Cars`
-  String get featuredCars {
+  /// `Understand your car's problem through AI-based analysis.`
+  String get smartDiagnosisSubtitle {
     return Intl.message(
-      'Featured Cars',
-      name: 'featuredCars',
+      'Understand your car\'s problem through AI-based analysis.',
+      name: 'smartDiagnosisSubtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `New`
-  String get newCars {
-    return Intl.message('New', name: 'newCars', desc: '', args: []);
+  /// `Start Diagnosis`
+  String get startDiagnosis {
+    return Intl.message(
+      'Start Diagnosis',
+      name: 'startDiagnosis',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `Used`
-  String get usedCars {
-    return Intl.message('Used', name: 'usedCars', desc: '', args: []);
+  /// `Quick Services`
+  String get quickServices {
+    return Intl.message(
+      'Quick Services',
+      name: 'quickServices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request Help`
+  String get requestHelp {
+    return Intl.message(
+      'Request Help',
+      name: 'requestHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emergency support`
+  String get emergencySupport {
+    return Intl.message(
+      'Emergency support',
+      name: 'emergencySupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nearby Centers`
+  String get nearbyMaintenance {
+    return Intl.message(
+      'Nearby Centers',
+      name: 'nearbyMaintenance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} centers near you`
+  String nearestCentersCount(Object count) {
+    return Intl.message(
+      '$count centers near you',
+      name: 'nearestCentersCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `No nearby centers currently`
+  String get noNearbyCenters {
+    return Intl.message(
+      'No nearby centers currently',
+      name: 'noNearbyCenters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maintenance History`
+  String get maintenanceHistory {
+    return Intl.message(
+      'Maintenance History',
+      name: 'maintenanceHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last maintenance: Loading current technical data...`
+  String get loadingTechnicalData {
+    return Intl.message(
+      'Last maintenance: Loading current technical data...',
+      name: 'loadingTechnicalData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last maintenance: {service} – {date}`
+  String lastMaintenanceDetails(Object service, Object date) {
+    return Intl.message(
+      'Last maintenance: $service – $date',
+      name: 'lastMaintenanceDetails',
+      desc: '',
+      args: [service, date],
+    );
+  }
+
+  /// `No maintenance history yet`
+  String get noMaintenanceHistory {
+    return Intl.message(
+      'No maintenance history yet',
+      name: 'noMaintenanceHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Current Offers`
+  String get myCurrentOffers {
+    return Intl.message(
+      'My Current Offers',
+      name: 'myCurrentOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active chat exists`
+  String get activeChatExists {
+    return Intl.message(
+      'Active chat exists',
+      name: 'activeChatExists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Offers`
+  String get viewOffers {
+    return Intl.message('View Offers', name: 'viewOffers', desc: '', args: []);
+  }
+
+  /// `Ongoing Requests`
+  String get ongoingRequests {
+    return Intl.message(
+      'Ongoing Requests',
+      name: 'ongoingRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track Request`
+  String get trackRequest {
+    return Intl.message(
+      'Track Request',
+      name: 'trackRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find nearby maintenance centers`
+  String get findNearbyCenters {
+    return Intl.message(
+      'Find nearby maintenance centers',
+      name: 'findNearbyCenters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explore more than {count} centers near you`
+  String exploreNearbyCentersCount(Object count) {
+    return Intl.message(
+      'Explore more than $count centers near you',
+      name: 'exploreNearbyCentersCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Locating nearby centers...`
+  String get locatingNearbyCenters {
+    return Intl.message(
+      'Locating nearby centers...',
+      name: 'locatingNearbyCenters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications`
+  String get notifications1 {
+    return Intl.message(
+      'Notifications',
+      name: 'notifications1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No notifications currently`
+  String get noNotifications {
+    return Intl.message(
+      'No notifications currently',
+      name: 'noNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today`
+  String get today {
+    return Intl.message('Today', name: 'today', desc: '', args: []);
+  }
+
+  /// `Earlier`
+  String get past {
+    return Intl.message('Earlier', name: 'past', desc: '', args: []);
+  }
+
+  /// `My Offers`
+  String get myOffers {
+    return Intl.message('My Offers', name: 'myOffers', desc: '', args: []);
+  }
+
+  /// `Offer deleted successfully`
+  String get deleteOfferSuccess {
+    return Intl.message(
+      'Offer deleted successfully',
+      name: 'deleteOfferSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No accepted offers currently`
+  String get noAcceptedOffers {
+    return Intl.message(
+      'No accepted offers currently',
+      name: 'noAcceptedOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No pending offers currently`
+  String get noPendingOffers {
+    return Intl.message(
+      'No pending offers currently',
+      name: 'noPendingOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No completed offers currently`
+  String get noCompletedOffers {
+    return Intl.message(
+      'No completed offers currently',
+      name: 'noCompletedOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No rejected offers currently`
+  String get noRejectedOffers {
+    return Intl.message(
+      'No rejected offers currently',
+      name: 'noRejectedOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No submitted offers currently`
+  String get noSubmittedOffers {
+    return Intl.message(
+      'No submitted offers currently',
+      name: 'noSubmittedOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accepted`
+  String get accepted {
+    return Intl.message('Accepted', name: 'accepted', desc: '', args: []);
+  }
+
+  /// `Rejected`
+  String get rejected {
+    return Intl.message('Rejected', name: 'rejected', desc: '', args: []);
+  }
+
+  /// `Completed`
+  String get completed {
+    return Intl.message('Completed', name: 'completed', desc: '', args: []);
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message('Pending', name: 'pending', desc: '', args: []);
+  }
+
+  /// `Yesterday`
+  String get yesterday {
+    return Intl.message('Yesterday', name: 'yesterday', desc: '', args: []);
+  }
+
+  /// `PM`
+  String get pm {
+    return Intl.message('PM', name: 'pm', desc: '', args: []);
+  }
+
+  /// `AM`
+  String get am {
+    return Intl.message('AM', name: 'am', desc: '', args: []);
+  }
+
+  /// `Help Type`
+  String get helpType {
+    return Intl.message('Help Type', name: 'helpType', desc: '', args: []);
+  }
+
+  /// `Offline Help`
+  String get fieldHelp {
+    return Intl.message('Offline Help', name: 'fieldHelp', desc: '', args: []);
+  }
+
+  /// `Date & Time`
+  String get dateTime {
+    return Intl.message('Date & Time', name: 'dateTime', desc: '', args: []);
+  }
+
+  /// `View Details`
+  String get viewDetails {
+    return Intl.message(
+      'View Details',
+      name: 'viewDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attached Images`
+  String get attachedImages {
+    return Intl.message(
+      'Attached Images',
+      name: 'attachedImages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} images`
+  String imagesCount(Object count) {
+    return Intl.message(
+      '$count images',
+      name: 'imagesCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Request cancelled successfully`
+  String get requestCancelledSuccessfully {
+    return Intl.message(
+      'Request cancelled successfully',
+      name: 'requestCancelledSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help offer submitted successfully`
+  String get helpOfferSubmittedSuccessfully {
+    return Intl.message(
+      'Help offer submitted successfully',
+      name: 'helpOfferSubmittedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sending offer...`
+  String get sendingOffer {
+    return Intl.message(
+      'Sending offer...',
+      name: 'sendingOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Provide Help`
+  String get provideHelp {
+    return Intl.message(
+      'Provide Help',
+      name: 'provideHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Battery`
+  String get battery {
+    return Intl.message('Battery', name: 'battery', desc: '', args: []);
+  }
+
+  /// `Engine`
+  String get engine {
+    return Intl.message('Engine', name: 'engine', desc: '', args: []);
+  }
+
+  /// `Tires`
+  String get tires {
+    return Intl.message('Tires', name: 'tires', desc: '', args: []);
+  }
+
+  /// `Other`
+  String get other {
+    return Intl.message('Other', name: 'other', desc: '', args: []);
+  }
+
+  /// `You want to request help directly on the road`
+  String get roadsideHelpDesc {
+    return Intl.message(
+      'You want to request help directly on the road',
+      name: 'roadsideHelpDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request Help`
+  String get requestHelpButton {
+    return Intl.message(
+      'Request Help',
+      name: 'requestHelpButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You want online help via chat`
+  String get onlineChatHelpDesc {
+    return Intl.message(
+      'You want online help via chat',
+      name: 'onlineChatHelpDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while loading data`
+  String get errorLoadingData {
+    return Intl.message(
+      'An error occurred while loading data',
+      name: 'errorLoadingData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer status updated successfully`
+  String get offerStatusUpdated {
+    return Intl.message(
+      'Offer status updated successfully',
+      name: 'offerStatusUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request cancelled successfully`
+  String get requestCancelled {
+    return Intl.message(
+      'Request cancelled successfully',
+      name: 'requestCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat created successfully`
+  String get chatCreated {
+    return Intl.message(
+      'Chat created successfully',
+      name: 'chatCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Request Details`
+  String get viewRequestDetails {
+    return Intl.message(
+      'View Request Details',
+      name: 'viewRequestDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel Request`
+  String get cancelRequest {
+    return Intl.message(
+      'Cancel Request',
+      name: 'cancelRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available Offers`
+  String get availableOffers {
+    return Intl.message(
+      'Available Offers',
+      name: 'availableOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No offers available`
+  String get noOffers {
+    return Intl.message(
+      'No offers available',
+      name: 'noOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receiving available offers...`
+  String get receivingOffers {
+    return Intl.message(
+      'Receiving available offers...',
+      name: 'receivingOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Arrival Time`
+  String get arrivalTime {
+    return Intl.message(
+      'Arrival Time',
+      name: 'arrivalTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{minutes} min`
+  String minutesDuration(Object minutes) {
+    return Intl.message(
+      '$minutes min',
+      name: 'minutesDuration',
+      desc: '',
+      args: [minutes],
+    );
+  }
+
+  /// `Distance`
+  String get distanceLabel {
+    return Intl.message('Distance', name: 'distanceLabel', desc: '', args: []);
+  }
+
+  /// `{distance} km`
+  String distanceKm(Object distance) {
+    return Intl.message(
+      '$distance km',
+      name: 'distanceKm',
+      desc: '',
+      args: [distance],
+    );
+  }
+
+  /// `Offer Accepted`
+  String get offerAccepted {
+    return Intl.message(
+      'Offer Accepted',
+      name: 'offerAccepted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept`
+  String get accept {
+    return Intl.message('Accept', name: 'accept', desc: '', args: []);
+  }
+
+  /// `Reject`
+  String get reject {
+    return Intl.message('Reject', name: 'reject', desc: '', args: []);
+  }
+
+  /// `Start documenting your car's maintenance journey to alert you of upcoming appointments.`
+  String get startDocumentingJourney {
+    return Intl.message(
+      'Start documenting your car\'s maintenance journey to alert you of upcoming appointments.',
+      name: 'startDocumentingJourney',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Maintenance History`
+  String get addMaintenanceHistory {
+    return Intl.message(
+      'Add Maintenance History',
+      name: 'addMaintenanceHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Maintenance`
+  String get lastMaintenance {
+    return Intl.message(
+      'Last Maintenance',
+      name: 'lastMaintenance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No history`
+  String get noHistory {
+    return Intl.message('No history', name: 'noHistory', desc: '', args: []);
+  }
+
+  /// `Total Payment`
+  String get totalPayment {
+    return Intl.message(
+      'Total Payment',
+      name: 'totalPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{cost} EGP`
+  String egpCurrency(Object cost) {
+    return Intl.message(
+      '$cost EGP',
+      name: 'egpCurrency',
+      desc: '',
+      args: [cost],
+    );
+  }
+
+  /// `New Maintenance Record`
+  String get newMaintenanceRecord {
+    return Intl.message(
+      'New Maintenance Record',
+      name: 'newMaintenanceRecord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get dateLabel {
+    return Intl.message('Date', name: 'dateLabel', desc: '', args: []);
+  }
+
+  /// `Maintenance Center`
+  String get maintenanceCenter {
+    return Intl.message(
+      'Maintenance Center',
+      name: 'maintenanceCenter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maintenance Type`
+  String get maintenanceType {
+    return Intl.message(
+      'Maintenance Type',
+      name: 'maintenanceType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get descriptionLabel {
+    return Intl.message(
+      'Description',
+      name: 'descriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost (EGP)`
+  String get costEgp {
+    return Intl.message('Cost (EGP)', name: 'costEgp', desc: '', args: []);
+  }
+
+  /// `Saving...`
+  String get saving {
+    return Intl.message('Saving...', name: 'saving', desc: '', args: []);
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message('Save', name: 'save', desc: '', args: []);
+  }
+
+  /// `{service} was performed to resolve the issue`
+  String maintenanceDoneReason(Object service) {
+    return Intl.message(
+      '$service was performed to resolve the issue',
+      name: 'maintenanceDoneReason',
+      desc: '',
+      args: [service],
+    );
+  }
+
+  /// `Search for a problem or service center...`
+  String get mapSearchHint {
+    return Intl.message(
+      'Search for a problem or service center...',
+      name: 'mapSearchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fetching your location, please wait...`
+  String get fetchingLocation {
+    return Intl.message(
+      'Fetching your location, please wait...',
+      name: 'fetchingLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No service centers found nearby`
+  String get noServiceCentersFound {
+    return Intl.message(
+      'No service centers found nearby',
+      name: 'noServiceCentersFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loadingNamePlaceholder {
+    return Intl.message(
+      'Loading...',
+      name: 'loadingNamePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `km`
+  String get km {
+    return Intl.message('km', name: 'km', desc: '', args: []);
+  }
+
+  /// `Directions`
+  String get directions {
+    return Intl.message('Directions', name: 'directions', desc: '', args: []);
+  }
+
+  /// `Smart Diagnosis`
+  String get smartDiagnosis2 {
+    return Intl.message(
+      'Smart Diagnosis',
+      name: 'smartDiagnosis2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose the most appropriate method to analyze the car problem`
+  String get chooseDiagnosisMethod {
+    return Intl.message(
+      'Choose the most appropriate method to analyze the car problem',
+      name: 'chooseDiagnosisMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No diagnostics found for this code.`
+  String get noDiagnosticsFound {
+    return Intl.message(
+      'No diagnostics found for this code.',
+      name: 'noDiagnosticsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explain the Problem`
+  String get explainProblem {
+    return Intl.message(
+      'Explain the Problem',
+      name: 'explainProblem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OBD Diagnosis`
+  String get obdDiagnosis {
+    return Intl.message(
+      'OBD Diagnosis',
+      name: 'obdDiagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diagnosis Summary:`
+  String get diagnosisSummary {
+    return Intl.message(
+      'Diagnosis Summary:',
+      name: 'diagnosisSummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Severity Level: `
+  String get severityLevelLabel {
+    return Intl.message(
+      'Severity Level: ',
+      name: 'severityLevelLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can you drive: `
+  String get canDriveLabel {
+    return Intl.message(
+      'Can you drive: ',
+      name: 'canDriveLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Possible Causes: `
+  String get possibleCausesLabel {
+    return Intl.message(
+      'Possible Causes: ',
+      name: 'possibleCausesLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What to check: `
+  String get whatToCheckLabel {
+    return Intl.message(
+      'What to check: ',
+      name: 'whatToCheckLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can you check the problem at home? `
+  String get canCheckAtHomeLabel {
+    return Intl.message(
+      'Can you check the problem at home? ',
+      name: 'canCheckAtHomeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Technical Recommendation: `
+  String get technicalRecommendationLabel {
+    return Intl.message(
+      'Technical Recommendation: ',
+      name: 'technicalRecommendationLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Output Language: `
+  String get outputLanguage {
+    return Intl.message(
+      'Output Language: ',
+      name: 'outputLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Arabic`
+  String get arabic {
+    return Intl.message('Arabic', name: 'arabic', desc: '', args: []);
+  }
+
+  /// `English`
+  String get english {
+    return Intl.message('English', name: 'english', desc: '', args: []);
+  }
+
+  /// `Car Type and Model`
+  String get carTypeAndModel {
+    return Intl.message(
+      'Car Type and Model',
+      name: 'carTypeAndModel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example: Mercedes C200 2021 or Toyota Corolla`
+  String get carExampleHint {
+    return Intl.message(
+      'Example: Mercedes C200 2021 or Toyota Corolla',
+      name: 'carExampleHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter car type and model`
+  String get carValidationEmpty {
+    return Intl.message(
+      'Please enter car type and model',
+      name: 'carValidationEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OBD Code`
+  String get obdCodeLabel {
+    return Intl.message('OBD Code', name: 'obdCodeLabel', desc: '', args: []);
+  }
+
+  /// `P0420`
+  String get obdCodeHint {
+    return Intl.message('P0420', name: 'obdCodeHint', desc: '', args: []);
+  }
+
+  /// `Please enter OBD code first`
+  String get obdCodeValidationEmpty {
+    return Intl.message(
+      'Please enter OBD code first',
+      name: 'obdCodeValidationEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Live Sensor Data: `
+  String get liveSensorData {
+    return Intl.message(
+      'Live Sensor Data: ',
+      name: 'liveSensorData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Engine Coolant Temp`
+  String get engineCoolant {
+    return Intl.message(
+      'Engine Coolant Temp',
+      name: 'engineCoolant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Engine RPM`
+  String get engineRpm {
+    return Intl.message('Engine RPM', name: 'engineRpm', desc: '', args: []);
+  }
+
+  /// `Engine Load`
+  String get engineLoad {
+    return Intl.message('Engine Load', name: 'engineLoad', desc: '', args: []);
+  }
+
+  /// `Vehicle Speed`
+  String get carSpeed {
+    return Intl.message('Vehicle Speed', name: 'carSpeed', desc: '', args: []);
+  }
+
+  /// `Throttle Position`
+  String get throttlePosition {
+    return Intl.message(
+      'Throttle Position',
+      name: 'throttlePosition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Numbers only`
+  String get numbersOnly {
+    return Intl.message(
+      'Numbers only',
+      name: 'numbersOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analyze Code & Data`
+  String get analyzeCodeAndData {
+    return Intl.message(
+      'Analyze Code & Data',
+      name: 'analyzeCodeAndData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please correct the errors in red fields first.`
+  String get fixErrorsSnackbar {
+    return Intl.message(
+      'Please correct the errors in red fields first.',
+      name: 'fixErrorsSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OBD Trouble Code Analysis`
+  String get obdAnalysisTitle {
+    return Intl.message(
+      'OBD Trouble Code Analysis',
+      name: 'obdAnalysisTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Understand car codes and discover technical problems accurately.`
+  String get obdAnalysisSubTitle {
+    return Intl.message(
+      'Understand car codes and discover technical problems accurately.',
+      name: 'obdAnalysisSubTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Smart Diagnosis`
+  String get aiSmartDiagnosis {
+    return Intl.message(
+      'AI Smart Diagnosis',
+      name: 'aiSmartDiagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analyze car problems by describing symptoms to provide smart suggestions and diagnostics.`
+  String get aiDiagnosisSubTitle {
+    return Intl.message(
+      'Analyze car problems by describing symptoms to provide smart suggestions and diagnostics.',
+      name: 'aiDiagnosisSubTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example: There is a strange sound when braking in the front wheels...`
+  String get problemDescriptionHint {
+    return Intl.message(
+      'Example: There is a strange sound when braking in the front wheels...',
+      name: 'problemDescriptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The diagnosis is advisory and not a substitute for a technical inspection.`
+  String get disclaimerText {
+    return Intl.message(
+      'The diagnosis is advisory and not a substitute for a technical inspection.',
+      name: 'disclaimerText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analyze Problem`
+  String get analyzeProblemButton {
+    return Intl.message(
+      'Analyze Problem',
+      name: 'analyzeProblemButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a description of the problem first before analyzing.`
+  String get emptyProblemSnackbar {
+    return Intl.message(
+      'Please enter a description of the problem first before analyzing.',
+      name: 'emptyProblemSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while loading requests`
+  String get loadRequestsError {
+    return Intl.message(
+      'An error occurred while loading requests',
+      name: 'loadRequestsError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `No requests available`
+  String get noRequestsAvailable {
+    return Intl.message(
+      'No requests available',
+      name: 'noRequestsAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome to`
+  String get welcomeTo {
+    return Intl.message('Welcome to', name: 'welcomeTo', desc: '', args: []);
+  }
+
+  /// `How would you like to participate today?\nHelping others or getting support`
+  String get motoverseCommunitySub {
+    return Intl.message(
+      'How would you like to participate today?\nHelping others or getting support',
+      name: 'motoverseCommunitySub',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Want to request roadside assistance or consult others about your car problem`
+  String get requestHelpDesc {
+    return Intl.message(
+      'Want to request roadside assistance or consult others about your car problem',
+      name: 'requestHelpDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request Help`
+  String get requestHelpBtn {
+    return Intl.message(
+      'Request Help',
+      name: 'requestHelpBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Browse assistance requests near you and share your experience with people in need`
+  String get viewRequestsDesc {
+    return Intl.message(
+      'Browse assistance requests near you and share your experience with people in need',
+      name: 'viewRequestsDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Current Requests`
+  String get viewRequestsBtn {
+    return Intl.message(
+      'View Current Requests',
+      name: 'viewRequestsBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Problem Type`
+  String get problemType {
+    return Intl.message(
+      'Problem Type',
+      name: 'problemType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Problem Description`
+  String get problemDescription {
+    return Intl.message(
+      'Problem Description',
+      name: 'problemDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe the problem you are facing`
+  String get describeYourProblemHint {
+    return Intl.message(
+      'Describe the problem you are facing',
+      name: 'describeYourProblemHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Images`
+  String get addImages {
+    return Intl.message('Add Images', name: 'addImages', desc: '', args: []);
+  }
+
+  /// `Your images and data are stored securely`
+  String get dataStoredSecurely {
+    return Intl.message(
+      'Your images and data are stored securely',
+      name: 'dataStoredSecurely',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request Sent Successfully`
+  String get requestSentSuccessfully {
+    return Intl.message(
+      'Request Sent Successfully',
+      name: 'requestSentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your request has been received successfully\nand will be displayed in the request log`
+  String get requestReceivedDesc {
+    return Intl.message(
+      'Your request has been received successfully\nand will be displayed in the request log',
+      name: 'requestReceivedDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a problem type`
+  String get selectProblemTypeValidation {
+    return Intl.message(
+      'Please select a problem type',
+      name: 'selectProblemTypeValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This offer has been canceled`
+  String get offerRejected {
+    return Intl.message(
+      'This offer has been canceled',
+      name: 'offerRejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This offer has been completed`
+  String get offerCompleted {
+    return Intl.message(
+      'This offer has been completed',
+      name: 'offerCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel help offer`
+  String get cancelHelpOffer {
+    return Intl.message(
+      'Cancel help offer',
+      name: 'cancelHelpOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offline Help`
+  String get offlineHelp {
+    return Intl.message(
+      'Offline Help',
+      name: 'offlineHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Online Help`
+  String get onlineHelp {
+    return Intl.message('Online Help', name: 'onlineHelp', desc: '', args: []);
+  }
+
+  /// `All customer details and personal data are protected and secured.`
+  String get dataProtectionNotice {
+    return Intl.message(
+      'All customer details and personal data are protected and secured.',
+      name: 'dataProtectionNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can select up to 3 traits only`
+  String get maxTagsWarning {
+    return Intl.message(
+      'You can select up to 3 traits only',
+      name: 'maxTagsWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your review has been submitted successfully!`
+  String get reviewSubmittedSuccessfully {
+    return Intl.message(
+      'Your review has been submitted successfully!',
+      name: 'reviewSubmittedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The order has been completed successfully`
+  String get orderCompletedSuccessfully {
+    return Intl.message(
+      'The order has been completed successfully',
+      name: 'orderCompletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How was your experience with the helper?`
+  String get experienceQuestion {
+    return Intl.message(
+      'How was your experience with the helper?',
+      name: 'experienceQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a comment`
+  String get addComment {
+    return Intl.message(
+      'Add a comment',
+      name: 'addComment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share your experience to help other users`
+  String get commentHint {
+    return Intl.message(
+      'Share your experience to help other users',
+      name: 'commentHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submitting...`
+  String get submitting {
+    return Intl.message(
+      'Submitting...',
+      name: 'submitting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit Review`
+  String get submitReview {
+    return Intl.message(
+      'Submit Review',
+      name: 'submitReview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skip`
+  String get skip {
+    return Intl.message('Skip', name: 'skip', desc: '', args: []);
+  }
+
+  /// `Your request is secured and backed by Motoverse Safety guarantee.`
+  String get safetyNotice {
+    return Intl.message(
+      'Your request is secured and backed by Motoverse Safety guarantee.',
+      name: 'safetyNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fast Response`
+  String get fastResponse {
+    return Intl.message(
+      'Fast Response',
+      name: 'fastResponse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Excellent Manner`
+  String get excellentManner {
+    return Intl.message(
+      'Excellent Manner',
+      name: 'excellentManner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Professional`
+  String get professional {
+    return Intl.message(
+      'Professional',
+      name: 'professional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Helpful`
+  String get helpful {
+    return Intl.message('Helpful', name: 'helpful', desc: '', args: []);
+  }
+
+  /// `Needs Improvement`
+  String get needsImprovement {
+    return Intl.message(
+      'Needs Improvement',
+      name: 'needsImprovement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Requests`
+  String get myRequests {
+    return Intl.message('My Requests', name: 'myRequests', desc: '', args: []);
+  }
+
+  /// `No active requests currently`
+  String get noActiveRequests {
+    return Intl.message(
+      'No active requests currently',
+      name: 'noActiveRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No previous requests`
+  String get noPreviousRequests {
+    return Intl.message(
+      'No previous requests',
+      name: 'noPreviousRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can create a new request or review previous requests.`
+  String get emptyRequestsSubtitle {
+    return Intl.message(
+      'You can create a new request or review previous requests.',
+      name: 'emptyRequestsSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get add {
+    return Intl.message('Add', name: 'add', desc: '', args: []);
+  }
+
+  /// `Car`
+  String get car {
+    return Intl.message('Car', name: 'car', desc: '', args: []);
+  }
+
+  /// `Reported Problem`
+  String get reportedProblem {
+    return Intl.message(
+      'Reported Problem',
+      name: 'reportedProblem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Malfunction in {problem}`
+  String malfunctionIn(Object problem) {
+    return Intl.message(
+      'Malfunction in $problem',
+      name: 'malfunctionIn',
+      desc: '',
+      args: [problem],
+    );
   }
 
   /// `All`
-  String get allCars {
-    return Intl.message('All', name: 'allCars', desc: '', args: []);
+  String get all {
+    return Intl.message('All', name: 'all', desc: '', args: []);
   }
 
-  /// `New`
-  String get newCar {
-    return Intl.message('New', name: 'newCar', desc: '', args: []);
+  /// `Chat Help`
+  String get chatHelp {
+    return Intl.message('Chat Help', name: 'chatHelp', desc: '', args: []);
   }
 
-  /// `Used`
-  String get usedCar {
-    return Intl.message('Used', name: 'usedCar', desc: '', args: []);
-  }
-
-  /// `Car Comparison`
-  String get featureCompare {
+  /// `Offline Help`
+  String get roadsideHelp {
     return Intl.message(
-      'Car Comparison',
-      name: 'featureCompare',
+      'Offline Help',
+      name: 'roadsideHelp',
       desc: '',
       args: [],
     );
   }
 
-  /// `Compare models and specs easily to make the best decision.`
-  String get featureCompareDesc {
+  /// `Helper`
+  String get defaultHelperName {
     return Intl.message(
-      'Compare models and specs easily to make the best decision.',
-      name: 'featureCompareDesc',
+      'Helper',
+      name: 'defaultHelperName',
       desc: '',
       args: [],
     );
   }
 
-  /// `Cost Estimation`
-  String get featureCost {
+  /// `Current Rating: {rating}`
+  String currentRating(Object rating) {
     return Intl.message(
-      'Cost Estimation',
-      name: 'featureCost',
+      'Current Rating: $rating',
+      name: 'currentRating',
+      desc: '',
+      args: [rating],
+    );
+  }
+
+  /// `N/A`
+  String get ratingNotAvailable {
+    return Intl.message('N/A', name: 'ratingNotAvailable', desc: '', args: []);
+  }
+
+  /// `Locating your position, please wait...`
+  String get locatingUserMessage {
+    return Intl.message(
+      'Locating your position, please wait...',
+      name: 'locatingUserMessage',
       desc: '',
       args: [],
     );
   }
 
-  /// `Calculate ownership and maintenance costs before buying.`
-  String get featureCostDesc {
+  /// `Find nearby maintenance centers`
+  String get findNearbyCentersTitle {
     return Intl.message(
-      'Calculate ownership and maintenance costs before buying.',
-      name: 'featureCostDesc',
+      'Find nearby maintenance centers',
+      name: 'findNearbyCentersTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Centers Map`
-  String get featureMap {
-    return Intl.message('Centers Map', name: 'featureMap', desc: '', args: []);
-  }
-
-  /// `Find the nearest trusted service center with location services.`
-  String get featureMapDesc {
+  /// `Explore more than 24 centers`
+  String get findNearbyCentersSubtitle {
     return Intl.message(
-      'Find the nearest trusted service center with location services.',
-      name: 'featureMapDesc',
+      'Explore more than 24 centers',
+      name: 'findNearbyCentersSubtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Maintenance Tracking`
-  String get featureMaintenance {
+  /// `Problem Details`
+  String get problemDetails {
     return Intl.message(
-      'Maintenance Tracking',
-      name: 'featureMaintenance',
+      'Problem Details',
+      name: 'problemDetails',
       desc: '',
       args: [],
     );
   }
 
-  /// `Track your car status and remember maintenance dates easily.`
-  String get featureMaintenanceDesc {
+  /// `{distance} km away`
+  String away(Object distance) {
     return Intl.message(
-      'Track your car status and remember maintenance dates easily.',
-      name: 'featureMaintenanceDesc',
+      '$distance km away',
+      name: 'away',
+      desc: '',
+      args: [distance],
+    );
+  }
+
+  /// `Distance and Time`
+  String get distanceAndTime {
+    return Intl.message(
+      'Distance and Time',
+      name: 'distanceAndTime',
       desc: '',
       args: [],
     );
   }
 
-  /// `Price Prediction`
-  String get featurePricePredict {
+  /// `{distance} km - {minutes} min`
+  String distanceAndMinutes(Object distance, Object minutes) {
     return Intl.message(
-      'Price Prediction',
-      name: 'featurePricePredict',
+      '$distance km - $minutes min',
+      name: 'distanceAndMinutes',
+      desc: '',
+      args: [distance, minutes],
+    );
+  }
+
+  /// `Call`
+  String get call {
+    return Intl.message('Call', name: 'call', desc: '', args: []);
+  }
+
+  /// `Chat`
+  String get chat {
+    return Intl.message('Chat', name: 'chat', desc: '', args: []);
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message('Active', name: 'active', desc: '', args: []);
+  }
+
+  /// `Confirm Complete Request`
+  String get confirmCompleteRequestTitle {
+    return Intl.message(
+      'Confirm Complete Request',
+      name: 'confirmCompleteRequestTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Know the future value of your car before buying or selling.`
-  String get featurePricePredictDesc {
+  /// `Once the request is completed, you will not be able to communicate with the other party through this chat. Are you sure you want to complete the request?`
+  String get confirmCompleteRequestDesc {
     return Intl.message(
-      'Know the future value of your car before buying or selling.',
-      name: 'featurePricePredictDesc',
+      'Once the request is completed, you will not be able to communicate with the other party through this chat. Are you sure you want to complete the request?',
+      name: 'confirmCompleteRequestDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Smart Recommendation`
-  String get featureRecommend {
+  /// `Yes`
+  String get yes {
+    return Intl.message('Yes', name: 'yes', desc: '', args: []);
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message('No', name: 'no', desc: '', args: []);
+  }
+
+  /// `Online`
+  String get online {
+    return Intl.message('Online', name: 'online', desc: '', args: []);
+  }
+
+  /// `Offline`
+  String get offline {
+    return Intl.message('Offline', name: 'offline', desc: '', args: []);
+  }
+
+  /// `No messages yet`
+  String get noMessagesYet {
     return Intl.message(
-      'Smart Recommendation',
-      name: 'featureRecommend',
+      'No messages yet',
+      name: 'noMessagesYet',
       desc: '',
       args: [],
     );
   }
 
-  /// `We help you choose the perfect car for your budget and needs.`
-  String get featureRecommendDesc {
+  /// `Verified Helper`
+  String get verifiedHelper {
     return Intl.message(
-      'We help you choose the perfect car for your budget and needs.',
-      name: 'featureRecommendDesc',
+      'Verified Helper',
+      name: 'verifiedHelper',
       desc: '',
       args: [],
     );
   }
 
-  /// `💡 Tool Usage Tips`
-  String get tipsTitle {
+  /// `End Chat`
+  String get endChat {
+    return Intl.message('End Chat', name: 'endChat', desc: '', args: []);
+  }
+
+  /// `Please enable microphone permission to record`
+  String get microphonePermissionRequired {
     return Intl.message(
-      '💡 Tool Usage Tips',
-      name: 'tipsTitle',
+      'Please enable microphone permission to record',
+      name: 'microphonePermissionRequired',
       desc: '',
       args: [],
     );
   }
 
-  /// `• Use Smart Recommendation if you are unsure about choosing \n• Compare multiple cars before the final decision \n• Calculate total cost to avoid financial surprises \n• Track maintenance regularly to keep your car's value`
-  String get tipsBody {
+  /// `Attach an image`
+  String get attachImageTooltip {
     return Intl.message(
-      '• Use Smart Recommendation if you are unsure about choosing \n• Compare multiple cars before the final decision \n• Calculate total cost to avoid financial surprises \n• Track maintenance regularly to keep your car\'s value',
-      name: 'tipsBody',
+      'Attach an image',
+      name: 'attachImageTooltip',
       desc: '',
       args: [],
     );
   }
 
-  /// `Select Country`
-  String get selectCountry {
+  /// `Type your message here...`
+  String get typeMessageHint {
     return Intl.message(
-      'Select Country',
-      name: 'selectCountry',
+      'Type your message here...',
+      name: 'typeMessageHint',
       desc: '',
       args: [],
     );
   }
 
-  /// `Search Country`
-  String get searchCountry {
+  /// `Cancel recording`
+  String get cancelRecordingTooltip {
     return Intl.message(
-      'Search Country',
-      name: 'searchCountry',
+      'Cancel recording',
+      name: 'cancelRecordingTooltip',
       desc: '',
       args: [],
     );
   }
 
-  /// `Brand`
-  String get brand {
-    return Intl.message('Brand', name: 'brand', desc: '', args: []);
-  }
-
-  /// `Select Brand`
-  String get selectBrand {
+  /// `Recording audio...`
+  String get recordingVoice {
     return Intl.message(
-      'Select Brand',
-      name: 'selectBrand',
+      'Recording audio...',
+      name: 'recordingVoice',
       desc: '',
       args: [],
     );
   }
 
-  /// `Car Type`
-  String get carType {
-    return Intl.message('Car Type', name: 'carType', desc: '', args: []);
-  }
-
-  /// `Select Type`
-  String get selectCarType {
+  /// `Send recording`
+  String get sendRecordingTooltip {
     return Intl.message(
-      'Select Type',
-      name: 'selectCarType',
+      'Send recording',
+      name: 'sendRecordingTooltip',
       desc: '',
       args: [],
     );
   }
 
-  /// `Year`
-  String get year {
-    return Intl.message('Year', name: 'year', desc: '', args: []);
-  }
-
-  /// `Select Year`
-  String get selectYear {
-    return Intl.message('Select Year', name: 'selectYear', desc: '', args: []);
-  }
-
-  /// `Automatic`
-  String get automatic {
-    return Intl.message('Automatic', name: 'automatic', desc: '', args: []);
-  }
-
-  /// `Manual`
-  String get manual {
-    return Intl.message('Manual', name: 'manual', desc: '', args: []);
-  }
-
-  /// `Profile`
-  String get profile {
-    return Intl.message('Profile', name: 'profile', desc: '', args: []);
-  }
-
-  /// `View and edit your personal info`
-  String get profileDesc {
+  /// `Member since {date}`
+  String memberSince(Object date) {
     return Intl.message(
-      'View and edit your personal info',
-      name: 'profileDesc',
+      'Member since $date',
+      name: 'memberSince',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `Activity Center`
+  String get centerOfActivities {
+    return Intl.message(
+      'Activity Center',
+      name: 'centerOfActivities',
       desc: '',
       args: [],
     );
   }
 
-  /// `Dashboard`
-  String get dashboard {
-    return Intl.message('Dashboard', name: 'dashboard', desc: '', args: []);
-  }
-
-  /// `My Cars & History`
-  String get myCars {
+  /// `Security & Verification`
+  String get securityAndVerification {
     return Intl.message(
-      'My Cars & History',
-      name: 'myCars',
+      'Security & Verification',
+      name: 'securityAndVerification',
       desc: '',
       args: [],
     );
   }
 
-  /// `About Us`
-  String get aboutUs {
-    return Intl.message('About Us', name: 'aboutUs', desc: '', args: []);
+  /// `Identity Verification`
+  String get identityVerification {
+    return Intl.message(
+      'Identity Verification',
+      name: 'identityVerification',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `Learn about MotoServe platform`
-  String get aboutUsDesc {
+  /// `Incomplete`
+  String get incomplete {
+    return Intl.message('Incomplete', name: 'incomplete', desc: '', args: []);
+  }
+
+  /// `Privacy & Security`
+  String get privacyAndSecurity {
     return Intl.message(
-      'Learn about MotoServe platform',
-      name: 'aboutUsDesc',
+      'Privacy & Security',
+      name: 'privacyAndSecurity',
       desc: '',
       args: [],
     );
@@ -762,51 +2232,6 @@ class S {
   /// `Settings`
   String get settings {
     return Intl.message('Settings', name: 'settings', desc: '', args: []);
-  }
-
-  /// `App settings and notifications`
-  String get settingsDesc {
-    return Intl.message(
-      'App settings and notifications',
-      name: 'settingsDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Logout`
-  String get logout {
-    return Intl.message('Logout', name: 'logout', desc: '', args: []);
-  }
-
-  /// `Personal Settings`
-  String get personalSettings {
-    return Intl.message(
-      'Personal Settings',
-      name: 'personalSettings',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Edit Profile`
-  String get editProfile {
-    return Intl.message(
-      'Edit Profile',
-      name: 'editProfile',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Update your personal information`
-  String get updateInfo {
-    return Intl.message(
-      'Update your personal information',
-      name: 'updateInfo',
-      desc: '',
-      args: [],
-    );
   }
 
   /// `App Language`
@@ -829,141 +2254,586 @@ class S {
     );
   }
 
-  /// `Privacy & Security`
-  String get privacySecurity {
+  /// `Location Settings`
+  String get locationSettings {
     return Intl.message(
-      'Privacy & Security',
-      name: 'privacySecurity',
+      'Location Settings',
+      name: 'locationSettings',
       desc: '',
       args: [],
     );
   }
 
-  /// `Privacy Policy`
-  String get privacyPolicy {
+  /// `Support & Assistance`
+  String get supportAndAssistance {
     return Intl.message(
-      'Privacy Policy',
-      name: 'privacyPolicy',
+      'Support & Assistance',
+      name: 'supportAndAssistance',
       desc: '',
       args: [],
     );
   }
 
-  /// `View Privacy Policy`
-  String get privacyPolicyDesc {
+  /// `FAQ`
+  String get faq {
+    return Intl.message('FAQ', name: 'faq', desc: '', args: []);
+  }
+
+  /// `Contact Us`
+  String get contactUs {
+    return Intl.message('Contact Us', name: 'contactUs', desc: '', args: []);
+  }
+
+  /// `Logout`
+  String get logout {
+    return Intl.message('Logout', name: 'logout', desc: '', args: []);
+  }
+
+  /// `Current Car`
+  String get currentCar {
+    return Intl.message('Current Car', name: 'currentCar', desc: '', args: []);
+  }
+
+  /// `No car registered`
+  String get noCarRegistered {
     return Intl.message(
-      'View Privacy Policy',
-      name: 'privacyPolicyDesc',
+      'No car registered',
+      name: 'noCarRegistered',
       desc: '',
       args: [],
     );
   }
 
-  /// `Terms of Use`
-  String get termsOfUse {
-    return Intl.message('Terms of Use', name: 'termsOfUse', desc: '', args: []);
+  /// `Plate Number: {plate}`
+  String plateNumberLabel(Object plate) {
+    return Intl.message(
+      'Plate Number: $plate',
+      name: 'plateNumberLabel',
+      desc: '',
+      args: [plate],
+    );
   }
 
-  /// `Terms and conditions of use`
-  String get termsOfUseDesc {
+  /// `Car Information`
+  String get carInformation {
     return Intl.message(
-      'Terms and conditions of use',
-      name: 'termsOfUseDesc',
+      'Car Information',
+      name: 'carInformation',
       desc: '',
       args: [],
     );
   }
 
-  /// `Delete Account`
-  String get deleteAccount {
+  /// `Car Brand`
+  String get carBrand {
+    return Intl.message('Car Brand', name: 'carBrand', desc: '', args: []);
+  }
+
+  /// `Toyota`
+  String get toyotaHint {
+    return Intl.message('Toyota', name: 'toyotaHint', desc: '', args: []);
+  }
+
+  /// `Car Model`
+  String get carModel {
+    return Intl.message('Car Model', name: 'carModel', desc: '', args: []);
+  }
+
+  /// `Camry`
+  String get camryHint {
+    return Intl.message('Camry', name: 'camryHint', desc: '', args: []);
+  }
+
+  /// `Manufacture Year`
+  String get manufactureYear {
     return Intl.message(
-      'Delete Account',
-      name: 'deleteAccount',
+      'Manufacture Year',
+      name: 'manufactureYear',
       desc: '',
       args: [],
     );
   }
 
-  /// `© 2025 All rights reserved`
-  String get copyrights {
+  /// `Plate Number`
+  String get plateNumber {
     return Intl.message(
-      '© 2025 All rights reserved',
-      name: 'copyrights',
+      'Plate Number',
+      name: 'plateNumber',
       desc: '',
       args: [],
     );
   }
 
-  /// `New Car Notifications`
-  String get notifNewCars {
+  /// `A B C 1234`
+  String get plateHint {
+    return Intl.message('A B C 1234', name: 'plateHint', desc: '', args: []);
+  }
+
+  /// `Car Color`
+  String get carColor {
+    return Intl.message('Car Color', name: 'carColor', desc: '', args: []);
+  }
+
+  /// `All your personal data is processed and stored securely in accordance with our privacy policy.`
+  String get privacyNote {
     return Intl.message(
-      'New Car Notifications',
-      name: 'notifNewCars',
+      'All your personal data is processed and stored securely in accordance with our privacy policy.',
+      name: 'privacyNote',
       desc: '',
       args: [],
     );
   }
 
-  /// `Alerts when new cars are added`
-  String get notifNewCarsDesc {
+  /// `Save Changes`
+  String get saveChanges {
     return Intl.message(
-      'Alerts when new cars are added',
-      name: 'notifNewCarsDesc',
+      'Save Changes',
+      name: 'saveChanges',
       desc: '',
       args: [],
     );
   }
 
-  /// `Price Changes`
-  String get notifPriceChange {
+  /// `Add Car`
+  String get addCar {
+    return Intl.message('Add Car', name: 'addCar', desc: '', args: []);
+  }
+
+  /// `Delete Car`
+  String get deleteCar {
+    return Intl.message('Delete Car', name: 'deleteCar', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Confirm Delete`
+  String get deleteConfirmationTitle {
     return Intl.message(
-      'Price Changes',
-      name: 'notifPriceChange',
+      'Confirm Delete',
+      name: 'deleteConfirmationTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Alerts when favorite car prices change`
-  String get notifPriceChangeDesc {
+  /// `Are you sure you want to delete this car?`
+  String get deleteConfirmationDesc {
     return Intl.message(
-      'Alerts when favorite car prices change',
-      name: 'notifPriceChangeDesc',
+      'Are you sure you want to delete this car?',
+      name: 'deleteConfirmationDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Maintenance Reminders`
-  String get notifMaintenance {
+  /// `Delete`
+  String get deleteBtn {
+    return Intl.message('Delete', name: 'deleteBtn', desc: '', args: []);
+  }
+
+  /// `Car details updated successfully`
+  String get carUpdatedSuccess {
     return Intl.message(
-      'Maintenance Reminders',
-      name: 'notifMaintenance',
+      'Car details updated successfully',
+      name: 'carUpdatedSuccess',
       desc: '',
       args: [],
     );
   }
 
-  /// `Reminders for periodic maintenance dates`
-  String get notifMaintenanceDesc {
+  /// `Car added successfully`
+  String get carAddedSuccess {
     return Intl.message(
-      'Reminders for periodic maintenance dates',
-      name: 'notifMaintenanceDesc',
+      'Car added successfully',
+      name: 'carAddedSuccess',
       desc: '',
       args: [],
     );
   }
 
-  /// `Messages`
-  String get notifMessages {
-    return Intl.message('Messages', name: 'notifMessages', desc: '', args: []);
+  /// `Edit Your Information`
+  String get editProfileTitle {
+    return Intl.message(
+      'Edit Your Information',
+      name: 'editProfileTitle',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `Message notifications from sellers and centers`
-  String get notifMessagesDesc {
+  /// `Profile Picture`
+  String get profileImage {
     return Intl.message(
-      'Message notifications from sellers and centers',
-      name: 'notifMessagesDesc',
+      'Profile Picture',
+      name: 'profileImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose from Gallery`
+  String get galleryOption {
+    return Intl.message(
+      'Choose from Gallery',
+      name: 'galleryOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a Photo`
+  String get cameraOption {
+    return Intl.message(
+      'Take a Photo',
+      name: 'cameraOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove Current Image`
+  String get removeImageOption {
+    return Intl.message(
+      'Remove Current Image',
+      name: 'removeImageOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Address`
+  String get emailAddress {
+    return Intl.message(
+      'Email Address',
+      name: 'emailAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All your personal data is processed and stored securely in accordance with our privacy policy`
+  String get privacyNotice {
+    return Intl.message(
+      'All your personal data is processed and stored securely in accordance with our privacy policy',
+      name: 'privacyNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changes saved successfully`
+  String get successMessage {
+    return Intl.message(
+      'Changes saved successfully',
+      name: 'successMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smart vision for your car's key indicators`
+  String get smartVisionIndicators {
+    return Intl.message(
+      'Smart vision for your car\'s key indicators',
+      name: 'smartVisionIndicators',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Language`
+  String get appLanguageTitle {
+    return Intl.message(
+      'App Language',
+      name: 'appLanguageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Arabic`
+  String get arabicLanguage {
+    return Intl.message('Arabic', name: 'arabicLanguage', desc: '', args: []);
+  }
+
+  /// `English`
+  String get englishLanguage {
+    return Intl.message('English', name: 'englishLanguage', desc: '', args: []);
+  }
+
+  /// `Language changes will be applied immediately across all sections and services.`
+  String get languageNoticeText {
+    return Intl.message(
+      'Language changes will be applied immediately across all sections and services.',
+      name: 'languageNoticeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Capture ID Card - Front Side`
+  String get frontIdTitle {
+    return Intl.message(
+      'Capture ID Card - Front Side',
+      name: 'frontIdTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Capture ID Card - Back Side`
+  String get backIdTitle {
+    return Intl.message(
+      'Capture ID Card - Back Side',
+      name: 'backIdTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Capture a Clear Selfie`
+  String get faceImageTitle {
+    return Intl.message(
+      'Capture a Clear Selfie',
+      name: 'faceImageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We need to verify your identity`
+  String get weNeedToVerifyYourIdentity {
+    return Intl.message(
+      'We need to verify your identity',
+      name: 'weNeedToVerifyYourIdentity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To provide a secure and trusted experience\n for motoverse users`
+  String get verificationSubtitle {
+    return Intl.message(
+      'To provide a secure and trusted experience\n for motoverse users',
+      name: 'verificationSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Identity`
+  String get verifyIdentityButton {
+    return Intl.message(
+      'Verify Identity',
+      name: 'verifyIdentityButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please upload all required images`
+  String get pleaseUploadAllImages {
+    return Intl.message(
+      'Please upload all required images',
+      name: 'pleaseUploadAllImages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uploaded successfully`
+  String get uploadSuccess {
+    return Intl.message(
+      'Uploaded successfully',
+      name: 'uploadSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reupload`
+  String get reupload {
+    return Intl.message('Reupload', name: 'reupload', desc: '', args: []);
+  }
+
+  /// `Add Data File`
+  String get addDataFile {
+    return Intl.message(
+      'Add Data File',
+      name: 'addDataFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload vehicle diagnostic files (CSV, JSON, XLSX)`
+  String get uploadVehicleDiagnosticFiles {
+    return Intl.message(
+      'Upload vehicle diagnostic files (CSV, JSON, XLSX)',
+      name: 'uploadVehicleDiagnosticFiles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File uploaded successfully`
+  String get fileUploadedSuccessfully {
+    return Intl.message(
+      'File uploaded successfully',
+      name: 'fileUploadedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-upload`
+  String get reuploadFile {
+    return Intl.message('Re-upload', name: 'reuploadFile', desc: '', args: []);
+  }
+
+  /// `Analyze Data`
+  String get analyzeData {
+    return Intl.message(
+      'Analyze Data',
+      name: 'analyzeData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dashboard`
+  String get dashboard {
+    return Intl.message('Dashboard', name: 'dashboard', desc: '', args: []);
+  }
+
+  /// `Engine Temperature`
+  String get engineTemperature {
+    return Intl.message(
+      'Engine Temperature',
+      name: 'engineTemperature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fuel Level`
+  String get fuelLevel {
+    return Intl.message('Fuel Level', name: 'fuelLevel', desc: '', args: []);
+  }
+
+  /// `Barometric Pressure`
+  String get barometricPressure {
+    return Intl.message(
+      'Barometric Pressure',
+      name: 'barometricPressure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intake Air Temp`
+  String get intakeAirTemperature {
+    return Intl.message(
+      'Intake Air Temp',
+      name: 'intakeAirTemperature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Engine Runtime`
+  String get engineRuntime {
+    return Intl.message(
+      'Engine Runtime',
+      name: 'engineRuntime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Car Data Analysis`
+  String get carDataAnalysis {
+    return Intl.message(
+      'Car Data Analysis',
+      name: 'carDataAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fault Detected`
+  String get faultDetected {
+    return Intl.message(
+      'Fault Detected',
+      name: 'faultDetected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Analysis`
+  String get aiAnalysis {
+    return Intl.message('AI Analysis', name: 'aiAnalysis', desc: '', args: []);
+  }
+
+  /// `Needs Follow-up`
+  String get statusNeedsFollowUp {
+    return Intl.message(
+      'Needs Follow-up',
+      name: 'statusNeedsFollowUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Anomaly Ratio: {ratio}%`
+  String anomalyRatio(Object ratio) {
+    return Intl.message(
+      'Anomaly Ratio: $ratio%',
+      name: 'anomalyRatio',
+      desc: '',
+      args: [ratio],
+    );
+  }
+
+  /// `Model Confidence`
+  String get modelConfidence {
+    return Intl.message(
+      'Model Confidence',
+      name: 'modelConfidence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smart and Secure Diagnosis\n Analyze the problem with AI\n with a trusted and protected experience.`
+  String get onboarding1 {
+    return Intl.message(
+      'Smart and Secure Diagnosis\n Analyze the problem with AI\n with a trusted and protected experience.',
+      name: 'onboarding1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Access Certified Maintenance Centers\n and helpers around your location.`
+  String get onboarding2 {
+    return Intl.message(
+      'Access Certified Maintenance Centers\n and helpers around your location.',
+      name: 'onboarding2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track your car condition clearly\n and understand potential faults before making decisions.`
+  String get onboarding3 {
+    return Intl.message(
+      'Track your car condition clearly\n and understand potential faults before making decisions.',
+      name: 'onboarding3',
       desc: '',
       args: [],
     );

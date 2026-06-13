@@ -16,6 +16,7 @@ import 'package:motoverse/Features/history/presentation/widgets/maintenance_card
 import 'package:motoverse/Features/home/presentation/widgets/tool_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:timelines_plus/timelines_plus.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class HistoryPage1 extends StatelessWidget {
   const HistoryPage1({super.key});
@@ -97,14 +98,14 @@ class HistoryPage1 extends StatelessWidget {
         ),
         SizedBox(height: 30.h),
         Text(
-          'لا يوجد سجل صيانة',
+          S.of(context).noMaintenanceHistory,
           style: TextStyles.cairoBold24.copyWith(color: AppColors.blueNormal),
         ),
         SizedBox(height: 15.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Text(
-            'ابدأ بتوثيق رحلة صيانة سيارتك لتنبيهك بالمواعيد القادمة.',
+            S.of(context).startDocumentingJourney,
             textAlign: TextAlign.center,
             style: TextStyles.cairoMedium16.copyWith(
               color: AppColors.whiteDarkActive,
@@ -113,7 +114,7 @@ class HistoryPage1 extends StatelessWidget {
         ),
         SizedBox(height: 40.h),
         CustomElevatedButton(
-          text: 'اضافة سجل صيانة',
+          text: S.of(context).addMaintenanceHistory,
           radius: CustomRadius.card12,
           fun: () async {
             final result = await Navigator.of(context).pushNamed('history3');
@@ -142,16 +143,14 @@ class HistoryPage1 extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: ToolCard(
                   iconPath: Icons.sos,
-                  name: 'اخر صيانة',
-                  desc: summary.lastMaintenance?.date ?? 'No history',
-                  fun: () {
-                    // Navigator.of(context).pushNamed('history2');
-                  },
+                  name: S.of(context).lastMaintenance,
+                  desc:
+                      summary.lastMaintenance?.date ?? S.of(context).noHistory,
+                  fun: () {},
                   iconBgColor: AppColors.greenLight,
                   iconColor: AppColors.greenNormal,
                 ),
@@ -160,8 +159,8 @@ class HistoryPage1 extends StatelessWidget {
               Expanded(
                 child: ToolCard(
                   iconPath: Icons.payment_outlined,
-                  name: 'اجمال الدفع',
-                  desc: '${summary.totalCost} EGP',
+                  name: S.of(context).totalPayment,
+                  desc: S.of(context).egpCurrency(summary.totalCost.toString()),
                   fun: () {},
                   iconBgColor: AppColors.orangeLight,
                   iconColor: AppColors.orangeNormal,
@@ -215,9 +214,7 @@ class HistoryPage1 extends StatelessWidget {
         service: 'تغير زيت',
         description: 'وصف الصيانة',
         date: '2023-09-28',
-        // time: '04:45 PM',
         cost: '1000',
-        // reading: '100000',
       ),
     );
   }

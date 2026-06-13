@@ -4,7 +4,7 @@ import 'package:motoverse/Core/functions/custom_snackbar.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
-
+import 'package:motoverse/generated/l10n.dart';
 
 class DiagnosisView extends StatefulWidget {
   const DiagnosisView({super.key});
@@ -56,42 +56,42 @@ class _DiagnosisViewState extends State<DiagnosisView> {
             const _DiagnosisHeader(),
             SizedBox(height: 20.h),
             Text(
-              'لغة الناتج: ',
+              S.of(context).outputLanguage,
               style: TextStyles.cairoBold14.copyWith(
                 color: AppColors.blueNormal,
               ),
             ),
             SizedBox(height: 6.h),
-            _LanguageToggle(
-              isArabicSelected : isArabicSelected,
+            LanguageToggle(
+              isArabicSelected: isArabicSelected,
               onToggle: (value) => setState(() => isArabicSelected = value),
             ),
             SizedBox(height: 24.h),
             _CustomInputGroup(
-              label: 'نوع وموديل السيارة',
+              label: S.of(context).carTypeAndModel,
               controller: vehicleController,
-              hint: 'مثال: Mercedes C200 2021 أو Toyota Corolla',
+              hint: S.of(context).carExampleHint,
               icon: Icons.directions_car_filled_outlined,
               validator: (value) => value == null || value.trim().isEmpty
-                  ? 'يرجى إدخال نوع السيارة وموديلها'
+                  ? S.of(context).carValidationEmpty
                   : null,
             ),
             SizedBox(height: 24.h),
             _CustomInputGroup(
-              label: 'كود العطل (OBD Code)',
+              label: S.of(context).obdCodeLabel,
               controller: dtcController,
-              hint: 'P0420',
+              hint: S.of(context).obdCodeHint,
               icon: Icons.search,
               style: TextStyles.cairoBold16.copyWith(color: AppColors.blueDark),
               validator: (value) => value == null || value.trim().isEmpty
-                  ? 'يرجى إدخال كود العطل أولاً'
+                  ? S.of(context).obdCodeValidationEmpty
                   : null,
             ),
             SizedBox(height: 20.h),
             const Divider(color: AppColors.blueGrey),
             SizedBox(height: 12.h),
             Text(
-              'بيانات الحساسات الحية: ',
+              S.of(context).liveSensorData,
               style: TextStyles.cairoBold14.copyWith(
                 color: AppColors.blueNormal,
               ),
@@ -106,16 +106,15 @@ class _DiagnosisViewState extends State<DiagnosisView> {
             ),
             SizedBox(height: 35.h),
             _buildSubmitButton(context),
-            SizedBox(height: 70.h),
           ],
         ),
       ),
     );
   }
 
-Widget _buildSubmitButton(BuildContext context) {
+  Widget _buildSubmitButton(BuildContext context) {
     return CustomElevatedButton(
-      text: 'تحليل الكود والبيانات',
+      text: S.of(context).analyzeCodeAndData,
       radius: BorderRadius.circular(16.r),
       height: 48,
       fontStyle: TextStyles.cairoBold16,
@@ -143,7 +142,7 @@ Widget _buildSubmitButton(BuildContext context) {
         } else {
           customSnackBar(
             context: context,
-            msg: 'يرجى تصحيح الأخطاء في الحقول الحمراء أولاً.',
+            msg: S.of(context).fixErrorsSnackbar,
             isDone: false,
           );
         }
@@ -151,7 +150,6 @@ Widget _buildSubmitButton(BuildContext context) {
     );
   }
 }
-
 
 class _DiagnosisHeader extends StatelessWidget {
   const _DiagnosisHeader();
@@ -171,7 +169,7 @@ class _DiagnosisHeader extends StatelessWidget {
             ),
             SizedBox(width: 8.w),
             Text(
-              'تحليل أكواد الأعطال (OBD)',
+              S.of(context).obdAnalysisTitle,
               style: TextStyles.cairoBold16.copyWith(
                 color: AppColors.blueNormal,
               ),
@@ -180,7 +178,7 @@ class _DiagnosisHeader extends StatelessWidget {
         ),
         SizedBox(height: 12.h),
         Text(
-          'فهم أكواد السيارة واكتشاف المشكلات التقنية بدقة ووضوح.',
+          S.of(context).obdAnalysisSubTitle,
           style: TextStyles.cairoRegular13.copyWith(
             color: AppColors.whiteDarkHover,
           ),
@@ -190,12 +188,12 @@ class _DiagnosisHeader extends StatelessWidget {
   }
 }
 
-
-class _LanguageToggle extends StatelessWidget {
+class LanguageToggle extends StatelessWidget {
   final bool isArabicSelected;
   final ValueChanged<bool> onToggle;
 
-  const _LanguageToggle({
+  const LanguageToggle({
+    super.key,
     required this.isArabicSelected,
     required this.onToggle,
   });
@@ -210,39 +208,43 @@ class _LanguageToggle extends StatelessWidget {
         color: AppColors.blueGrey,
         borderRadius: BorderRadius.circular(12.r),
       ),
-      child: Stack(
-        children: [
-          AnimatedAlign(
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeOut,
-            alignment: isArabicSelected
-                ? Alignment.centerRight
-                : Alignment.centerLeft,
-            child: FractionallySizedBox(
-              widthFactor: 0.49,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.blueNormal,
-                  borderRadius: BorderRadius.circular(10.r),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Stack(
+          children: [
+            AnimatedAlign(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOut,
+              alignment: isArabicSelected
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
+              child: FractionallySizedBox(
+                widthFactor: 0.49,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.blueNormal,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
                 ),
               ),
             ),
-          ),
-          Row(
-            children: [
-              _buildToggleButton(
-                label: 'العربية',
-                isSelected: isArabicSelected,
-                onTap: () => onToggle(true),
-              ),
-              _buildToggleButton(
-                label: 'الانجليزية',
-                isSelected: !isArabicSelected,
-                onTap: () => onToggle(false),
-              ),
-            ],
-          ),
-        ],
+
+            Row(
+              children: [
+                _buildToggleButton(
+                  label: S.of(context).english,
+                  isSelected: !isArabicSelected,
+                  onTap: () => onToggle(false),
+                ),
+                _buildToggleButton(
+                  label: S.of(context).arabic,
+                  isSelected: isArabicSelected,
+                  onTap: () => onToggle(true),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -268,7 +270,6 @@ class _LanguageToggle extends StatelessWidget {
     );
   }
 }
-
 
 class _CustomInputGroup extends StatelessWidget {
   final String label;
@@ -328,7 +329,6 @@ class _CustomInputGroup extends StatelessWidget {
       prefixIcon: icon != null ? Icon(icon, color: AppColors.whiteDark) : null,
       fillColor: AppColors.whiteNormal,
       filled: true,
-  
       contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
       errorStyle: TextStyles.cairoRegular11.copyWith(
         color: AppColors.redNormal,
@@ -357,7 +357,6 @@ class _CustomInputGroup extends StatelessWidget {
   }
 }
 
-
 class _SensorsSection extends StatelessWidget {
   final TextEditingController coolantController;
   final TextEditingController rpmController;
@@ -373,16 +372,16 @@ class _SensorsSection extends StatelessWidget {
     required this.throttleController,
   });
 
-  String? _validateNumeric(String? value) {
-    if (value != null && value.isNotEmpty) {
-      final num? checkNum = num.tryParse(value);
-      if (checkNum == null) return 'أرقام فقط';
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
+    String? validateNumeric(String? value) {
+      if (value != null && value.isNotEmpty) {
+        final num? checkNum = num.tryParse(value);
+        if (checkNum == null) return S.of(context).numbersOnly;
+      }
+      return null;
+    }
+
     return Column(
       children: [
         Row(
@@ -390,21 +389,21 @@ class _SensorsSection extends StatelessWidget {
           children: [
             Expanded(
               child: _CustomInputGroup(
-                label: 'حرارة المحرك',
+                label: S.of(context).engineCoolant,
                 controller: coolantController,
                 hint: '95 °C',
                 keyboardType: TextInputType.number,
-                validator: _validateNumeric,
+                validator: validateNumeric,
               ),
             ),
             SizedBox(width: 12.w),
             Expanded(
               child: _CustomInputGroup(
-                label: 'دورات المحرك',
+                label: S.of(context).engineRpm,
                 controller: rpmController,
                 hint: '2500 RPM',
                 keyboardType: TextInputType.number,
-                validator: _validateNumeric,
+                validator: validateNumeric,
               ),
             ),
           ],
@@ -415,33 +414,33 @@ class _SensorsSection extends StatelessWidget {
           children: [
             Expanded(
               child: _CustomInputGroup(
-                label: 'الحمل على المحرك',
+                label: S.of(context).engineLoad,
                 controller: loadController,
                 hint: '65 %',
                 keyboardType: TextInputType.number,
-                validator: _validateNumeric,
+                validator: validateNumeric,
               ),
             ),
             SizedBox(width: 12.w),
             Expanded(
               child: _CustomInputGroup(
-                label: 'سرعة السيارة',
+                label: S.of(context).carSpeed,
                 controller: speedController,
                 hint: '80 km/h',
                 keyboardType: TextInputType.number,
-                validator: _validateNumeric,
+                validator: validateNumeric,
               ),
             ),
           ],
         ),
         SizedBox(height: 16.h),
         _CustomInputGroup(
-          label: 'موضع دواسة الوقود (Throttle)',
+          label: S.of(context).throttlePosition,
           controller: throttleController,
           hint: '20 %',
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.done,
-          validator: _validateNumeric,
+          validator: validateNumeric,
         ),
       ],
     );

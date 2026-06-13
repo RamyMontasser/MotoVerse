@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 
-/// A menu row with a toggle switch instead of a forward arrow.
-///
-/// Renders: `[icon] [title] ... [Switch]`
+
 class ProfileSwitchItem extends StatelessWidget {
   const ProfileSwitchItem({
     super.key,

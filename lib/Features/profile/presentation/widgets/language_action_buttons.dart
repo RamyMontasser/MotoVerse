@@ -4,7 +4,7 @@ import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/custom_radius.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_elevatedbutton.dart';
-
+import 'package:motoverse/generated/l10n.dart'; 
 
 class LanguageActionButtons extends StatelessWidget {
   final VoidCallback onSave;
@@ -20,11 +20,8 @@ class LanguageActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // SizedBox(
-        //   width: double.infinity,
-        // child:
         CustomElevatedButton(
-          text: 'حفظ التغييرات',
+          text: S.of(context).saveChanges, 
           backgColor: AppColors.blueNormal,
           radius: CustomRadius.card12,
           fun: onSave,
@@ -33,27 +30,11 @@ class LanguageActionButtons extends StatelessWidget {
             color: AppColors.whiteLight,
           ),
         ),
-        //  ElevatedButton(
-        //   onPressed: onSave,
-        //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: AppColors.blueDarkActive,
-        //     elevation: 0,
-        //     padding: EdgeInsets.symmetric(vertical: 14.h),
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(12.r),
-        //     ),
-        //   ),
-        //   child: Text(
-        //     'حفظ التغييرات',
-        //     style: TextStyles.cairoBold16.copyWith(color: Colors.white),
-        //   ),
-        // ),
-        // ),
         SizedBox(height: 10.h),
         TextButton(
           onPressed: onCancel,
           child: Text(
-            'إلغاء',
+            S.of(context).cancel,
             style: TextStyles.cairoBold16.copyWith(color: AppColors.blueNormal),
           ),
         ),

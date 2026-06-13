@@ -9,9 +9,9 @@ import 'package:motoverse/Core/constants/constants.dart';
 import 'package:motoverse/Core/errors/failure.dart';
 import 'package:motoverse/Core/services/network_service.dart';
 import 'package:motoverse/Features/home/data/models/user_model.dart';
-import 'package:motoverse/Features/socket_chat/data/models/file_message_model.dart';
-import 'package:motoverse/Features/socket_chat/data/models/text_message_model.dart';
-import 'package:motoverse/Features/socket_chat/domain/repo/chat_socket_repo.dart';
+import 'package:motoverse/Features/chat/data/models/file_message_model.dart';
+import 'package:motoverse/Features/chat/data/models/text_message_model.dart';
+import 'package:motoverse/Features/chat/domain/repo/chat_socket_repo.dart';
 import 'package:motoverse/Core/services/socket_service.dart';
 
 class ChatSocketRepositoryImpl implements ChatSocketRepository {

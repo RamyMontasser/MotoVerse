@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
+import 'package:motoverse/generated/l10n.dart';
 
 class MyOffersCategoryTabs extends StatelessWidget {
   const MyOffersCategoryTabs({
@@ -15,12 +16,13 @@ class MyOffersCategoryTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // تم النقل داخل الـ build لتمكين جلب النصوص المترجمة فورياً عند تغيير لغة التطبيق
     final List<Map<String, dynamic>> categories = [
-      {'title': 'الكل', 'color': AppColors.blueNormal},
-      {'title': 'مقبول', 'color': AppColors.greenNormal},
-      {'title': 'قيد الانتظار', 'color': AppColors.yellowNormal},
-      {'title': 'مكتمل', 'color': AppColors.blueNormal},
-      {'title': 'مرفوض', 'color': AppColors.redDark},
+      {'title': S.of(context).all, 'color': AppColors.blueNormal},
+      {'title': S.of(context).accepted, 'color': AppColors.greenNormal},
+      {'title': S.of(context).pending, 'color': AppColors.yellowNormal},
+      {'title': S.of(context).completed, 'color': AppColors.blueNormal},
+      {'title': S.of(context).rejected, 'color': AppColors.redDark},
     ];
 
     return SizedBox(
@@ -46,26 +48,11 @@ class MyOffersCategoryTabs extends StatelessWidget {
                   color: isSelected ? color : AppColors.blueLightActive,
                   width: 1,
                 ),
-                // boxShadow: isSelected
-                //     ? [
-                //         BoxShadow(
-                //           color: color.withValues(alpha: 0.3),
-                //           blurRadius: 6,
-                //           offset: const Offset(0, 3),
-                //         ),
-                //       ]
-                //     : null,
               ),
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Icon(
-                    //   category['icon'] as IconData,
-                    //   size: 14.sp,
-                    //   color: isSelected ? AppColors.whiteLight : color,
-                    // ),
-                    // SizedBox(width: 6.w),
                     Text(
                       category['title'] as String,
                       style: TextStyles.cairoMedium12.copyWith(

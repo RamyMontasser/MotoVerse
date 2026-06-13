@@ -60,6 +60,7 @@ class CustomElevatedButton extends StatelessWidget {
         ),
       ),
       child: Row(
+        // mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           prefixIconPath != null
@@ -85,25 +86,28 @@ class CustomElevatedButton extends StatelessWidget {
           prefixIcon != null
               ? Padding(
                   padding: EdgeInsetsGeometry.only(
-                    right: isEN() ? 8 : 0,
-                    left: isEN() ? 0 : 8,
+                    right: isEN() ? 4 : 0,
+                    left: isEN() ? 0 : 4,
                   ),
                   child: prefixIcon,
                 )
               : SizedBox(),
 
-          Text(
-            text,
-            style: fontStyle.copyWith(
-              color: foregColor ?? AppColors.whiteLight,
+          Flexible(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: fontStyle.copyWith(
+                color: foregColor ?? AppColors.whiteLight,
+              ),
+              //  fontFamily != null
+              //     ? TextStyles.bold16Tajawal.copyWith(
+              //         color: foregColor ?? AppColors.whiteLight,
+              //       )
+              // : TextStyles.cairoRegular16.copyWith(
+              //     color: foregColor ?? AppColors.primaryBlueLight,
+              //   ),
             ),
-            //  fontFamily != null
-            //     ? TextStyles.bold16Tajawal.copyWith(
-            //         color: foregColor ?? AppColors.whiteLight,
-            //       )
-            // : TextStyles.cairoRegular16.copyWith(
-            //     color: foregColor ?? AppColors.primaryBlueLight,
-            //   ),
           ),
 
           suffixIconPath != null

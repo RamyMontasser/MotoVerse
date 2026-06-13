@@ -4,10 +4,11 @@ import 'package:motoverse/Core/providers/localization_provider.dart';
 import 'package:motoverse/Core/theme/app_colors.dart';
 import 'package:motoverse/Core/theme/text_styles.dart';
 import 'package:motoverse/Core/widgets/custom_scrollview_with_appbar.dart';
-import 'package:motoverse/Features/profile/presentation/views/language_selection_card.dart';
+import 'package:motoverse/Features/profile/presentation/widgets/language_selection_card.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/language_action_buttons.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/language_global_icon.dart';
 import 'package:motoverse/Features/profile/presentation/widgets/language_notice_banner.dart';
+import 'package:motoverse/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         listen: false,
       );
       setState(() {
-        tempSelectedLanguage = languageProvider.local ;
+        tempSelectedLanguage = languageProvider.local;
       });
     });
   }
@@ -53,7 +54,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           child: Column(
             children: [
               Text(
-                "لغة التطبيق",
+                S.of(context).appLanguageTitle, 
                 style: TextStyles.cairoBold24.copyWith(
                   color: AppColors.blueNormal,
                 ),
@@ -65,7 +66,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
               LanguageSelectionCard(
                 langCode: 'ar',
-                title: 'العربية',
+                title: S
+                    .of(context)
+                    .arabicLanguage, 
                 subtitle: 'Arabic',
                 charBadge: 'ع',
                 badgeBgColor: AppColors.yellowLightHover,
@@ -77,7 +80,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
               LanguageSelectionCard(
                 langCode: 'en',
-                title: 'الإنجليزية',
+                title: S
+                    .of(context)
+                    .englishLanguage, 
                 subtitle: 'English',
                 charBadge: 'EN',
                 badgeBgColor: AppColors.blueLight,
@@ -87,10 +92,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
               ),
               SizedBox(height: 24.h),
 
-              const LanguageNoticeBanner(),
-              SizedBox(
-                height: 40.h,
-              ), 
+              const LanguageNoticeBanner(), 
+              SizedBox(height: 40.h),
 
               LanguageActionButtons(
                 onSave: () {
