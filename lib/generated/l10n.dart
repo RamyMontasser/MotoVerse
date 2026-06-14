@@ -2848,6 +2848,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Unsupported Car`
+  String get unsupportedCar {
+    return Intl.message(
+      'Unsupported Car',
+      name: 'unsupportedCar',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

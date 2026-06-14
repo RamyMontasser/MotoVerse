@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:meta/meta.dart';
+import 'package:motoverse/Features/bot/data/models/obd_analysis_model.dart';
 import 'package:motoverse/Features/bot/data/models/obd_metrics.dart';
 import 'package:motoverse/Features/bot/domain/repo/obd_repo.dart';
 
@@ -16,12 +17,41 @@ class ObdCubit extends Cubit<ObdState> {
   final List<FlSpot> _rpmSpots = [];
   final List<FlSpot> _speedSpots = [];
   int _chartXCoordinate = 0;
+  AiAnalysisModel? _aiAnalysisResult;
+  ObdMetrics? _latestMetrics;
+  bool _aiLoading = true; 
+  String? _aiError;
+
+  AiAnalysisModel? get aiAnalysis => _aiAnalysisResult;
+  bool get aiLoading => _aiLoading;
+  String? get aiError => _aiError;
 
   ObdCubit(this._obdRepo) : super(ObdInitial());
 
+  Future<void> fetchAiAnalysis(PlatformFile file) async {
+    _aiLoading = true;
+    _aiError = null;
+    if (_latestMetrics != null) emit(ObdDataUpdated(_latestMetrics!));
+
+    final result = await _obdRepo.getAiAnalysis(file: file);
+
+    result.fold(
+      (failure) {
+        _aiLoading = false;
+        _aiError = failure.errorMsg;
+        if (_latestMetrics != null) emit(ObdDataUpdated(_latestMetrics!));
+      },
+      (analysisModel) {
+        _aiLoading = false;
+        _aiAnalysisResult = analysisModel;
+        if (_latestMetrics != null) emit(ObdDataUpdated(_latestMetrics!));
+      },
+    );
+  }
+
   // double _parseSafeDouble(dynamic value) {
   //   if (value == null) return 0.0;
-  //   if (value is num) return value.toDouble(); 
+  //   if (value is num) return value.toDouble();
 
   //   final cleanString = value.toString().replaceAll(RegExp(r'[^0-9.]'), '');
   //   return double.tryParse(cleanString) ?? 0.0;
@@ -49,9 +79,10 @@ class ObdCubit extends Cubit<ObdState> {
                 }
                 return value.toString().trim();
               }
+
               final carModelRaw =
                   currentRow['carModel']?.toString() ?? 'Unknown Car';
-                
+
               final faultRaw = currentRow['faultCode']?.toString() ?? '';
               final String? finalFaultCode =
                   (faultRaw.isEmpty || faultRaw.toLowerCase() == 'null')
@@ -77,9 +108,7 @@ class ObdCubit extends Cubit<ObdState> {
               final loadProgress = loadDouble / 100.0;
               final tempProgress = (tempDouble / 150.0).clamp(0.0, 1.0);
 
-              _rpmSpots.add(
-                FlSpot(_chartXCoordinate.toDouble(), rpmForChart),
-              ); 
+              _rpmSpots.add(FlSpot(_chartXCoordinate.toDouble(), rpmForChart));
               _speedSpots.add(
                 FlSpot(_chartXCoordinate.toDouble(), speedForChart),
               );
@@ -106,12 +135,13 @@ class ObdCubit extends Cubit<ObdState> {
                 rpmSpots: List.from(_rpmSpots),
                 speedSpots: List.from(_speedSpots),
               );
-
+              _latestMetrics = metrics;
               emit(ObdDataUpdated(metrics));
             },
             onDone: () => emit(ObdFinished()),
             onError: (error) => emit(ObdError("خطأ: $error")),
           );
+      fetchAiAnalysis(file);
     } catch (e) {
       emit(ObdError("فشل في بدء المحاكاة: $e"));
     }

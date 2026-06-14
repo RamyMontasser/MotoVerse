@@ -164,13 +164,16 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       ),
                       SizedBox(height: 32.h),
 
-                       Text(
-                          S.of(context).carBrand,
-                          textAlign: TextAlign.start,
-                          style: TextStyles.cairoBold16.copyWith(
-                            color: AppColors.blueNormal,
-                          ),
-                      ),
+                       Align(
+                        alignment: AlignmentGeometry.centerStart,
+                         child: Text(
+                            S.of(context).carBrand,
+                            textAlign: TextAlign.start,
+                            style: TextStyles.cairoBold16.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                                               ),
+                       ),
                       SizedBox(height: 8.h),
                       CustomTextfeildWithBorder(
                         controller: _brandController,
@@ -179,13 +182,15 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       ),
                       SizedBox(height: 20.h),
 
-                       Text(
-                          S.of(context).carModel,
-                          textAlign: TextAlign.start,
-                          style: TextStyles.cairoBold16.copyWith(
-                            color: AppColors.blueNormal,
-                          ),
-                      ),
+                       Align(
+                        alignment: AlignmentGeometry.centerStart,
+                         child: Text(
+                            S.of(context).carModel,
+                            style: TextStyles.cairoBold16.copyWith(
+                              color: AppColors.blueNormal,
+                            ),
+                                               ),
+                       ),
                       SizedBox(height: 8.h),
                       CustomTextfeildWithBorder(
                         controller: _modelController,

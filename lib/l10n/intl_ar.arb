@@ -472,7 +472,8 @@
 
 
     "engineRpm": "عدد دورات المحرك (RPM)",
-    "vehicleSpeed": "سرعة المركبة"
+    "vehicleSpeed": "سرعة المركبة",
 
 
+    "unsupportedCar": "هذه السيارة غير مدعومة"
 }

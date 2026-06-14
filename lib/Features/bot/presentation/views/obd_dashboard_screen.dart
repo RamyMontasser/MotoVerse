@@ -11,14 +11,14 @@ import 'package:motoverse/Features/bot/data/models/obd_metrics.dart';
 import 'package:motoverse/Features/bot/domain/repo/obd_repo.dart';
 import 'package:motoverse/Features/bot/presentation/cubit/obd_cubit.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/obd/ai_analysis_card.dart';
+import 'package:motoverse/Features/bot/presentation/widgets/obd/car_model_card.dart';
+import 'package:motoverse/Features/bot/presentation/widgets/obd/data_file_picker_card.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/obd/engine_load_card.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/obd/fault_card.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/obd/live_chart_card.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/obd/stat_card.dart';
 import 'package:motoverse/Features/bot/presentation/widgets/obd/stat_card2.dart';
-import 'package:motoverse/Features/bot/presentation/widgets/obd/data_file_picker_card.dart';
 import 'package:motoverse/generated/l10n.dart';
-
 
 class ObdDashboardScreen extends StatelessWidget {
   const ObdDashboardScreen({super.key});
@@ -26,33 +26,33 @@ class ObdDashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-    create: (context) => ObdCubit(getIt<ObdRepo>()),
-    child:Scaffold(
-      body: CustomScrollViewWithAppBar(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 350),
-            child: BlocBuilder<ObdCubit, ObdState>(
-              builder: (context, state) {
-                if (state is ObdLoading) {
-                  return _buildLoadingView(context);
-                }
+      create: (context) => ObdCubit(getIt<ObdRepo>()),
+      child: Scaffold(
+        body: CustomScrollViewWithAppBar(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 350),
+              child: BlocBuilder<ObdCubit, ObdState>(
+                builder: (context, state) {
+                  if (state is ObdLoading) {
+                    return _buildLoadingView(context);
+                  }
 
-                if (state is ObdDataUpdated) {
-                  return _buildDashboardView(context, state.metrics);
-                }
+                  if (state is ObdDataUpdated) {
+                    return _buildDashboardView(context, state.metrics);
+                  }
 
-                if (state is ObdError) {
-                  return _buildErrorView(state.errorMessage);
-                }
-                return _buildPickerView(context);
-              },
+                  if (state is ObdError) {
+                    return _buildErrorView(state.errorMessage);
+                  }
+                  return _buildPickerView(context);
+                },
+              ),
             ),
           ),
         ),
       ),
-    )
     );
   }
 
@@ -82,6 +82,8 @@ class ObdDashboardScreen extends StatelessWidget {
   }
 
   Widget _buildDashboardView(BuildContext context, ObdMetrics metrics) {
+    final cubit = context.read<ObdCubit>();
+
     return Column(
       key: const ValueKey('obd_dashboard_view'),
       children: [
@@ -90,9 +92,15 @@ class ObdDashboardScreen extends StatelessWidget {
           SizedBox(height: 18.h),
         ],
 
+        CarModelCard(carModel: metrics.carModel),
+
+        SizedBox(height: 18.h),
+
         AiAnalysisCard(
-          carModel: metrics.carModel,
-          anomalyPercentage: 82,
+          anomalyPercentage: cubit.aiAnalysis?.anomalyRatio,
+          status: cubit.aiAnalysis?.status,
+          isLoading: cubit.aiLoading,
+          errorMessage: cubit.aiError,
         ),
         SizedBox(height: 18.h),
 
@@ -146,7 +154,7 @@ class ObdDashboardScreen extends StatelessWidget {
           value: metrics.speedValue,
           unit: 'km/h',
           icon: Icons.av_timer,
-          maxY: 150,
+          maxY: 100,
           spots: metrics.speedSpots.isEmpty
               ? [const FlSpot(0, 0)]
               : metrics.speedSpots,
@@ -200,7 +208,7 @@ class ObdDashboardScreen extends StatelessWidget {
               try {
                 FilePickerResult? result = await FilePicker.pickFiles(
                   type: FileType.custom,
-                  allowedExtensions: ['csv',],
+                  allowedExtensions: ['csv'],
                 );
 
                 if (result != null && result.files.isNotEmpty) {

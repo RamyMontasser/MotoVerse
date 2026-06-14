@@ -612,6 +612,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "typeMessageHint": MessageLookupByLibrary.simpleMessage(
       "اكتب رسالتك هنا...",
     ),
+    "unsupportedCar": MessageLookupByLibrary.simpleMessage(
+      "هذه السيارة غير مدعومة",
+    ),
     "update": MessageLookupByLibrary.simpleMessage("تحديث"),
     "uploadSuccess": MessageLookupByLibrary.simpleMessage("تم التحميل بنجاح"),
     "uploadVehicleDiagnosticFiles": MessageLookupByLibrary.simpleMessage(

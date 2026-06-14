@@ -19,3 +19,17 @@ class ObdDataUpdated extends ObdState {
   ObdDataUpdated(this.metrics);
 }
 
+class ObdAiAnalysisLoading extends ObdState {}
+
+class ObdAiAnalysisSuccess extends ObdState {
+  final AiAnalysisModel aiAnalysis;
+  ObdAiAnalysisSuccess(this.aiAnalysis);
+}
+
+class ObdAiAnalysisFailure extends ObdState {
+  final String errorMessage;
+  ObdAiAnalysisFailure(
+    this.errorMessage,
+  ); 
+}
+

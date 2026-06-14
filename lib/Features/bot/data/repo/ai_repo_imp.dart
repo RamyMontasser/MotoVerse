@@ -29,14 +29,8 @@ class AiRepoImp implements AiRepo {
       );
       return Right(diagnosisModel);
     } on DioException catch (e) {
-      // debugPrint("====== DIO ERROR ======");
-      // debugPrint("Status Code: ${e.response?.statusCode}");
-      // debugPrint("Response Data: ${e.response?.data}");
-      // debugPrint("Message: ${e.message}");
       return Left(ApiFailure.fromDioException(e));
     } catch (e) {
-      // debugPrint("====== SYSTEM ERROR ======");
-      // debugPrint(e.toString());
       return Left(ServerFailure(errorMsg: e.toString()));
     }
   }

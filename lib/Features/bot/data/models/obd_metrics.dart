@@ -16,9 +16,10 @@ class ObdMetrics {
   final List<FlSpot> speedSpots;
   final String carModel;
   final String? faultCode;
+  // no AI fields here — keep this model focused on OBD metrics
 
-  // final String? column1; 
-  // final String? column2; 
+  // final String? column1;
+  // final String? column2;
   // final String? column3;
 
   ObdMetrics({
@@ -34,7 +35,9 @@ class ObdMetrics {
     required this.barometricPressure,
     required this.runtimeValue,
     required this.rpmSpots,
-    required this.speedSpots, required this.carModel, this.faultCode,
+    required this.speedSpots,
+    required this.carModel,
+    this.faultCode,
     //  this.column1, this.column2, this.column3,
   });
 

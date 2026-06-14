@@ -462,7 +462,10 @@
 
 
 
-    "vehicleSpeed": "Vehicle Speed"
+    "vehicleSpeed": "Vehicle Speed",
+
+
+    "unsupportedCar": "Unsupported Car"
 
 
 
