@@ -24,6 +24,15 @@ class LiveChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // حساب الـ minX والـ maxX ديناميكياً بناءً على النقاط المتاحة
+    // هذا يضمن أن الدياجرام يتحرك (Scrolls) لايف مع التايمر ولا تختفي الخطوط
+    double minX = 0;
+    double maxX = 9;
+    if (spots.isNotEmpty && spots.length >= 10) {
+      minX = spots.first.x;
+      maxX = spots.last.x;
+    }
+
     return Container(
       height: 240.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -67,8 +76,6 @@ class LiveChartCard extends StatelessWidget {
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
-                // crossAxisAlignment: Alignment.baseline,
-                // textBaseline: TextBaseline.alphabetic,
                 children: [
                   Text(
                     unit,
@@ -115,10 +122,30 @@ class LiveChartCard extends StatelessWidget {
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
-                      reservedSize: 30.w,
+                      reservedSize: 35.w,
+                      // 👇 السطر ده هو السر! بيحدد الـ Interval (المسافة بين كل رقم ورقم)
+                      // لو الـ maxY بـ 6000، هيعرض رقم كل 1000 (يعني: 0, 1k, 2k, 3k, 4k, 5k, 6k)
+                      // تقدر تغير الـ 1000 وتخليها 500 لو عايز تقسيمات أكتر وأدق!
+                      interval: maxY >= 1000 ? 1000 : null,
+
                       getTitlesWidget: (value, meta) {
+                        // إخفاء الصفر القريب جداً من الحافة السفلى عشان المظهر العام يكون أنظف
+                        if (value == meta.min) return const SizedBox.shrink();
+
                         String text = value.toInt().toString();
-                        if (maxY == 40 && value > 0) text = '${value.toInt()}k';
+
+                        if (maxY >= 1000) {
+                          if (value >= 1000) {
+                            // لو القيمة بتقبل القسمة على 1000 ومفيش كسور (زي 1000 هتبقى 1k)
+                            if (value % 1000 == 0) {
+                              text = '${(value / 1000).toStringAsFixed(0)}k';
+                            } else {
+                              // لو خليت الـ interval بـ 500، الـ 1500 هتظهر 1.5k
+                              text = '${(value / 1000).toStringAsFixed(1)}k';
+                            }
+                          }
+                        }
+
                         return Text(
                           text,
                           style: TextStyles.cairoRegular13.copyWith(
@@ -130,8 +157,8 @@ class LiveChartCard extends StatelessWidget {
                   ),
                 ),
                 borderData: FlBorderData(show: false),
-                minX: 0,
-                maxX: 9,
+                minX: minX,
+                maxX: maxX,
                 minY: 0,
                 maxY: maxY,
                 lineBarsData: [

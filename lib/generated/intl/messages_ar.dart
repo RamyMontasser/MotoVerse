@@ -236,7 +236,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "engine": MessageLookupByLibrary.simpleMessage("محرك"),
     "engineCoolant": MessageLookupByLibrary.simpleMessage("حرارة المحرك"),
     "engineLoad": MessageLookupByLibrary.simpleMessage("الحمل على المحرك"),
-    "engineRpm": MessageLookupByLibrary.simpleMessage("دورات المحرك"),
+    "engineRpm": MessageLookupByLibrary.simpleMessage("عدد دورات المحرك (RPM)"),
     "engineRuntime": MessageLookupByLibrary.simpleMessage("وقت تشغيل المحرك"),
     "engineTemperature": MessageLookupByLibrary.simpleMessage(
       "درجة حرارة المحرك",
@@ -617,6 +617,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadVehicleDiagnosticFiles": MessageLookupByLibrary.simpleMessage(
       "قم برفع ملفات تشخيص السيارة (CSV, JSON, XLSX)",
     ),
+    "vehicleSpeed": MessageLookupByLibrary.simpleMessage("سرعة المركبة"),
     "verificationSubtitle": MessageLookupByLibrary.simpleMessage(
       "لتوفير تجربة آمنة وموثقة\n لمستخدمين motoverse",
     ),

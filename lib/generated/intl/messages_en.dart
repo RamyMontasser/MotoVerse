@@ -643,6 +643,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadVehicleDiagnosticFiles": MessageLookupByLibrary.simpleMessage(
       "Upload vehicle diagnostic files (CSV, JSON, XLSX)",
     ),
+    "vehicleSpeed": MessageLookupByLibrary.simpleMessage("Vehicle Speed"),
     "verificationSubtitle": MessageLookupByLibrary.simpleMessage(
       "To provide a secure and trusted experience\n for motoverse users",
     ),

@@ -164,14 +164,12 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       ),
                       SizedBox(height: 32.h),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
+                       Text(
                           S.of(context).carBrand,
+                          textAlign: TextAlign.start,
                           style: TextStyles.cairoBold16.copyWith(
                             color: AppColors.blueNormal,
                           ),
-                        ),
                       ),
                       SizedBox(height: 8.h),
                       CustomTextfeildWithBorder(
@@ -181,14 +179,12 @@ class _AddOrUpdateCarScreenState extends State<AddOrUpdateCarScreen> {
                       ),
                       SizedBox(height: 20.h),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
+                       Text(
                           S.of(context).carModel,
+                          textAlign: TextAlign.start,
                           style: TextStyles.cairoBold16.copyWith(
                             color: AppColors.blueNormal,
                           ),
-                        ),
                       ),
                       SizedBox(height: 8.h),
                       CustomTextfeildWithBorder(

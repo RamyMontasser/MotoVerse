@@ -2838,6 +2838,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Vehicle Speed`
+  String get vehicleSpeed {
+    return Intl.message(
+      'Vehicle Speed',
+      name: 'vehicleSpeed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
