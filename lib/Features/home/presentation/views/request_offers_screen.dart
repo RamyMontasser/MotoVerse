@@ -166,7 +166,10 @@ class RequestOffersScreen extends StatelessWidget {
                     ),
                     if (!hasAcceptedOffer &&
                         requests.first.status != 'accepted')
-                      _buildLoadingHeader(newContext, requests),
+                      Padding(
+                        padding:  EdgeInsets.only(bottom: 15.h),
+                        child: _buildLoadingHeader(newContext, requests),
+                      ),
                     BlocBuilder<NotificationCubit, NotificationState>(
                       buildWhen: (previous, current) =>
                           current is NotificationLoading ||

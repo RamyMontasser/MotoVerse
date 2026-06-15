@@ -120,7 +120,7 @@ class MyApp extends StatelessWidget {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(
             textScaler: TextScaler.linear(
-              MediaQuery.textScaleFactorOf(context).clamp(1.0, 1.03),
+              MediaQuery.textScaleFactorOf(context).clamp(1.0, 1.02),
             ),
           ),
           child: Consumer<LocalizationProvider>(

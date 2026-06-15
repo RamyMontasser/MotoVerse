@@ -24,6 +24,7 @@ class MyOffersPage extends StatefulWidget {
 class _MyOffersPageState extends State<MyOffersPage> {
   late int currentCategory;
   List<OfferModel> myOffers = [];
+  bool _hasInitialCategorySet = false;
 
   @override
   void initState() {
@@ -122,6 +123,21 @@ class _MyOffersPageState extends State<MyOffersPage> {
                       msg: state.errMessage,
                       isDone: false,
                     );
+                  }
+                  if (state is MyOffersSuccess && !_hasInitialCategorySet) {
+                    _hasInitialCategorySet = true;
+                    final offers = state.offers;
+                    if (offers.isNotEmpty) {
+                      if (offers.any((o) => o.status == 'accepted')) {
+                        setState(() {
+                          currentCategory = 1; 
+                        });
+                      } else if (offers.any((o) => o.status == 'pending')) {
+                        setState(() {
+                          currentCategory = 2; 
+                        });
+                      }
+                    }
                   }
                 },
                 child: BlocBuilder<MyOffersCubit, MyOffersState>(
